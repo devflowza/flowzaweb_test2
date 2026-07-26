@@ -1,0 +1,193 @@
+"use client";
+
+import * as React from "react";
+import Link from "next/link";
+import { ArrowRight, Check } from "lucide-react";
+import {
+  ENTERPRISE_PLUS,
+  PRICING_COPY,
+  PRICING_PLANS,
+  YEARLY_DISCOUNT_PERCENT,
+  formatPrice,
+  yearlyMonthlyEquivalent,
+  yearlyTotal,
+} from "@/content/pricing";
+import { Badge } from "@/components/ui/badge";
+import { Button, ButtonIcon } from "@/components/ui/button";
+import { Container, Section } from "@/components/layout/container";
+import { SectionHeading } from "@/components/layout/section-heading";
+import { Reveal } from "@/components/motion";
+import { cn } from "@/lib/utils";
+
+export function PricingSection({ standalone = false }: { standalone?: boolean }) {
+  const [yearly, setYearly] = React.useState(false);
+
+  return (
+    <Section id="pricing" tone="white" ghost="PLANS">
+      <Container>
+        <SectionHeading
+          badge={PRICING_COPY.badge}
+          title={PRICING_COPY.title}
+          subtitle={PRICING_COPY.subtitle}
+          as={standalone ? "h1" : "h2"}
+        />
+
+        {/* Billing toggle */}
+        <Reveal className="mb-12 flex justify-center">
+          <div
+            role="group"
+            aria-label="Billing period"
+            className="relative inline-flex items-center rounded-full border border-line bg-surface-tint p-1 shadow-hairline"
+          >
+            <button
+              type="button"
+              onClick={() => setYearly(false)}
+              aria-pressed={!yearly}
+              className={cn(
+                "rounded-full px-5 py-2 text-sm font-medium transition-all duration-400 ease-(--ease-swift)",
+                !yearly ? "bg-navy-950 text-white shadow-soft" : "text-body hover:text-ink",
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              type="button"
+              onClick={() => setYearly(true)}
+              aria-pressed={yearly}
+              className={cn(
+                "flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-400 ease-(--ease-swift)",
+                yearly ? "bg-navy-950 text-white shadow-soft" : "text-body hover:text-ink",
+              )}
+            >
+              Yearly
+              <span
+                className={cn(
+                  "rounded-full px-2 py-0.5 font-mono text-[0.65rem] font-semibold",
+                  yearly ? "bg-emerald-400/20 text-emerald-300" : "bg-emerald-100 text-emerald-700",
+                )}
+              >
+                −{YEARLY_DISCOUNT_PERCENT}%
+              </span>
+            </button>
+          </div>
+        </Reveal>
+
+        {/* Plan cards */}
+        <ul className="grid gap-5 lg:grid-cols-3">
+          {PRICING_PLANS.map((plan, i) => {
+            const price = yearly ? yearlyMonthlyEquivalent(plan.monthlyPrice) : plan.monthlyPrice;
+            return (
+              <li key={plan.id} className="h-full">
+                <Reveal delay={i * 0.1} className="h-full">
+                  <div
+                    className={cn(
+                      "relative flex h-full flex-col rounded-(--radius-shell) border bg-surface p-7 transition-all duration-600 ease-(--ease-swift)",
+                      plan.highlighted
+                        ? "border-brand-600/40 shadow-lift ring-4 ring-brand-600/10"
+                        : "border-line shadow-hairline hover:shadow-soft",
+                    )}
+                  >
+                    {plan.highlighted ? (
+                      <span className="fx-gradient absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5 font-mono text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-white shadow-glow-brand">
+                        Most Popular
+                      </span>
+                    ) : null}
+
+                    <div className="flex items-center gap-3">
+                      <span
+                        className={cn(
+                          "flex size-10 items-center justify-center rounded-xl",
+                          plan.highlighted
+                            ? "bg-brand-600 text-white"
+                            : "bg-brand-50 text-brand-700",
+                        )}
+                      >
+                        <plan.icon className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
+                      </span>
+                      <h3 className="text-lg font-semibold text-ink">{plan.name}</h3>
+                    </div>
+
+                    <p className="mt-4 text-sm text-body">{plan.description}</p>
+
+                    <p className="mt-5 flex items-baseline gap-1.5">
+                      <span className="font-mono text-4xl font-semibold tracking-tight text-ink">
+                        ${formatPrice(price)}
+                      </span>
+                      <span className="text-sm text-muted">/mo</span>
+                    </p>
+                    <p className="mt-1.5 min-h-5 text-[0.8125rem] text-muted">
+                      {yearly
+                        ? `Billed yearly — $${formatPrice(yearlyTotal(plan.monthlyPrice))} per year`
+                        : "Billed monthly"}
+                    </p>
+
+                    <ul className="mt-6 flex-1 space-y-2.5 border-t border-line pt-6">
+                      {plan.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm text-body">
+                          <Check
+                            className="mt-0.5 size-4 shrink-0 text-emerald-700"
+                            strokeWidth={2}
+                            aria-hidden="true"
+                          />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-7 grid grid-cols-2 gap-2.5">
+                      <Button
+                        asChild
+                        variant={plan.highlighted ? "primary" : "outline"}
+                        size="lg"
+                        className="w-full"
+                      >
+                        <a href={plan.trialUrl} target="_blank" rel="noopener noreferrer">
+                          Start Trial
+                        </a>
+                      </Button>
+                      <Button
+                        asChild
+                        variant={plan.highlighted ? "dark" : "ghost"}
+                        size="lg"
+                        className={cn("w-full", !plan.highlighted && "border border-line")}
+                      >
+                        <a href={plan.buyUrl} target="_blank" rel="noopener noreferrer">
+                          Buy Now
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Enterprise Plus */}
+        <Reveal delay={0.2}>
+          <div className="fx-aurora-dark mt-6 flex flex-col items-center justify-between gap-5 rounded-(--radius-shell) bg-navy-950 px-8 py-8 text-center sm:flex-row sm:text-left">
+            <div>
+              <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-white sm:justify-start">
+                {ENTERPRISE_PLUS.name}
+                <Badge variant="dark">Custom</Badge>
+              </h3>
+              <p className="mt-1.5 text-sm text-white/70">{ENTERPRISE_PLUS.description}</p>
+            </div>
+            <Button asChild variant="white" size="lg">
+              <Link href="/contact?service=Sales%20Inquiry">
+                {ENTERPRISE_PLUS.ctaLabel}
+                <ButtonIcon className="bg-slate-900/10">
+                  <ArrowRight strokeWidth={2} />
+                </ButtonIcon>
+              </Link>
+            </Button>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.26}>
+          <p className="mt-8 text-center text-sm text-muted">{PRICING_COPY.note}</p>
+        </Reveal>
+      </Container>
+    </Section>
+  );
+}

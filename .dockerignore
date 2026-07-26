@@ -1,0 +1,11 @@
+node_modules
+.next
+.open-next
+.wrangler
+.git
+.github
+docs
+scripts
+*.md
+.env*
+!.env.example

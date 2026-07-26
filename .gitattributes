@@ -1,0 +1,14 @@
+# Normalize to LF in the repo and on checkout everywhere. Without this, Windows
+# clones get CRLF working copies and `npm run format:check` fails against
+# Prettier's LF default while CI (Linux) passes.
+* text=auto eol=lf
+
+# Binary assets — never touch these
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

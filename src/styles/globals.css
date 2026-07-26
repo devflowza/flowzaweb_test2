@@ -1,0 +1,356 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ---------------------------------------------------------------------------
+   Flowza "Operating Fabric" design tokens
+   Light-first system: white/slate surfaces, deep navy dark bands,
+   cyan→blue brand energy, per-product accent theming.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* ----- Fonts (wired to next/font CSS variables in src/lib/fonts.ts) ----- */
+  --font-sans:
+    var(--font-instrument), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", "Cascadia Mono", monospace;
+
+  /* ----- Brand ramp (blue — primary action color) ----- */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+
+  /* ----- Accent ramp (cyan — the "flow" in the gradient) ----- */
+  --color-accent-200: #a5f3fc;
+  --color-accent-300: #67e8f9;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+  --color-accent-700: #0e7490;
+  --color-accent-800: #155e75;
+
+  /* ----- Navy (dark surfaces: top bar, footer, stats bands) ----- */
+  --color-navy-800: #16223f;
+  --color-navy-900: #0e182f;
+  --color-navy-950: #0b1120;
+
+  /* ----- Semantic aliases ----- */
+  --color-ink: #0f172a;
+  --color-ink-strong: #020617;
+  --color-body: #475569;
+  --color-muted: #64748b;
+  --color-faint: #94a3b8;
+  --color-line: #e2e8f0;
+  --color-line-strong: #cbd5e1;
+  --color-surface: #ffffff;
+  --color-surface-tint: #f8fafc;
+  --color-surface-wash: #f0f6ff;
+  --color-whatsapp: #25d366;
+  --color-whatsapp-deep: #16a34a;
+
+  /* ----- Per-product accents (canonical) ----- */
+  --color-product-finance: #10b981;
+  --color-product-logispro: #38bdf8;
+  --color-product-spamaster: #f43f5e;
+  --color-product-fleetza: #7c5ff5;
+  --color-product-qrforge: #f59e0b;
+  --color-product-pos: #8b5cf6;
+  --color-product-club: #9333ea;
+
+  /* ----- Fluid display type scale ----- */
+  --text-display-2xl: clamp(2.8rem, 1.85rem + 4.1vw, 5rem);
+  --text-display-2xl--line-height: 1.02;
+  --text-display-2xl--letter-spacing: -0.035em;
+  --text-display-2xl--font-weight: 640;
+
+  --text-display-xl: clamp(2.25rem, 1.65rem + 2.7vw, 3.7rem);
+  --text-display-xl--line-height: 1.06;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-xl--font-weight: 620;
+
+  --text-display-lg: clamp(1.9rem, 1.5rem + 1.8vw, 2.85rem);
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-lg--font-weight: 600;
+
+  --text-display-md: clamp(1.55rem, 1.32rem + 1.05vw, 2.15rem);
+  --text-display-md--line-height: 1.16;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md--font-weight: 600;
+
+  --text-display-sm: clamp(1.28rem, 1.18rem + 0.5vw, 1.55rem);
+  --text-display-sm--line-height: 1.28;
+  --text-display-sm--letter-spacing: -0.015em;
+  --text-display-sm--font-weight: 600;
+
+  --text-lede: clamp(1.05rem, 1rem + 0.28vw, 1.22rem);
+  --text-lede--line-height: 1.65;
+
+  --text-eyebrow: 0.72rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* ----- Fluid rhythm ----- */
+  --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
+  --spacing-section: clamp(4.5rem, 9vw, 9rem);
+  --spacing-section-sm: clamp(3rem, 6vw, 5.5rem);
+
+  /* ----- Radii (concentric system: inner = outer − padding) ----- */
+  --radius-chip: 0.625rem;
+  --radius-card: clamp(1.1rem, 1.6vw, 1.5rem);
+  --radius-shell: clamp(1.5rem, 2.3vw, 2rem);
+  --radius-hero: clamp(1.75rem, 3vw, 2.75rem);
+
+  /* ----- Elevation ----- */
+  --shadow-hairline: 0 1px 2px rgb(2 6 23 / 0.05);
+  --shadow-soft: 0 2px 10px -2px rgb(2 6 23 / 0.05), 0 12px 34px -14px rgb(2 6 23 / 0.1);
+  --shadow-lift: 0 8px 16px -10px rgb(2 6 23 / 0.08), 0 22px 44px -18px rgb(2 6 23 / 0.18);
+  --shadow-mega: 0 28px 56px -30px rgb(2 6 23 / 0.28), 0 60px 120px -32px rgb(23 37 84 / 0.26);
+  --shadow-glow-brand: 0 14px 34px -12px rgb(37 99 235 / 0.5);
+  --shadow-glow-whatsapp: 0 14px 34px -12px rgb(37 211 102 / 0.45);
+
+  /* ----- Motion tokens ----- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-swift: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-soft-spring: cubic-bezier(0.34, 1.26, 0.44, 1);
+
+  --animate-marquee: marquee var(--marquee-duration, 42s) linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s var(--ease-swift) infinite;
+  --animate-accordion-down: accordion-down 0.3s var(--ease-swift);
+  --animate-accordion-up: accordion-up 0.25s var(--ease-swift);
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.8);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-600);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 3px;
+  }
+
+  /* Anchored sections clear the sticky header */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+
+  /* Balanced headline wrapping everywhere */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Signature utilities
+--------------------------------------------------------------------------- */
+
+/* Blueprint grid backdrop */
+@utility fx-grid {
+  background-image:
+    linear-gradient(to right, rgb(15 23 42 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(15 23 42 / 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 55%, transparent 100%);
+}
+
+/* Cyan→blue aurora light-leak (hero and CTA washes) */
+@utility fx-aurora {
+  background:
+    radial-gradient(38rem 22rem at 12% 8%, rgb(34 211 238 / 0.14), transparent 62%),
+    radial-gradient(44rem 26rem at 88% 12%, rgb(37 99 235 / 0.12), transparent 64%),
+    radial-gradient(30rem 20rem at 55% 100%, rgb(147 197 253 / 0.1), transparent 60%);
+}
+
+/* Dark-band aurora (navy sections) */
+@utility fx-aurora-dark {
+  background:
+    radial-gradient(40rem 24rem at 10% 0%, rgb(34 211 238 / 0.12), transparent 60%),
+    radial-gradient(48rem 28rem at 92% 18%, rgb(37 99 235 / 0.2), transparent 62%);
+}
+
+/* Brand gradient text — LARGE text on light surfaces only (>=24px, or >=18.7px
+   bold). Every stop clears WCAG 1.4.3's 3:1 large-text ratio on white:
+   accent-600 3.7:1, brand-600 5.2:1. For small text use fx-gradient-text-strong. */
+@utility fx-gradient-text {
+  background-image: linear-gradient(94deg, var(--color-accent-600), var(--color-brand-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Small text on light surfaces — every stop clears 4.5:1 (5.4:1 / 5.1:1). */
+@utility fx-gradient-text-strong {
+  background-image: linear-gradient(94deg, var(--color-accent-700), var(--color-brand-700));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Any text size on dark surfaces — 13:1 / 10.5:1 on navy-950. */
+@utility fx-gradient-text-light {
+  background-image: linear-gradient(94deg, var(--color-accent-300), var(--color-brand-300));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Brand gradient surface — carries white text, so every stop clears 4.5:1
+   against white (accent-700 5.4:1 -> brand-700 5.1:1). */
+@utility fx-gradient {
+  background-image: linear-gradient(94deg, var(--color-accent-700), var(--color-brand-700));
+}
+
+/* Decorative gradient — never place text on this. */
+@utility fx-gradient-vivid {
+  background-image: linear-gradient(94deg, var(--color-accent-400), var(--color-brand-600));
+}
+
+/* Ghost watermark display type behind sections */
+@utility fx-ghost-text {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--color-ink);
+  opacity: 0.04;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Double-bezel outer shell (machined-hardware card framing) */
+@utility bezel {
+  background-color: rgb(15 23 42 / 0.04);
+  border: 1px solid rgb(15 23 42 / 0.06);
+  border-radius: var(--radius-shell);
+  padding: 0.375rem;
+}
+
+@utility bezel-dark {
+  background-color: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: var(--radius-shell);
+  padding: 0.375rem;
+}
+
+/* Scroll-reveal entrance (see components/motion Reveal).
+   BELOW THE FOLD ONLY: the hidden state is gated behind html[data-js] — set
+   pre-hydration — so content is never hidden without JS, and behind
+   prefers-reduced-motion so it never animates when unwanted.
+   Above-the-fold content must use <Reveal immediate> (below) instead, so first
+   paint and LCP never wait on hydration. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-js] [data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 28px));
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 0.8s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+  }
+
+  html[data-js] [data-reveal].is-inview {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* Above-the-fold entrance: a pure-CSS animation that starts as soon as the
+     stylesheet is parsed. No JS gate, so it cannot delay LCP. */
+  [data-reveal-now] {
+    animation: reveal-in 0.8s var(--ease-out-expo) both;
+    animation-delay: var(--reveal-delay, 0s);
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 28px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Marquee track pauses for reduced motion */
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: var(--animate-marquee);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

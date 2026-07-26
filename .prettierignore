@@ -1,0 +1,4 @@
+wrangler.jsonc
+.open-next/
+.next/
+package-lock.json
