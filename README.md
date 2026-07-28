@@ -81,7 +81,26 @@ prefix). Do not change `src/content/contact.ts` service options or the insert ma
 **Cloudflare Workers (primary):** `npm run cf:build` produces `.open-next/`; deploy with
 `npm run cf:deploy` (needs `CLOUDFLARE_API_TOKEN`; set `SUPABASE_URL`/`SUPABASE_ANON_KEY`
 via `wrangler secret put`). CI (`.github/workflows/ci.yml`) runs format/lint/typecheck/build
-on every push — deployment is deliberately manual.
+on every push.
+
+**Workers Builds (git-connected):** this must be a **Workers** project, not Pages —
+`wrangler.jsonc` declares a worker (`main`, `assets`), not a `pages_build_output_dir`.
+Settings → Build:
+
+| Setting        | Value                     |
+| -------------- | ------------------------- |
+| Build command  | `npm run cf:build`        |
+| Deploy command | `npx wrangler deploy`     |
+| Node version   | from `.node-version` (24) |
+
+`wrangler deploy` detects `open-next.config.ts` and delegates to
+`opennextjs-cloudflare deploy`, so the build command **must** be `cf:build` — plain
+`npm run build` skips the worker bundle and the deploy fails with "Could not find compiled
+Open Next config". Secrets are not read from `wrangler.jsonc`; set them with
+`wrangler secret put` or in the dashboard.
+
+Do not use `@cloudflare/next-on-pages` — it's deprecated, unsupported on Next 16, and its
+`@cloudflare/workers-types@^4` peer conflicts with `wrangler@^4.114`.
 
 **Docker (fallback):** `docker build -t flowzaweb . && docker run -p 3000:3000 flowzaweb`
 (standalone output, Node 24 alpine, non-root).
