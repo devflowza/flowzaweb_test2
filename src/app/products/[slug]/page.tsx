@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { getPlatform, PLATFORM_SLUGS } from "@/content/products";
 import { CONTACT } from "@/content/site";
-import { Button, ButtonIcon } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/layout/social-icons";
 import { PlatformHero } from "@/components/platform/platform-hero";
 import {
@@ -98,9 +98,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
         <Button asChild size="xl" variant="white">
           <a href={platform.appUrl} target="_blank" rel="noopener noreferrer">
             Launch {platform.shortName}
-            <ButtonIcon className="bg-slate-900/10">
-              <ArrowUpRight strokeWidth={2} />
-            </ButtonIcon>
+            <ArrowUpRight strokeWidth={2} />
           </a>
         </Button>
         <Button asChild size="xl" variant="whatsapp">

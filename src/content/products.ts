@@ -2,6 +2,7 @@ import {
   Activity,
   AlertCircle,
   ArrowUpRight,
+  BadgeCheck,
   BarChart2,
   Calendar,
   CalendarCheck,
@@ -29,7 +30,10 @@ import {
   Receipt,
   RefreshCw,
   Scale,
+  Search,
   Shield,
+  Signature,
+  SlidersHorizontal,
   Star,
   Target,
   Users,
@@ -78,7 +82,8 @@ export interface Platform extends PlatformNav {
   features: PlatformFeature[];
   steps: PlatformStep[];
   stats: PlatformStat[];
-  testimonial: PlatformTestimonial;
+  /** Omit until a real, attributable customer quote exists — never invent one. */
+  testimonial?: PlatformTestimonial;
   related: PlatformSlug[];
 }
 
@@ -643,6 +648,156 @@ export const PLATFORMS: Platform[] = [
       initials: "RM",
     },
     related: ["finance", "spamaster", "pos"],
+  },
+  {
+    ...PLATFORM_NAV_MAP.rentflow,
+    cardDescription:
+      "Collect, screen and approve tenant applications in one trackable pipeline — no email threads.",
+    description:
+      "Collect, screen and approve tenant applications without the back-and-forth of emails and spreadsheets.",
+    longDescription:
+      "FlowZa RentFlow turns rental applications into a simple, trackable process. Every application — from first submission to final decision — lives in one dashboard, so you always know who's applying, where they stand, and what's left to check.",
+    badges: ["Tenant screening", "Bulk actions", "One dashboard"],
+    cardBadges: ["Screening", "Bulk actions", "Searchable"],
+    features: [
+      {
+        icon: LayoutGrid,
+        title: "One Dashboard for Every Application",
+        description:
+          "See all applications at a glance, filtered by status: pending review, under screening, approved, rejected or withdrawn.",
+      },
+      {
+        icon: Shield,
+        title: "Built-In Tenant Screening",
+        description:
+          "Run credit checks, background checks, eviction history, income verification and reference checks without leaving the app.",
+      },
+      {
+        icon: BadgeCheck,
+        title: "Fast Decisions",
+        description:
+          "Approve or reject applications in a click, with reasons recorded automatically for your records.",
+      },
+      {
+        icon: Layers,
+        title: "Bulk Actions",
+        description:
+          "Move multiple applications through the pipeline at once when you're managing high application volume.",
+      },
+      {
+        icon: Search,
+        title: "Searchable Records",
+        description: "Find any applicant instantly by name, email or application ID.",
+      },
+    ],
+    steps: [
+      {
+        title: "Collect",
+        description:
+          "Applications arrive in one dashboard instead of an inbox — every submission tracked from the moment it lands, with nothing to copy into a spreadsheet.",
+      },
+      {
+        title: "Screen",
+        description:
+          "Run credit, background, eviction-history, income and reference checks in the app, and watch each application move from pending review to under screening.",
+      },
+      {
+        title: "Decide",
+        description:
+          "Approve or reject in a click with the reason recorded automatically, and use bulk actions to clear a backlog when volume spikes.",
+      },
+    ],
+    stats: [
+      { value: "5", label: "Screening checks built in" },
+      { value: "5", label: "Pipeline statuses, pending through withdrawn" },
+      { value: "1-click", label: "Approve or reject, reason recorded" },
+      { value: "Bulk", label: "Move many applications at once" },
+    ],
+    related: ["finance", "club", "qrforge"],
+  },
+  {
+    ...PLATFORM_NAV_MAP.pms,
+    cardDescription:
+      "The full performance loop — KRA/KPI cycles, bell-curve calibration and succession — linked to pay.",
+    description:
+      "FlowZa PMS runs the full performance loop — KRA/KPI cycles, bell-curve calibration and succession — then links every rating to a compensation engine that knows your country's statutory rules.",
+    longDescription:
+      "One loop, four steps: rate, calibrate, decide pay and document — without leaving the platform. FlowZa PMS carries a review cycle from self, manager and reviewer stages through a recorded calibration session, resolves the resulting pay against your country's salary structures and statutory rules, and issues an approved letter a third party can verify as authentic.",
+    badges: ["KRA/KPI + bell curve", "Compensation engine", "Verifiable letters"],
+    cardBadges: ["Bell curve", "Compensation", "Verifiable letters"],
+    features: [
+      {
+        icon: Target,
+        title: "KRA/KPI Cycles, Multi-Stage",
+        description:
+          "Self, manager and reviewer stages across KRA/KPI cycles. Score per-KPI or as one consolidated stage score, with succession planning on the same cycle.",
+      },
+      {
+        icon: BarChart2,
+        title: "Bell-Curve Calibration",
+        description:
+          "Compare ratings against a distribution with a bell curve and recorded calibration sessions, so a rating is defensible rather than a matter of who rated hardest.",
+      },
+      {
+        icon: SlidersHorizontal,
+        title: "Local Pay, Without a Custom Build",
+        description:
+          "Salary structures, statutory rules and increment strategies are data-driven — add a country by adding configuration, not code. Increments preserve an employee's component structure instead of resetting it on every raise.",
+      },
+      {
+        icon: Signature,
+        title: "Letters Anyone Can Verify",
+        description:
+          "Every letter is approved, signed with your organization's key, and checkable by a third party from a public verification page — no more disputed offer or experience letters.",
+      },
+      {
+        icon: Scale,
+        title: "Conduct Compliance That Configures Itself",
+        description:
+          "Respect at Work resolves your obligations by jurisdiction — POSH in India, labour-law conduct duties in the GCC — with policy, training, committee and complaint workflow built in.",
+      },
+      {
+        icon: Globe,
+        title: "Local Currency, Local Statutory Rules",
+        description:
+          "India (EPF, ESI, Professional Tax, gratuity, POSH), the UAE and Saudi Arabia and Oman (end-of-service computation per legal entity, plus workforce data for Saudization and Omanization reporting) — each priced and computed in its own currency, not in dollars.",
+      },
+      {
+        icon: Database,
+        title: "Your Data, In Your Region",
+        description:
+          "Per-tenant isolation enforced at the database, not the application layer, with region-configurable hosting so your data stays where your policy says it should — and export any time, with no lock-in.",
+      },
+    ],
+    steps: [
+      {
+        title: "Rate",
+        description:
+          "Self, manager and reviewer stages across KRA/KPI cycles. Score per-KPI or as one consolidated stage score.",
+      },
+      {
+        title: "Calibrate",
+        description:
+          "Compare ratings against a distribution with bell curve and recorded calibration sessions.",
+      },
+      {
+        title: "Pay",
+        description:
+          "The compensation engine resolves salary structure and statutory deductions for the employee's country. GCC wage-protection figures are computed today; bank-file (WPS) export is on the roadmap.",
+      },
+      {
+        title: "Document",
+        description:
+          "Generate an approved letter that anyone can verify as authentic from a public page.",
+      },
+    ],
+    stats: [
+      { value: "4", label: "Markets computed in local currency" },
+      { value: "4", label: "Loop stages: rate, calibrate, pay, document" },
+      { value: "Public", label: "Letter verification a third party can check" },
+      { value: "Config", label: "New country by configuration, not code" },
+    ],
+    related: ["finance", "rentflow", "club"],
   },
 ];
 

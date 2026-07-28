@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils";
 
 const fieldStyles = [
   // 16px font prevents iOS focus zoom
-  "w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-hairline",
+  "w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-(--shadow-hairline)",
   // muted (4.8:1), not faint (2.6:1) — placeholders must stay readable.
-  "placeholder:text-muted",
-  "transition-[border-color,box-shadow] duration-200 ease-(--ease-swift)",
-  "hover:border-line-strong",
-  "focus:border-brand-600 focus:outline-none focus:ring-4 focus:ring-brand-600/15",
+  "placeholder:text-gray",
+  "transition-[border-color,box-shadow] duration-200 ease-(--ease-1)",
+  "hover:border-line-soft",
+  "focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15",
   "aria-[invalid=true]:border-red-500 aria-[invalid=true]:focus:ring-red-500/15",
   "disabled:cursor-not-allowed disabled:opacity-60",
 ].join(" ");

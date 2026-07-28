@@ -6,15 +6,17 @@ export const HERO = {
   headline: ["One Platform.", "Infinite Flow."],
   verticals: "Finance · Logistics · Wellness · Fleet · Retail · Clubs",
   subhead:
-    "Seven purpose-built AI systems on one operating fabric. FlowZa quietly automates the busywork — invoices, routes, rosters, stock — so a team of ten can move like a team of fifty.",
+    "Nine purpose-built AI systems on one operating fabric. FlowZa quietly automates the busywork — invoices, routes, rosters, stock — so a team of ten can move like a team of fifty.",
   pills: ["SOC 2 Compliant", "99.9% Uptime SLA", "Go live in hours"],
   industries: ["Retail", "Logistics", "Wellness", "Clubs"],
-  screenshot: {
-    src: "/images/finance/dashboard.webp",
-    alt: "FlowZa Finance live dashboard with receivables, income and expense analytics",
-    badge: "Live Platform",
-    caption: "FlowZa Finance",
-    subcaption: "Real-time dashboards · Accounting, payroll & compliance",
+  /**
+   * Hero photography. Leave `src` unset to render a labelled placeholder —
+   * add the path once the shot exists and the frame fills in with no layout change.
+   */
+  image: {
+    src: "/images/photos/brand-expo.webp",
+    alt: "A hand holding a phone to scan a QR code at a FlowZa stand, below a wall headline reading One Platform. All Possibilities. Visitors talk in the background.",
+    focal: "left center",
   },
   floatingStats: [
     { value: "94%", label: "Automation rate" },
@@ -83,9 +85,9 @@ export const FINANCE_SPOTLIGHT = {
   title: "FlowZa Finance — Your Entire Back Office, Live",
   subtitle:
     "The operating system for your business finances. Accounting, invoicing, inventory, payroll, HR and compliance — unified in one cloud platform with real-time data and bank-grade security.",
-  screenshot: {
+  image: {
     src: "/images/finance/dashboard.webp",
-    alt: "FlowZa Finance financial dashboard screenshot",
+    alt: "The FlowZa Finance dashboard showing total receivables, an income and expense chart, top customers and recent invoices",
   },
   kpis: [
     { value: "98%", label: "Invoice accuracy" },
@@ -152,7 +154,7 @@ export const ACTION_TRIO = {
 
 export const PLATFORMS_SECTION = {
   badge: "Our Platforms",
-  title: "Seven Systems. One Operating Fabric.",
+  title: "Nine Systems. One Operating Fabric.",
   subtitle:
     "Purpose-built AI platforms for every business vertical — each one deep enough to run your operation, all connected to the same fabric.",
   ctaTile: {

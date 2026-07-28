@@ -1,81 +1,72 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Platform } from "@/content/products";
 import { PLATFORM_MAP } from "@/content/products";
 import { Container, Section } from "@/components/layout/container";
 import { SectionHeading } from "@/components/layout/section-heading";
+import { ImageFrame } from "@/components/ui/image-frame";
+import { TextButton } from "@/components/ui/button";
 import { CountUp, Reveal } from "@/components/motion";
 import { Stars } from "@/components/sections/testimonials";
 
+/** Solid accent band of headline numbers — the reference's `highlights` strip. */
 export function PlatformStats({ platform }: { platform: Platform }) {
   return (
-    <section
+    <Section
+      tone="accent"
+      flush
       aria-label={`${platform.shortName} in numbers`}
-      className="relative overflow-hidden bg-navy-950"
+      ghost={platform.index}
     >
-      {/* Per-product accent lives in the wash, not under the text — white on a
-          bright accent (emerald/sky/amber) would fail contrast. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          background: `radial-gradient(48rem 26rem at 8% 0%, ${platform.color}2e, transparent 62%), radial-gradient(52rem 30rem at 92% 100%, ${platform.colorSecondary}33, transparent 64%)`,
-        }}
-      />
-      <Container className="relative">
-        <dl className="grid grid-cols-2 lg:grid-cols-4">
+      <Container>
+        <dl className="flex flex-wrap py-14 lg:py-16">
           {platform.stats.map((stat, i) => (
             <Reveal
               key={stat.label}
               delay={i * 0.08}
-              className="relative flex flex-col items-center gap-2 px-4 py-10 text-center lg:py-14"
+              className="relative w-1/2 px-4 py-5 text-center lg:w-1/4"
             >
               {i > 0 ? (
                 <span
                   aria-hidden="true"
-                  className="absolute left-0 top-1/2 hidden h-14 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-white/25 to-transparent lg:block"
+                  className="absolute left-0 top-1/2 hidden h-16 w-px -translate-y-1/2 bg-white/25 lg:block"
                 />
               ) : null}
-              <dt className="order-2 max-w-52 font-mono text-[0.66rem] uppercase leading-relaxed tracking-[0.14em] text-white/70">
+              <dt className="order-2 mx-auto mt-2 max-w-[14rem] text-caption font-light uppercase leading-relaxed tracking-[2px] text-white/85">
                 {stat.label}
               </dt>
-              <dd className="order-1 font-mono text-[clamp(1.9rem,3vw,2.7rem)] font-semibold tracking-tight text-white">
+              <dd className="order-1 text-h1 font-medium tracking-[-0.03em] text-white">
                 <CountUp value={stat.value} />
               </dd>
             </Reveal>
           ))}
         </dl>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 export function PlatformFeatures({ platform }: { platform: Platform }) {
   return (
-    <Section tone="tint" ghost={platform.index}>
+    <Section tone="white">
       <Container>
         <SectionHeading
-          badge="Capabilities"
+          eyebrow="Capabilities"
           title={`Everything ${platform.shortName} Does for You`}
           subtitle={platform.longDescription}
         />
-        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="flex flex-wrap gap-y-10 sm:gap-x-[1.2%]">
           {platform.features.map((feature, i) => (
-            <li key={feature.title} className="h-full">
+            <li key={feature.title} className="w-full sm:w-[49.4%] lg:w-[32.53%]">
               <Reveal delay={(i % 3) * 0.09} className="h-full">
-                <div className="group flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-soft">
-                  <span
-                    className="flex size-11 items-center justify-center rounded-xl transition-transform duration-500 ease-(--ease-soft-spring) group-hover:scale-110"
-                    style={{
-                      backgroundColor: `${platform.color}14`,
-                      color: platform.colorDeep,
-                    }}
-                  >
-                    <feature.icon className="size-5" strokeWidth={1.75} aria-hidden="true" />
+                <div className="flex h-full flex-col">
+                  <span className="grid size-14 place-items-center rounded-chip border border-line bg-surface text-accent-deep shadow-(--shadow-subtle)">
+                    <feature.icon className="size-6" strokeWidth={1.5} aria-hidden="true" />
                   </span>
-                  <h3 className="mt-5 text-[1.0625rem] font-semibold text-ink">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-body">{feature.description}</p>
+                  <h3 className="mt-5 text-h5 text-ink">{feature.title}</h3>
+                  <p className="mt-3 text-body font-light leading-relaxed text-gray">
+                    {feature.description}
+                  </p>
                 </div>
               </Reveal>
             </li>
@@ -86,35 +77,32 @@ export function PlatformFeatures({ platform }: { platform: Platform }) {
   );
 }
 
+const STEP_COUNT_WORD: Record<number, string> = { 2: "Two", 3: "Three", 4: "Four", 5: "Five" };
+
 export function PlatformSteps({ platform }: { platform: Platform }) {
   return (
-    <Section tone="white">
+    <Section tone="tint">
       <Container>
-        <SectionHeading badge="How It Works" title="Up and Running in Three Steps" />
-        <ol className="relative grid gap-12 lg:grid-cols-3 lg:gap-8">
-          <div
-            aria-hidden="true"
-            className="absolute left-[16.66%] right-[16.66%] top-9 hidden h-px lg:block"
-            style={{
-              background: `linear-gradient(90deg, ${platform.colorSecondary}40, ${platform.color}40)`,
-            }}
-          />
+        {/* Derived, not hardcoded: PMS runs a four-step loop, the rest are three. */}
+        <SectionHeading
+          eyebrow="How It Works"
+          title={`Up and Running in ${STEP_COUNT_WORD[platform.steps.length] ?? platform.steps.length} Steps`}
+        />
+        <ol className="flex flex-wrap gap-y-10 sm:gap-x-[1.2%]">
           {platform.steps.map((step, i) => (
-            <li key={step.title} className="relative">
-              <Reveal delay={i * 0.12} className="flex flex-col items-center text-center">
-                <span
-                  className="relative z-10 flex size-[4.5rem] items-center justify-center rounded-full text-white [box-shadow:var(--shadow-lift),inset_0_1px_1px_rgb(255_255_255/0.3)]"
-                  style={{
-                    // colorDeep-based so the white numeral clears 4.5:1 on every product.
-                    backgroundImage: `linear-gradient(135deg, color-mix(in oklab, ${platform.colorDeep}, black 22%), ${platform.colorDeep})`,
-                  }}
-                >
-                  <span className="font-mono text-xl font-semibold">0{i + 1}</span>
-                </span>
-                <h3 className="mt-6 text-display-sm text-ink">{step.title}</h3>
-                <p className="mt-3 max-w-sm text-[0.9375rem] leading-relaxed text-body">
-                  {step.description}
-                </p>
+            <li key={step.title} className="w-full lg:w-[32.53%]">
+              <Reveal delay={i * 0.1}>
+                <div className="flex flex-col gap-5">
+                  <span className="grid size-[50px] shrink-0 place-items-center rounded-chip border border-line bg-surface text-h4 font-medium text-accent-deep shadow-(--shadow-chip)">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-h4 text-ink">{step.title}</h3>
+                    <p className="mt-3 text-body font-light leading-relaxed text-gray">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
               </Reveal>
             </li>
           ))}
@@ -125,29 +113,28 @@ export function PlatformSteps({ platform }: { platform: Platform }) {
 }
 
 export function PlatformTestimonial({ platform }: { platform: Platform }) {
+  const t = platform.testimonial;
+  if (!t) return null;
   return (
-    <Section tone="tint" compact>
-      <Container className="max-w-3xl">
+    <Section tone="white" compact>
+      <Container>
         <Reveal>
-          <figure className="flex flex-col items-center rounded-(--radius-shell) border border-line bg-surface p-8 text-center shadow-soft sm:p-12">
+          <figure className="mx-auto flex max-w-4xl flex-col items-center rounded-card bg-surface-mint p-10 text-center sm:p-14">
             <Stars />
-            <blockquote className="mt-6 text-display-sm font-normal leading-relaxed text-ink">
-              &ldquo;{platform.testimonial.quote}&rdquo;
+            <blockquote className="mt-7 text-h3 font-normal leading-relaxed text-ink">
+              &ldquo;{t.quote}&rdquo;
             </blockquote>
-            <figcaption className="mt-8 flex items-center gap-3.5">
+            <figcaption className="mt-9 flex items-center gap-4">
               <span
                 aria-hidden="true"
-                className="flex size-12 items-center justify-center rounded-full font-mono text-sm font-semibold text-white"
-                style={{ backgroundColor: platform.color }}
+                className="grid size-12 place-items-center rounded-pill bg-accent-deep text-body font-medium text-white"
               >
-                {platform.testimonial.initials}
+                {t.initials}
               </span>
               <span className="text-left">
-                <span className="block text-sm font-semibold text-ink">
-                  {platform.testimonial.name}
-                </span>
-                <span className="block text-[0.8125rem] text-muted">
-                  {platform.testimonial.role} · {platform.testimonial.company}
+                <span className="block text-body font-medium text-ink">{t.name}</span>
+                <span className="block text-caption font-light text-gray">
+                  {t.role} · {t.company}
                 </span>
               </span>
             </figcaption>
@@ -164,37 +151,40 @@ export function PlatformRelated({ platform }: { platform: Platform }) {
     <Section tone="white">
       <Container>
         <SectionHeading
-          badge="One Fabric"
+          eyebrow="One Fabric"
           title="Works Better Together"
           subtitle="Every FlowZa platform shares the same operating fabric — customers, inventory and ledger data flow between systems without manual re-entry."
         />
-        <ul className="grid gap-4 md:grid-cols-3">
+        <ul className="flex flex-wrap gap-y-10 sm:gap-x-[1.2%]">
           {related.map((r, i) => (
-            <li key={r.slug} className="h-full">
-              <Reveal delay={i * 0.09} className="h-full">
-                <Link
-                  href={`/products/${r.slug}`}
-                  className="group relative flex h-56 flex-col justify-end overflow-hidden rounded-(--radius-shell) border border-line bg-navy-950 shadow-soft transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-lift"
-                >
-                  <Image
-                    src={r.image}
-                    alt={r.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 92vw, 30vw"
-                    className="object-cover object-left-top opacity-90 transition-transform duration-700 ease-(--ease-swift) group-hover:scale-[1.05]"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"
-                  />
-                  <div className="relative p-5">
-                    <h3 className="font-semibold text-white">{r.name}</h3>
-                    <p className="mt-0.5 text-[0.8125rem] text-white/70">{r.tagline}</p>
-                    <span className="mt-2.5 flex items-center gap-1 text-sm font-medium text-accent-300 opacity-0 transition-all duration-500 ease-(--ease-swift) group-hover:opacity-100 motion-safe:translate-y-1.5 motion-safe:group-hover:translate-y-0">
-                      Explore platform
-                      <ArrowRight className="size-3.5" strokeWidth={2} aria-hidden="true" />
+            <li key={r.slug} className="w-full lg:w-[32.53%]">
+              <Reveal delay={i * 0.09}>
+                <Link href={`/products/${r.slug}`} className="group block">
+                  <div className="relative">
+                    <ImageFrame
+                      image={r.image}
+                      ratio="4/3"
+                      sizes="(max-width: 1024px) 92vw, 31vw"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 rounded-card bg-gradient-to-t from-[#052005] via-transparent to-transparent opacity-25 transition-opacity duration-300 group-hover:opacity-60"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="fx-arrow-chip absolute bottom-4 right-4 group-hover:scale-[1.3] group-hover:bg-accent-deep group-hover:before:opacity-0"
+                    >
+                      <ArrowRight className="relative size-5" strokeWidth={1.75} />
                     </span>
                   </div>
+                  <h3 className="mt-5 text-h5 text-ink transition-colors duration-300 group-hover:text-accent-deep">
+                    {r.name}
+                  </h3>
+                  <p className="mt-1.5 text-body font-light text-gray">{r.cardTagline}</p>
+                  <TextButton className="mt-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    Explore
+                    <ArrowRight className="size-3.5" strokeWidth={2} aria-hidden="true" />
+                  </TextButton>
                 </Link>
               </Reveal>
             </li>

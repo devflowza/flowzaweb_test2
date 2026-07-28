@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { Clock, Mail, MapPin } from "lucide-react";
 import {
   CONTACT,
@@ -8,40 +9,44 @@ import {
   SOCIALS,
   TRUST_BADGES,
 } from "@/content/site";
-import { PLATFORMS } from "@/content/products";
+import { PLATFORM_NAV } from "@/content/platforms-nav";
 import { Logo } from "./logo";
 import { WhatsAppIcon, socialIconFor } from "./social-icons";
 
+/**
+ * The reference keeps its footer light (#fafafa) with accent-green uppercase
+ * column labels — not a dark slab.
+ */
 export function Footer() {
   return (
-    <footer className="fx-aurora-dark relative overflow-hidden bg-navy-950 text-white/70">
-      <div className="mx-auto w-full max-w-[90rem] px-(--spacing-gutter)">
-        {/* Main columns */}
-        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-8 lg:py-20">
+    <footer className="bg-surface-tint text-body">
+      <div className="section-x">
+        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr] lg:gap-10">
           {/* Brand */}
           <div className="max-w-sm">
-            <Logo dark />
-            <p className="mt-5 text-sm leading-relaxed">
-              AI-powered business operating systems for MEA &amp; India. Seven purpose-built
+            <Logo />
+            <p className="mt-6 text-body font-light leading-relaxed text-gray">
+              AI-powered business operating systems for MEA &amp; India. Nine purpose-built
               platforms. One unified vision.
             </p>
-            <div className="mt-6 rounded-(--radius-card) border border-white/10 bg-white/5 p-4 text-sm">
-              <p className="flex items-center gap-2 font-medium text-white/90">
-                <Clock className="size-4 text-accent-400" strokeWidth={1.75} aria-hidden="true" />
+            <div className="mt-7 rounded-card border border-line bg-surface p-5">
+              <p className="flex items-center gap-2 text-caption font-medium uppercase tracking-[2px] text-accent-deep">
+                <Clock className="size-4" strokeWidth={1.75} aria-hidden="true" />
                 Working Hours
               </p>
-              <p className="mt-2">{CONTACT.hours}</p>
-              <p className="mt-1 text-rose-300/90">{CONTACT.hoursClosed}</p>
+              <p className="mt-3 text-body font-light text-ink">{CONTACT.hours}</p>
+              <p className="mt-1 text-body font-light text-gray">{CONTACT.hoursClosed}</p>
               <a
                 href={CONTACT.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-block rounded-sm text-whatsapp transition-colors hover:text-emerald-300"
+                className="mt-3 inline-flex items-center gap-2 rounded-sm text-caption font-medium tracking-[0.5px] text-accent-deep transition-colors hover:text-accent-deep"
               >
+                <WhatsAppIcon className="size-4" />
                 Chat with us on WhatsApp
               </a>
             </div>
-            <ul className="mt-6 flex items-center gap-3">
+            <ul className="mt-7 flex items-center gap-3">
               {SOCIALS.map((s) => {
                 const Icon = socialIconFor(s.label);
                 return (
@@ -51,7 +56,7 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all duration-300 ease-(--ease-swift) hover:border-white/30 hover:text-white"
+                      className="grid size-11 place-items-center rounded-pill border border-line bg-surface text-gray transition-all duration-300 ease-(--ease-1) hover:border-accent hover:text-accent-deep"
                     >
                       <Icon className="size-4" />
                     </a>
@@ -61,116 +66,134 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Quick links */}
-          <nav aria-label="Quick links">
-            <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-400">
-              Quick Links
-            </p>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {FOOTER_QUICK_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="rounded-sm transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <FooterColumn label="Quick Links">
+            {FOOTER_QUICK_LINKS.map((link) => (
+              <FooterLink key={link.href} href={link.href}>
+                {link.label}
+              </FooterLink>
+            ))}
+          </FooterColumn>
 
-          {/* Platforms */}
-          <nav aria-label="Platforms">
-            <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-400">
-              Our Platforms
-            </p>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {PLATFORMS.map((p) => (
-                <li key={p.slug}>
-                  <Link
-                    href={`/products/${p.slug}`}
-                    className="rounded-sm transition-colors hover:text-white"
-                  >
-                    {p.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <FooterColumn label="Our Platforms">
+            {PLATFORM_NAV.map((p) => (
+              <FooterLink key={p.slug} href={`/products/${p.slug}`}>
+                {p.name}
+              </FooterLink>
+            ))}
+          </FooterColumn>
 
-          {/* Contact */}
           <div>
-            <p className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-400">
+            <p className="text-caption font-medium uppercase tracking-[1px] text-accent-deep">
               Contact Info
             </p>
-            <ul className="mt-5 space-y-3 text-sm">
+            <ul className="mt-6 space-y-4 text-body font-light">
               <li>
                 <a
                   href={CONTACT.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-2.5 rounded-sm transition-colors hover:text-white"
+                  className="flex items-start gap-3 rounded-sm text-ink transition-colors hover:text-accent-deep"
                 >
-                  <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-whatsapp" />
+                  <WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-accent-deep" />
                   {CONTACT.whatsappDisplay} (WhatsApp)
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="flex items-start gap-2.5 rounded-sm transition-colors hover:text-white"
+                  className="flex items-start gap-3 rounded-sm text-ink transition-colors hover:text-accent-deep"
                 >
-                  <Mail className="mt-0.5 size-4 shrink-0" strokeWidth={1.75} aria-hidden="true" />
+                  <Mail
+                    className="mt-0.5 size-4 shrink-0 text-accent-deep"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
                   {CONTACT.email}
                 </a>
               </li>
-              <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0" strokeWidth={1.75} aria-hidden="true" />
+              <li className="flex items-start gap-3 text-ink">
+                <MapPin
+                  className="mt-0.5 size-4 shrink-0 text-accent-deep"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
                 {CONTACT.address}
               </li>
             </ul>
-            <p className="mt-7 font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-accent-400">
+            <p className="mt-8 text-caption font-medium uppercase tracking-[1px] text-accent-deep">
               Policies
             </p>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className="mt-5 space-y-3">
               {FOOTER_LEGAL_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="rounded-sm transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
+                <FooterLink key={link.href} href={link.href}>
+                  {link.label}
+                </FooterLink>
               ))}
             </ul>
           </div>
         </div>
 
         {/* Trust strip */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 border-t border-white/8 py-6">
+        <ul className="flex flex-wrap items-center justify-center gap-3 border-t border-line py-7">
           {TRUST_BADGES.map((badge) => (
-            <span
+            <li
               key={badge}
-              className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-white/60"
+              className="rounded-pill border border-line bg-surface px-4 py-2 text-caption font-light text-gray"
             >
               {badge}
-            </span>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/8 py-6 text-[0.8125rem] sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-line py-7 text-caption font-light text-gray sm:flex-row">
           <p>
             © {new Date().getFullYear()} {SITE.name} · {SITE.legalName}. All Rights Reserved.
           </p>
           <Link
             href="/status"
-            className="flex items-center gap-2 rounded-sm transition-colors hover:text-white"
+            className="flex items-center gap-2 rounded-sm transition-colors hover:text-accent-deep"
           >
             <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-pulse-dot rounded-full bg-emerald-400" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
+              <span className="absolute inline-flex size-full animate-pulse-dot rounded-full bg-accent" />
+              <span className="relative inline-flex size-2 rounded-full bg-accent" />
             </span>
             All systems operational
           </Link>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <nav aria-label={label}>
+      <p className="text-caption font-medium uppercase tracking-[1px] text-accent-deep">{label}</p>
+      <ul className="mt-6 space-y-3">{children}</ul>
+    </nav>
+  );
+}
+
+/**
+ * Generic over the route string so template-literal hrefs (e.g.
+ * `/products/${slug}`) keep the type Next's typedRoutes infers at the call site.
+ */
+function FooterLink<T extends string>({
+  href,
+  children,
+}: {
+  href: Route<T>;
+  children: React.ReactNode;
+}) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="rounded-sm text-body font-light text-ink transition-colors hover:text-accent-deep"
+      >
+        {children}
+      </Link>
+    </li>
   );
 }

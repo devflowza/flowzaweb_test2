@@ -16,6 +16,7 @@ export const SERVICE_OPTIONS = [
   "FlowZa Spa Master",
   "FlowZa POS",
   "FlowZa PMS",
+  "FlowZa RentFlow",
 ] as const;
 
 export type ServiceOption = (typeof SERVICE_OPTIONS)[number];

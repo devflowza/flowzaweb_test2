@@ -21,7 +21,7 @@ export const ABOUT_MISSION = {
   title: "AI that works the way your business does",
   paragraphs: [
     "Most software is built for an imaginary average customer. We build for real people — the spa owner managing 12 staff, the logistics company tracking 400 vehicles, the restaurant running a distributed POS network.",
-    "Seven purpose-built platforms. One unified vision. FlowZa AI is the operating system for businesses that refuse to stay behind.",
+    "Nine purpose-built platforms. One unified vision. FlowZa AI is the operating system for businesses that refuse to stay behind.",
   ],
   floatingBadge: {
     title: "Growing Fast",

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PLATFORMS } from "@/content/products";
+import type { PlatformSlug } from "@/content/products";
 import { CONTACT, EXTERNAL_APPS } from "@/content/site";
 import { Badge } from "@/components/ui/badge";
-import { Button, ButtonIcon } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Container, Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { WhatsAppIcon } from "@/components/layout/social-icons";
@@ -12,32 +13,46 @@ import { Reveal } from "@/components/motion";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbNode, graph, webPageNode } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Get Started — Pick Your Platform, Start in Minutes",
-  description:
-    "FlowZa Finance and FlowZa Club are live today with self-serve trials. Tell us which platform you need and we'll set you up first.",
-  alternates: { canonical: "/get-started" },
-};
-
-const LIVE_TRIALS = [
-  {
-    slug: "finance",
+/**
+ * Bespoke trial copy for specific platforms. Anything live but absent here
+ * falls back to a generic CTA pointed at its `appUrl` — so a platform can
+ * never go missing from this page the way three did when this list was the
+ * sole source of "is it live" instead of deriving from `platform.live`.
+ */
+const LIVE_TRIAL_OVERRIDES: Partial<
+  Record<PlatformSlug, { cta: string; href: string; note: string }>
+> = {
+  finance: {
     cta: "Start Free Trial",
     href: EXTERNAL_APPS.financeTrial,
     note: "No card required · guided migration from Zoho or spreadsheets",
   },
-  {
-    slug: "club",
+  club: {
     cta: "Start 14-Day Trial",
     href: EXTERNAL_APPS.clubApp,
     note: "14-day trial · six-step setup wizard, go live in hours",
   },
-] as const;
+};
+
+const LIVE_PLATFORM_NAMES = new Intl.ListFormat("en", {
+  style: "long",
+  type: "conjunction",
+}).format(PLATFORMS.filter((p) => p.live).map((p) => p.name));
+
+export const metadata: Metadata = {
+  title: "Get Started — Pick Your Platform, Start in Minutes",
+  description: `${LIVE_PLATFORM_NAMES} are live today with self-serve trials. Tell us which platform you need and we'll set you up first.`,
+  alternates: { canonical: "/get-started" },
+};
 
 export default function GetStartedPage() {
-  const live = LIVE_TRIALS.map((t) => ({
-    ...t,
-    platform: PLATFORMS.find((p) => p.slug === t.slug)!,
+  const live = PLATFORMS.filter((p) => p.live).map((platform) => ({
+    platform,
+    ...(LIVE_TRIAL_OVERRIDES[platform.slug] ?? {
+      cta: "Start Free Trial",
+      href: platform.appUrl,
+      note: "No card required",
+    }),
   }));
   const comingSoon = PLATFORMS.filter((p) => !p.live);
 
@@ -58,23 +73,23 @@ export default function GetStartedPage() {
         badge="Get Started"
         title="Pick Your Platform."
         titleHighlight="Start in Minutes."
-        subtitle="FlowZa Finance and FlowZa Club are live today with self-serve trials. The rest of the fabric is rolling out — tell us which one you need and we'll set you up first."
+        subtitle={`${LIVE_PLATFORM_NAMES} are live today with self-serve trials. The rest of the fabric is rolling out — tell us which one you need and we'll set you up first.`}
       />
 
       {/* Live trials */}
       <Section tone="white" className="pt-(--spacing-section-sm)" compact>
         <Container>
           <Reveal>
-            <h2 className="mb-8 flex items-center gap-3 text-display-md text-ink">
+            <h2 className="mb-8 flex items-center gap-3 text-h3 text-ink">
               Live today
               <Badge variant="live">Self-serve</Badge>
             </h2>
           </Reveal>
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {live.map(({ platform, cta, href, note }, i) => (
               <Reveal key={platform.slug} delay={i * 0.1} className="h-full">
                 <div
-                  className="relative flex h-full flex-col overflow-hidden rounded-(--radius-shell) border border-line bg-surface p-7 shadow-soft transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-lift"
+                  className="relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface p-7 shadow-(--shadow-soft) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-lift)"
                   style={{ borderTopColor: platform.color, borderTopWidth: 3 }}
                 >
                   <div className="flex items-center gap-3">
@@ -92,10 +107,10 @@ export default function GetStartedPage() {
                         {platform.name}
                         <Badge variant="live">Live</Badge>
                       </h3>
-                      <p className="text-sm text-muted">{platform.tagline}</p>
+                      <p className="text-sm text-gray">{platform.tagline}</p>
                     </div>
                   </div>
-                  <p className="mt-4 flex-1 text-sm leading-relaxed text-body">
+                  <p className="mt-4 flex-1 text-sm leading-relaxed text-gray">
                     {platform.cardDescription}
                   </p>
                   <div className="mt-6">
@@ -110,12 +125,10 @@ export default function GetStartedPage() {
                     >
                       <a href={href} target="_blank" rel="noopener noreferrer">
                         {cta}
-                        <ButtonIcon>
-                          <ArrowUpRight strokeWidth={2} />
-                        </ButtonIcon>
+                        <ArrowUpRight strokeWidth={2} />
                       </a>
                     </Button>
-                    <p className="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-muted">
+                    <p className="mt-3 text-[0.7rem] uppercase tracking-[0.1em] text-gray">
                       {note}
                     </p>
                   </div>
@@ -130,8 +143,8 @@ export default function GetStartedPage() {
       <Section tone="tint" compact>
         <Container>
           <Reveal>
-            <h2 className="mb-3 text-display-md text-ink">Rolling out next</h2>
-            <p className="mb-8 max-w-2xl text-[0.9375rem] text-body">
+            <h2 className="mb-3 text-h3 text-ink">Rolling out next</h2>
+            <p className="mb-8 max-w-2xl text-[0.9375rem] text-gray">
               These platforms are in controlled rollout. Request early access and we&rsquo;ll
               prioritize your onboarding.
             </p>
@@ -140,7 +153,7 @@ export default function GetStartedPage() {
             {comingSoon.map((platform, i) => (
               <li key={platform.slug} className="h-full">
                 <Reveal delay={(i % 3) * 0.08} className="h-full">
-                  <div className="flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-0.5 hover:shadow-soft">
+                  <div className="flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-0.5 hover:shadow-(--shadow-soft)">
                     <div className="flex items-center gap-3">
                       <span
                         className="flex size-10 items-center justify-center rounded-xl"
@@ -153,18 +166,18 @@ export default function GetStartedPage() {
                       </span>
                       <div>
                         <h3 className="text-[0.9875rem] font-semibold text-ink">{platform.name}</h3>
-                        <p className="text-[0.8125rem] text-muted">{platform.tagline}</p>
+                        <p className="text-[0.8125rem] text-gray">{platform.tagline}</p>
                       </div>
                     </div>
                     <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
                       <Badge>Coming Soon</Badge>
                       <Link
                         href={`/contact?service=${encodeURIComponent(platform.name)}`}
-                        className="group flex items-center gap-1 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"
+                        className="group flex items-center gap-1 text-sm font-semibold text-accent-deep transition-colors hover:text-accent-deep"
                       >
                         Get Early Access
                         <ArrowRight
-                          className="size-3.5 transition-transform duration-500 ease-(--ease-soft-spring) group-hover:translate-x-0.5"
+                          className="size-3.5 transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-0.5"
                           strokeWidth={2}
                           aria-hidden="true"
                         />
@@ -182,10 +195,10 @@ export default function GetStartedPage() {
       <Section tone="white" compact>
         <Container className="flex flex-col items-center gap-5 text-center">
           <Reveal>
-            <h2 className="text-display-md text-ink">Not sure which platform fits?</h2>
+            <h2 className="text-h3 text-ink">Not sure which platform fits?</h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="max-w-xl text-[0.9375rem] text-body">
+            <p className="max-w-xl text-[0.9375rem] text-gray">
               Chat with our team — we&rsquo;ll map your operation to the right platform and get you
               a personalized walkthrough.
             </p>

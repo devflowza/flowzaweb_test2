@@ -16,7 +16,7 @@ import { Reveal } from "@/components/motion";
 export const metadata: Metadata = {
   title: "Documentation — Guides & Onboarding Resources",
   description:
-    "Platform guides and onboarding resources for all seven FlowZa AI platforms — from account creation and data migration to going live.",
+    "Platform guides and onboarding resources for all nine FlowZa AI platforms — from account creation and data migration to going live.",
   alternates: { canonical: "/docs" },
 };
 
@@ -45,7 +45,7 @@ export default function DocsPage() {
       <Section tone="white" className="pt-(--spacing-section-sm)" compact>
         <Container>
           <Reveal>
-            <h2 className="mb-8 text-display-md text-ink">Browse by product</h2>
+            <h2 className="mb-8 text-h3 text-ink">Browse by product</h2>
           </Reveal>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {PLATFORMS.map((p, i) => (
@@ -53,7 +53,7 @@ export default function DocsPage() {
                 <Reveal delay={(i % 3) * 0.07} className="h-full">
                   <Link
                     href={`/products/${p.slug}`}
-                    className="group flex h-full items-start gap-4 rounded-(--radius-shell) border border-line bg-surface p-5 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-0.5 hover:shadow-soft"
+                    className="group flex h-full items-start gap-4 rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-0.5 hover:shadow-(--shadow-soft)"
                   >
                     <span
                       className="flex size-10 shrink-0 items-center justify-center rounded-xl"
@@ -65,13 +65,13 @@ export default function DocsPage() {
                       <span className="block text-[0.9875rem] font-semibold text-ink">
                         {p.name}
                       </span>
-                      <span className="mt-1 block text-sm leading-relaxed text-body">
+                      <span className="mt-1 block text-sm leading-relaxed text-gray">
                         {p.cardDescription}
                       </span>
-                      <span className="mt-2.5 inline-flex items-center gap-1 text-sm font-medium text-brand-700 transition-colors group-hover:text-brand-800">
+                      <span className="mt-2.5 inline-flex items-center gap-1 text-sm font-medium text-accent-deep transition-colors group-hover:text-accent-deep">
                         Platform overview
                         <ArrowRight
-                          className="size-3.5 transition-transform duration-500 ease-(--ease-soft-spring) group-hover:translate-x-0.5"
+                          className="size-3.5 transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-0.5"
                           strokeWidth={2}
                           aria-hidden="true"
                         />
@@ -89,7 +89,7 @@ export default function DocsPage() {
       <Section tone="tint" ghost="START">
         <Container className="max-w-4xl">
           <SectionHeading
-            badge="Getting Started"
+            eyebrow="Getting Started"
             title="From Zero to Live in Five Steps"
             subtitle="The onboarding path every FlowZa customer follows — assisted by our team at every step."
           />
@@ -97,15 +97,15 @@ export default function DocsPage() {
             {DOCS_GETTING_STARTED.map((step, i) => (
               <li key={step.title}>
                 <Reveal delay={i * 0.06}>
-                  <div className="flex items-start gap-4 rounded-(--radius-card) border border-line bg-surface p-5 shadow-hairline">
-                    <span className="fx-gradient flex size-9 shrink-0 items-center justify-center rounded-full font-mono text-sm font-semibold text-white">
+                  <div className="flex items-start gap-4 rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline)">
+                    <span className="bg-accent-deep flex size-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white">
                       {i + 1}
                     </span>
                     <span>
                       <span className="block text-[0.9875rem] font-semibold text-ink">
                         {step.title}
                       </span>
-                      <span className="mt-1 block text-sm leading-relaxed text-body">
+                      <span className="mt-1 block text-sm leading-relaxed text-gray">
                         {step.description}
                       </span>
                     </span>
@@ -124,23 +124,23 @@ export default function DocsPage() {
             <Reveal className="h-full">
               <Link
                 href="/help"
-                className="group flex h-full items-start gap-4 rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-0.5 hover:shadow-soft"
+                className="group flex h-full items-start gap-4 rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-0.5 hover:shadow-(--shadow-soft)"
               >
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-mint text-accent-deep">
                   <LifeBuoy className="size-5" strokeWidth={1.75} aria-hidden="true" />
                 </span>
                 <span>
                   <span className="block text-[1.0625rem] font-semibold text-ink">Help Center</span>
-                  <span className="mt-1 block text-sm text-body">
+                  <span className="mt-1 block text-sm text-gray">
                     Answers to the questions we hear most, plus direct support channels.
                   </span>
                 </span>
               </Link>
             </Reveal>
             <Reveal delay={0.08} className="h-full">
-              <div className="flex h-full flex-col justify-between gap-4 rounded-(--radius-shell) border border-line bg-navy-950 p-6 sm:flex-row sm:items-center">
+              <div className="flex h-full flex-col justify-between gap-4 rounded-card border border-line bg-ink p-6 sm:flex-row sm:items-center">
                 <span className="flex items-start gap-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-accent-300">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-accent-lime">
                     <Mail className="size-5" strokeWidth={1.75} aria-hidden="true" />
                   </span>
                   <span>

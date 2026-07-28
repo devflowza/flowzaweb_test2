@@ -91,13 +91,13 @@ export default function ContactPage() {
                       <span className="block text-[0.9375rem] font-semibold text-ink">
                         {card.title}
                       </span>
-                      <span className="mt-0.5 block truncate text-sm text-body">{card.line1}</span>
-                      <span className="mt-0.5 block text-[0.8125rem] text-muted">{card.line2}</span>
+                      <span className="mt-0.5 block truncate text-sm text-gray">{card.line1}</span>
+                      <span className="mt-0.5 block text-[0.8125rem] text-gray">{card.line2}</span>
                     </span>
                   </>
                 );
                 const classes =
-                  "flex items-start gap-4 rounded-(--radius-shell) border border-line bg-surface p-5 shadow-hairline transition-all duration-500 ease-(--ease-swift)";
+                  "flex items-start gap-4 rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline) transition-all duration-500 ease-(--ease-1)";
                 return (
                   <Reveal key={card.title} delay={i * 0.07}>
                     {"href" in card && card.href ? (
@@ -105,7 +105,7 @@ export default function ContactPage() {
                         href={card.href}
                         target={card.href.startsWith("http") ? "_blank" : undefined}
                         rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className={`${classes} hover:-translate-y-0.5 hover:shadow-soft`}
+                        className={`${classes} hover:-translate-y-0.5 hover:shadow-(--shadow-soft)`}
                       >
                         {body}
                       </a>
@@ -118,7 +118,7 @@ export default function ContactPage() {
 
               <Reveal delay={0.3}>
                 <div className="mt-2 flex items-center gap-3">
-                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted">
+                  <span className="text-[0.7rem] uppercase tracking-[0.16em] text-gray">
                     Follow us
                   </span>
                   <ul className="flex gap-2.5">
@@ -131,7 +131,7 @@ export default function ContactPage() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={s.label}
-                            className="flex size-10 items-center justify-center rounded-full border border-line bg-surface text-muted transition-all duration-300 ease-(--ease-swift) hover:border-brand-300 hover:text-brand-700"
+                            className="flex size-10 items-center justify-center rounded-full border border-line bg-surface text-gray transition-all duration-300 ease-(--ease-1) hover:border-accent hover:text-accent-deep"
                           >
                             <Icon className="size-4" />
                           </a>
@@ -145,9 +145,9 @@ export default function ContactPage() {
 
             {/* Form column */}
             <Reveal delay={0.12}>
-              <div className="bezel shadow-soft">
-                <div className="rounded-[calc(var(--radius-shell)-0.375rem)] border border-line bg-white p-6 sm:p-8">
-                  <h2 className="text-display-sm text-ink">{CONTACT_PAGE.formTitle}</h2>
+              <div className="shadow-(--shadow-soft)">
+                <div className="rounded-card border border-line bg-white p-6 sm:p-8">
+                  <h2 className="text-h4 text-ink">{CONTACT_PAGE.formTitle}</h2>
                   <div className="mt-6">
                     <ContactForm />
                   </div>

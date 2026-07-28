@@ -33,8 +33,8 @@ function Outcome({ tone, children }: { tone: "success" | "muted"; children: Reac
       role="status"
       className={
         tone === "success"
-          ? "flex h-full flex-col items-center justify-center gap-4 rounded-(--radius-shell) border border-emerald-200 bg-emerald-50/60 p-10 text-center"
-          : "flex h-full flex-col items-center justify-center gap-4 rounded-(--radius-shell) border border-line bg-surface-tint p-10 text-center"
+          ? "flex h-full flex-col items-center justify-center gap-4 rounded-card border border-emerald-200 bg-emerald-50/60 p-10 text-center"
+          : "flex h-full flex-col items-center justify-center gap-4 rounded-card border border-line bg-surface-tint p-10 text-center"
       }
     >
       {children}
@@ -72,8 +72,8 @@ export function ContactForm() {
         <span className="flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
           <CheckCircle2 className="size-7" strokeWidth={1.75} aria-hidden="true" />
         </span>
-        <h3 className="text-display-sm text-ink">{CONTACT_PAGE.successTitle}</h3>
-        <p className="max-w-md text-[0.9375rem] leading-relaxed text-body">
+        <h3 className="text-h4 text-ink">{CONTACT_PAGE.successTitle}</h3>
+        <p className="max-w-md text-[0.9375rem] leading-relaxed text-gray">
           {CONTACT_PAGE.successBody}
         </p>
       </Outcome>
@@ -83,7 +83,7 @@ export function ContactForm() {
   if (state.status === "unavailable") {
     return (
       <Outcome tone="muted">
-        <p className="max-w-md text-[0.9375rem] leading-relaxed text-body">
+        <p className="max-w-md text-[0.9375rem] leading-relaxed text-gray">
           {CONTACT_PAGE.fallbackBody}
         </p>
       </Outcome>
@@ -238,11 +238,11 @@ export function ContactForm() {
             </>
           )}
         </Button>
-        <p className="text-[0.8125rem] leading-relaxed text-muted">
+        <p className="text-[0.8125rem] leading-relaxed text-gray">
           {CONTACT_PAGE.consentLead}{" "}
           <a
             href="/privacy"
-            className="font-medium text-brand-700 underline underline-offset-4 hover:text-brand-800"
+            className="font-medium text-accent-deep underline underline-offset-4 hover:text-accent-deep"
           >
             Privacy Policy
           </a>

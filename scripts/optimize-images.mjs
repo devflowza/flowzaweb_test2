@@ -9,15 +9,12 @@ import path from "node:path";
 const SRC = path.resolve(import.meta.dirname, "../../website-content");
 const OUT = path.resolve(import.meta.dirname, "../public/images");
 
-/** [source, output, maxWidth] */
+/** [source, output, maxWidth]
+ *
+ *  The legacy `products/*` jobs were removed: the platform cards and banners now
+ *  use the branded shoot wired by `optimize-photos.mjs`, so re-adding them would
+ *  only recreate orphaned files. */
 const JOBS = [
-  // Product hero imagery
-  ["public/product-finance.webp", "products/finance.webp", 1600],
-  ["public/logispro-hero.png", "products/logispro.webp", 1600],
-  ["public/SpaMaster.png", "products/spamaster.webp", 1600],
-  ["public/POS_image.png", "products/pos.webp", 1600],
-  ["public/Fleetza.png", "products/fleetza.webp", 1600],
-  ["public/product-qrforge.webp", "products/qrforge.webp", 1600],
   // Brand
   ["public/Logo_Final_-_Focused.jpeg", "brand/logo.webp", 512],
   // Finance flagship screenshots

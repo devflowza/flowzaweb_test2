@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, TrendingUp } from "lucide-react";
 import { ABOUT_HERO, ABOUT_MISSION, ABOUT_STATS, ABOUT_VALUES } from "@/content/about";
 import { CONTACT, SITE } from "@/content/site";
-import { Button, ButtonIcon } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/layout/page-header";
 import { Container, Section } from "@/components/layout/container";
 import { Eyebrow } from "@/components/layout/eyebrow";
@@ -17,7 +17,7 @@ import { breadcrumbNode, graph, webPageNode } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "About Us — Built to Transform Every Business",
   description:
-    "FlowZa AI builds seven purpose-built AI business platforms for MEA & India, on the belief that powerful AI shouldn't be reserved for nine-figure budgets.",
+    "FlowZa AI builds nine purpose-built AI business platforms for MEA & India, on the belief that powerful AI shouldn't be reserved for nine-figure budgets.",
   alternates: { canonical: "/about" },
 };
 
@@ -47,7 +47,7 @@ export default function AboutPage() {
       <Section tone="white" compact className="pt-(--spacing-section-sm)">
         <Container>
           <Reveal>
-            <dl className="grid grid-cols-2 overflow-hidden rounded-(--radius-shell) border border-line bg-surface-tint shadow-hairline lg:grid-cols-4">
+            <dl className="grid grid-cols-2 overflow-hidden rounded-card border border-line bg-surface-tint shadow-(--shadow-hairline) lg:grid-cols-4">
               {ABOUT_STATS.map((stat, i) => (
                 <div
                   key={stat.label}
@@ -59,10 +59,10 @@ export default function AboutPage() {
                       className="absolute left-0 top-1/2 hidden h-12 w-px -translate-y-1/2 bg-line lg:block"
                     />
                   ) : null}
-                  <dt className="order-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-muted">
+                  <dt className="order-2 text-[0.66rem] uppercase tracking-[0.14em] text-gray">
                     {stat.label}
                   </dt>
-                  <dd className="order-1 font-mono text-3xl font-semibold tracking-tight text-ink">
+                  <dd className="order-1 text-3xl font-semibold tracking-tight text-ink">
                     <CountUp value={stat.value} />
                   </dd>
                 </div>
@@ -81,24 +81,24 @@ export default function AboutPage() {
                 <Eyebrow>{ABOUT_MISSION.badge}</Eyebrow>
               </Reveal>
               <Reveal delay={0.08}>
-                <h2 className="mt-4 text-display-lg text-ink">{ABOUT_MISSION.title}</h2>
+                <h2 className="mt-4 text-h2 text-ink">{ABOUT_MISSION.title}</h2>
               </Reveal>
               {ABOUT_MISSION.paragraphs.map((p, i) => (
                 <Reveal key={i} delay={0.16 + i * 0.08}>
-                  <p className="mt-5 text-lede text-body">{p}</p>
+                  <p className="mt-5 text-lede text-gray">{p}</p>
                 </Reveal>
               ))}
             </div>
             <Reveal delay={0.15} className="relative">
-              <div className="bezel shadow-soft">
-                <div className="fx-aurora-dark relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-[calc(var(--radius-shell)-0.375rem)] bg-navy-950 p-8">
+              <div className="shadow-(--shadow-soft)">
+                <div className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-card bg-ink p-8">
                   <span
                     aria-hidden="true"
-                    className="fx-ghost-text absolute -right-4 top-2 text-[8rem] leading-none text-white opacity-[0.05]"
+                    className="fx-ghost absolute -right-4 top-2 text-[8rem] leading-none text-white opacity-[0.05]"
                   >
                     07
                   </span>
-                  <p className="relative max-w-xs text-display-sm text-white">
+                  <p className="relative max-w-xs text-h4 text-white">
                     &ldquo;{SITE.positioning}&rdquo;
                   </p>
                   <ul className="relative flex flex-wrap gap-2">
@@ -106,7 +106,7 @@ export default function AboutPage() {
                       (v) => (
                         <li
                           key={v}
-                          className="rounded-full border border-white/15 bg-white/8 px-3 py-1 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-white/75"
+                          className="rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[0.68rem] uppercase tracking-[0.12em] text-white/75"
                         >
                           {v}
                         </li>
@@ -115,7 +115,7 @@ export default function AboutPage() {
                   </ul>
                 </div>
               </div>
-              <div className="absolute -bottom-5 -left-3 flex items-center gap-3 rounded-2xl border border-line bg-white/95 px-4 py-3 shadow-lift backdrop-blur-sm sm:-left-5">
+              <div className="absolute -bottom-5 -left-3 flex items-center gap-3 rounded-2xl border border-line bg-white/95 px-4 py-3 shadow-(--shadow-lift) backdrop-blur-sm sm:-left-5">
                 <span className="flex size-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                   <TrendingUp className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
                 </span>
@@ -123,7 +123,7 @@ export default function AboutPage() {
                   <span className="block text-sm font-semibold text-ink">
                     {ABOUT_MISSION.floatingBadge.title}
                   </span>
-                  <span className="block text-[0.8125rem] text-muted">
+                  <span className="block text-[0.8125rem] text-gray">
                     {ABOUT_MISSION.floatingBadge.subtitle}
                   </span>
                 </span>
@@ -137,7 +137,7 @@ export default function AboutPage() {
       <Section tone="white">
         <Container>
           <SectionHeading
-            badge="Our Values"
+            eyebrow="Our Values"
             title="What We Stand For"
             subtitle="Six principles that shape every product decision, support conversation and line of code."
           />
@@ -145,12 +145,12 @@ export default function AboutPage() {
             {ABOUT_VALUES.map((value, i) => (
               <li key={value.title} className="h-full">
                 <Reveal delay={(i % 3) * 0.09} className="h-full">
-                  <div className="group flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-soft">
-                    <span className="flex size-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition-transform duration-500 ease-(--ease-soft-spring) group-hover:scale-110">
+                  <div className="group flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)">
+                    <span className="flex size-11 items-center justify-center rounded-xl bg-accent-mint text-accent-deep transition-transform duration-500 ease-(--ease-btn) group-hover:scale-110">
                       <value.icon className="size-5" strokeWidth={1.75} aria-hidden="true" />
                     </span>
                     <h3 className="mt-5 text-[1.0625rem] font-semibold text-ink">{value.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-body">{value.description}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-gray">{value.description}</p>
                   </div>
                 </Reveal>
               </li>
@@ -167,9 +167,7 @@ export default function AboutPage() {
         <Button asChild size="xl" variant="white">
           <Link href="/get-started">
             Get Started
-            <ButtonIcon className="bg-slate-900/10">
-              <ArrowRight strokeWidth={2} />
-            </ButtonIcon>
+            <ArrowRight strokeWidth={2} />
           </Link>
         </Button>
         <Button asChild size="xl" variant="whatsapp">

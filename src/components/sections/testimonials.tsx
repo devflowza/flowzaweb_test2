@@ -4,11 +4,12 @@ import { TESTIMONIALS_SECTION } from "@/content/home";
 import { Container, Section } from "@/components/layout/container";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal } from "@/components/motion";
+import { cn } from "@/lib/utils";
 
 export function Stars({ className }: { className?: string }) {
   return (
     <span role="img" aria-label="5 out of 5 stars" className={className}>
-      <span aria-hidden="true" className="flex gap-0.5 text-amber-400">
+      <span aria-hidden="true" className="flex gap-1 text-accent-deep">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star key={i} className="size-4 fill-current" strokeWidth={0} />
         ))}
@@ -19,28 +20,32 @@ export function Stars({ className }: { className?: string }) {
 
 export function TestimonialCard({
   testimonial,
-  accentColor = "#2563eb",
+  className,
 }: {
   testimonial: Testimonial;
-  accentColor?: string;
+  className?: string;
 }) {
   return (
-    <figure className="flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-7 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-soft">
+    <figure
+      className={cn(
+        "flex h-full flex-col rounded-card bg-surface p-8 shadow-(--shadow-subtle)",
+        className,
+      )}
+    >
       <Stars />
-      <blockquote className="mt-5 flex-1 text-[0.9875rem] leading-relaxed text-body">
+      <blockquote className="mt-6 flex-1 text-lede leading-relaxed text-gray">
         &ldquo;{testimonial.quote}&rdquo;
       </blockquote>
-      <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+      <figcaption className="mt-7 flex items-center gap-4 border-t border-line pt-6">
         <span
           aria-hidden="true"
-          className="flex size-11 items-center justify-center rounded-full font-mono text-sm font-semibold text-white"
-          style={{ backgroundColor: accentColor }}
+          className="grid size-12 shrink-0 place-items-center rounded-pill bg-accent-mint text-body font-medium text-accent-deep"
         >
           {testimonial.initials}
         </span>
         <span>
-          <span className="block text-sm font-semibold text-ink">{testimonial.name}</span>
-          <span className="block text-[0.8125rem] text-muted">
+          <span className="block text-body font-medium text-ink">{testimonial.name}</span>
+          <span className="block text-caption font-light text-gray">
             {testimonial.role} · {testimonial.company}
           </span>
         </span>
@@ -49,27 +54,25 @@ export function TestimonialCard({
   );
 }
 
-const ACCENTS = ["#2563eb", "#f43f5e", "#7c5ff5"];
-
 export function Testimonials() {
   return (
-    <Section id="testimonials" tone="tint">
+    <Section id="testimonials" tone="tint" ghost="TRUST">
       <Container>
         <SectionHeading
-          badge={TESTIMONIALS_SECTION.badge}
+          eyebrow={TESTIMONIALS_SECTION.badge}
           title={TESTIMONIALS_SECTION.title}
           subtitle={
-            <span className="flex flex-col items-center gap-3">
+            <span className="flex flex-col gap-3">
               <Stars />
               {TESTIMONIALS_SECTION.subtitle}
             </span>
           }
         />
-        <ul className="grid gap-5 md:grid-cols-3">
+        <ul className="flex flex-wrap gap-y-8 sm:gap-x-[1.2%]">
           {HOME_TESTIMONIALS.map((t, i) => (
-            <li key={t.name} className="h-full">
+            <li key={t.name} className="w-full lg:w-[32.53%]">
               <Reveal delay={i * 0.1} className="h-full">
-                <TestimonialCard testimonial={t} accentColor={ACCENTS[i % ACCENTS.length]} />
+                <TestimonialCard testimonial={t} />
               </Reveal>
             </li>
           ))}

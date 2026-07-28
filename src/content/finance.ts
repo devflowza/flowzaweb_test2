@@ -28,7 +28,8 @@ export interface FinanceScreenshot {
 export const FINANCE_SHOWCASE = {
   badge: "Product Tour",
   title: "Everything Your Business Needs",
-  subtitle: "Nine powerful modules, unified in one intelligent platform.",
+  /* Deliberately not numbered — the count tracks FINANCE_SCREENSHOTS and drifted once already. */
+  subtitle: "Every module, unified in one intelligent platform.",
   urlBar: "finance.flowza.ai",
 } as const;
 
@@ -149,6 +150,20 @@ export const FINANCE_SCREENSHOTS: FinanceScreenshot[] = [
       "Linked reference tracking",
     ],
     src: "/images/finance/invoice-workflow.webp",
+  },
+  {
+    id: "vat-compliance",
+    label: "Tax & Compliance",
+    sub: "OTA VAT returns",
+    description:
+      "Generate and file VAT returns with auto-computed box values, and keep the history",
+    bullets: [
+      "OTA VAT return generation",
+      "Auto-computed box values",
+      "Filing status tracking",
+      "Downloadable return PDFs",
+    ],
+    src: "/images/finance/vat-compliance.webp",
   },
 ];
 

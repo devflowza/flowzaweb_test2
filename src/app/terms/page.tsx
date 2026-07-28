@@ -24,7 +24,7 @@ export default function TermsPage() {
           breadcrumbNode("/terms", [{ label: "Terms of Service", href: "/terms" }]),
         )}
       />
-      <LegalLayout badge="Legal" title="Terms of Service" lastUpdated="July 26, 2026" version="4.0">
+      <LegalLayout badge="Legal" title="Terms of Service" lastUpdated="July 28, 2026" version="4.1">
         <TermsContent />
       </LegalLayout>
     </>

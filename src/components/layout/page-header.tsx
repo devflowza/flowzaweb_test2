@@ -25,8 +25,8 @@ export function PageHeader({
 }: PageHeaderProps) {
   return (
     <section className="relative overflow-hidden bg-surface">
-      <div aria-hidden="true" className="fx-grid absolute inset-0" />
-      <div aria-hidden="true" className="fx-aurora absolute inset-0" />
+      <div aria-hidden="true" className="absolute inset-0" />
+      <div aria-hidden="true" className="absolute inset-0" />
       <Container className="relative pt-[clamp(2.5rem,5vw,4rem)]">
         <Reveal immediate>
           <Breadcrumbs items={crumbs} />
@@ -37,19 +37,19 @@ export function PageHeader({
           </div>
         </Reveal>
         <Reveal delay={0.14} immediate>
-          <h1 className="mt-4 max-w-3xl text-display-xl text-ink">
+          <h1 className="mt-4 max-w-3xl text-h1 text-ink">
             {title}
             {titleHighlight ? (
               <>
                 {" "}
-                <span className="fx-gradient-text">{titleHighlight}</span>
+                <span className="fx-accent-gradient">{titleHighlight}</span>
               </>
             ) : null}
           </h1>
         </Reveal>
         {subtitle ? (
           <Reveal delay={0.2} immediate>
-            <p className="mt-5 max-w-2xl text-lede text-body">{subtitle}</p>
+            <p className="mt-5 max-w-2xl text-lede text-gray">{subtitle}</p>
           </Reveal>
         ) : null}
         {children}

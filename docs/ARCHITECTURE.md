@@ -15,10 +15,9 @@ flagship Flowza.ai website, to be built from scratch in this folder.
 ## 1. Executive summary
 
 - **Framework:** Next.js **16.2** (App Router) — see §5 for why 16 over the requested 15.
-- **Design:** a new "Operating Fabric" design language — Flowza's cyan→blue brand on a
-  light, editorial, fluid-token system inspired by the reference site's _concepts_ (not its code):
-  clamp-based fluid type/spacing/radius, section primitives, signature marquee, aurora light-leaks,
-  glass accents, stats bands, doc-style flagship product page.
+- **Design:** ported from the `sample-design` reference by measurement — see §15. Plus Jakarta
+  Sans at weight 500/300/200, the reference green palette, 51.2px section rhythm, pill radii with
+  72px one-sided scoops, image-dominant cards, solid accent bands, light `#fafafa` footer.
 - **Content:** a single typed content layer (`src/content/`) that becomes the one source of truth,
   reconciling the inconsistencies found in the current site (pricing tables, legal entities,
   discount claims, product colors).
@@ -469,3 +468,215 @@ legacy polyfill chunk which modern browsers never execute):
 | Runtime dependencies | 17 (`motion`, `@radix-ui/react-label`, `@radix-ui/react-select` and `@mdx-js/react` were all removed as unused) |
 
 Product copy is verified absent from every client chunk.
+
+---
+
+## 15. Redesign to the sample-design language (2026-07-26)
+
+The first build reinterpreted the reference rather than adopting it, and was
+rejected. The root cause was method: the design system was derived from a written
+analysis of `sample-design` without the reference ever being rendered.
+
+**Correction.** `sample-design`'s Twig templates were rendered to static HTML (in
+the scratchpad — the folder itself is never written to) and served with its real
+compiled stylesheet, then every value was read off the live page with
+`getComputedStyle`. The design system is now ported from those measurements
+rather than approximated.
+
+### What the reference actually is
+
+|                | Reference                                                                  | First build (wrong)             |
+| -------------- | -------------------------------------------------------------------------- | ------------------------------- |
+| Family         | Plus Jakarta Sans alone                                                    | Instrument Sans + IBM Plex Mono |
+| Heading weight | **500**                                                                    | 600–640                         |
+| Body weight    | **300**, lede **200**                                                      | 400                             |
+| Hero h1        | 51.07px, tracking −1.92→−2.25px                                            | heavier, looser                 |
+| Section rhythm | **51.2px** (`clamp(2.5rem,4vw,8rem)`)                                      | 72–144px                        |
+| Footer         | light **#fafafa**                                                          | dark navy slab                  |
+| Punctuation    | solid accent full-bleed bands                                              | dark navy bands                 |
+| Radii          | pill 25.6px on cards _and_ FAQ rows; 15px chips; **72px one-sided scoops** | small uniform radii             |
+| Cards          | the image _is_ the card, 60px frosted arrow chip rotated −45°              | navy tiles with overlay         |
+| Grid           | flex-wrap with **1.2%** gutters                                            | CSS grid                        |
+| Marquee        | 38.4px/500/−1.28px in **#dadae0** with accent `*` separators               | small pills                     |
+| Signature FX   | green radial `.shade` leak; conic `.glow` ring (blur 200px, 4s)            | cyan/blue aurora                |
+
+### Verified after the rebuild
+
+Measured on the running site against the reference's numbers: hero h1 **51.07px
+/ 500 / −2.25px** with the same `background-clip` gradient; section padding
+**51.2px**; h2 **29.79px / 500** (ref 29.81); lede **19.84px / weight 200** (ref
+20.15/200); buttons **25.6px radius, 0.5px tracking, weight 500** with the inset
+bevel; card radius **25.6px**; arrow chip **60px, 100% radius, −45°**; number
+chips **50×50 at 15px radius** with the tinted shadow; FAQ rows **25.6px on
+#fafafa**; marquee **38.4px / 500 / −1.27px in #dadae0**; footer **#fafafa**.
+
+### Two deliberate departures
+
+**Contrast.** The reference's bright green `#40B657` under white text measures
+**2.61:1** — below the 4.5:1 this project requires. Rather than invent a colour,
+text-bearing surfaces (filled buttons, solid bands, Live pills, numerals, accent
+text) use the reference's _own_ secondary teal `#137865`, which measures
+**5.38:1**. Bright `#40B657` is retained wherever it is decorative: the radial
+shade, dots, borders, card scrims, hover states and the marquee asterisks. To
+trade contrast back for exact fidelity, point `--color-accent-deep` at `#40b657`
+in `globals.css`.
+
+**Photography.** The branded shoot in `../images` is wired in. One WebP per
+photograph at its native 3:2 lives in `public/images/photos/` (75–120 KB, down
+from ~2 MB PNGs), and every crop — 1:1 card, 4:5 hero, 16:7 banner — is done in
+CSS via `object-fit`/`object-position`, so no photo is stored twice and changing a
+ratio costs nothing. `ImageSlot.focal` lets the content layer set the crop window
+per photo; `ImageFrame` still falls back to a labelled placeholder for any slot
+without a `src`. Run `npm run optimize:photos` to re-encode after a new shoot.
+
+| Photo             | Used for                                     | Card focal    | Banner focal  |
+| ----------------- | -------------------------------------------- | ------------- | ------------- |
+| `brand-expo.webp` | homepage hero (4:5) + `/products` hub banner | `left center` | `left center` |
+| `finance.webp`    | Finance card + page banner                   | `88% center`  | centre        |
+| `logispro.webp`   | LogisPro card + banner                       | `14% center`  | centre        |
+| `spamaster.webp`  | Spa Master card + banner                     | `left center` | centre        |
+| `fleetza.webp`    | Fleetza card + banner                        | centre        | `center 12%`  |
+| `qrforge.webp`    | QRForge card + banner                        | centre        | centre        |
+| `pos-cafe.webp`   | POS card                                     | centre        | —             |
+| `pos-retail.webp` | POS page banner                              | —             | centre        |
+| `club.webp`       | Club card + banner                           | `85% center`  | `center 85%`  |
+
+`Finance2.png` is deliberately **unused**: it is a marketing poster with a
+baked-in headline, feature icon strip and QR code, which would fight the page's
+own H1, be unreadable at card size, and put meaningful text inside an image. It
+also spells the brand "Flowza" rather than "FlowZa". It remains a good
+social/print asset.
+
+Focal points were chosen by rendering each actual crop and inspecting it. A
+centre crop slices the Club standee, the Finance wall sign and the Spa Master
+sign mid-word, and cuts the top off the Fleetza driver's head — all of which read
+as mistakes rather than as crops. The homepage hero uses `brand-expo.webp`
+specifically so that no photograph appears twice on one page; `/` and `/products`
+each render eight distinct photos (verified by parsing the built HTML).
+
+**Overlay contrast over photography.** Card chrome (Live pill, index numeral,
+arrow chip) sits on photographs, not flat colour, so a scrim alone is not
+sufficient: measured against the brightest pixel beneath each glyph, the index
+numeral fell to **1.02:1** on Spa Master and **1.03:1** on Club — white on white.
+Both the numeral and the arrow chip now carry their own dark frost
+(`fx-frost`, and `fx-arrow-chip::before` inverted from the reference's _light_
+5 % frost to `rgb(4 22 10 / 0.62)`), and the arrow's hover fill moved from
+`--color-accent` to `--color-accent-deep`. Worst case across all 14 overlays is
+now **5.35:1**. Re-measure with the canvas-sampling snippet if the photography
+changes: sample the peak-luminance pixel under each glyph, composite the frost
+over it, and require ≥ 4.5:1.
+
+**Alt text.** Every alt describes only what is literally visible. The imagery is
+AI-generated, so on-screen UI contains pseudo-text: alts name the _kind_ of panel
+shown, never invented figures, and they do not attribute product branding to a
+photograph that does not display it.
+
+### Note on `tailwind-merge`
+
+Custom `text-*` tokens are ambiguous to `tailwind-merge` — it treated `text-h2`
+(size) and `text-ink` (colour) as conflicting and silently dropped one, which
+rendered every section heading at 16px. `src/lib/utils.ts` now registers both
+token groups explicitly. Worth remembering before adding new `text-*` tokens.
+
+---
+
+## 16. Platform roster: seven → nine (2026-07-28)
+
+QRForge went live, and **FlowZa RentFlow** (`08`, `/products/rentflow`) and
+**FlowZa PMS** (`09`, `/products/pms`) were added from client-supplied copy. Both
+are marked live. Three live platforms became five: Finance, QRForge, Club,
+RentFlow, PMS.
+
+**Naming.** The supplied PMS copy called the product "PerfOS" throughout while
+the brief called it "PMS". Resolved to **FlowZa PMS** — it is also the name
+already present in `SERVICE_OPTIONS`. "PerfOS" appears nowhere in the site.
+
+**Adding a platform touches more than the content file.** For the next one:
+
+| Place                          | What changes                                                                                                                       |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `platforms-nav.ts`             | `PlatformSlug` union, `PLATFORM_NAV_MAP` entry, `PLATFORM_NAV` array                                                               |
+| `products.ts`                  | full record: descriptions, badges, features, steps, stats, `related`                                                               |
+| `contact.ts`                   | `SERVICE_OPTIONS` — **schema-adjacent**, becomes `contact_submissions.subject`                                                     |
+| `terms.mdx` + `terms/page.tsx` | covered-services list, changelog entry, `version`/`lastUpdated`                                                                    |
+| `privacy.mdx`                  | platform count                                                                                                                     |
+| Count-bearing copy             | `site.ts`, `home.ts`, `about.ts`, `faqs.ts`, `support.ts`, `footer.tsx`, both OG routes, `/products` + `/about` + `/docs` metadata |
+
+Sitemap, `llms.txt`, JSON-LD, `generateStaticParams`, the mega-menu and the
+homepage grid all derive from `PLATFORMS` and needed no edits. The grid is
+`flex-wrap` at `lg:w-[32.53%]`, so nine tiles fill three rows exactly.
+
+**Two count bugs this surfaced**, both from hardcoded numbers in copy that should
+have been derived:
+
+- `PlatformSteps` hard-coded "Up and Running in **Three** Steps"; PMS runs a
+  four-step loop. Now derived from `platform.steps.length`.
+- The Finance tour subtitle said "**Nine** powerful modules" — a number that had
+  to be maintained by hand and broke the moment a tenth screenshot was wired in.
+  Reworded to carry no count.
+
+A blind `seven` → `nine` regex would have rewritten "nine-figure budgets" on
+`/about`, so the sweep used explicit string pairs that fail loudly on a miss.
+
+**Two deliberate omissions.**
+
+1. **No testimonials.** `Platform.testimonial` is now optional and
+   `PlatformTestimonial` returns `null` without one. Inventing a customer quote
+   for a product that launched days ago is fabrication; the section simply does
+   not render.
+2. **No photography, at first.** Both slots rendered the labelled `ImageFrame`
+   placeholder until real shots landed two turns later — see the photography
+   addendum below.
+
+**Accents.** RentFlow teal (`#14b8a6` / deep `#0f766e`, **5.47:1**) and PMS indigo
+(`#6366f1` / deep `#4338ca`, **7.90:1**) — both `colorDeep` values honour the
+4.5:1 contract on that field. The bright values sit below it by design;
+`colorSecondary` is used only for OG-card washes, never behind text.
+
+**One content conflict left standing by client decision.** The supplied PMS copy
+read "SOC 2 — in progress… no certifications we don't hold", contradicting the
+site's existing SOC 2 claim. Raised; the client chose to keep the SOC 2 claim as
+complete, so the "in progress" wording was dropped rather than propagated. The
+copy's other scope caveat — GCC wage-protection figures computed today, WPS
+bank-file export on the roadmap — **is** preserved verbatim on the PMS page.
+
+### 16.1 RentFlow and PMS photography (2026-07-28)
+
+No image-generation tool is available in this session, so the client generated
+five AI renders externally from prompts built to match the existing shoot's
+lighting/style and the site's teal accent (`optimize-photos.mjs` comment block
+has the full prompt), and dropped them in `../images/v2`. Four were selected
+from five; one ("Shared style lock" — a generic "+24% Revenue" dashboard) was
+excluded for not depicting either product and risking visual overlap with the
+real Finance screenshot.
+
+Unlike the first nine photos, RentFlow and PMS each use **two different source
+photos** — one for the card, one for the banner — rather than two crops of one
+shot. This isn't a new pattern: `pos-cafe.webp` / `pos-retail.webp` already do
+this. It reads better here too: the card shows the product's primary screen
+(application list / calibration chart) for grid scanning, and the banner shows
+the narrative differentiator (screening-and-decide detail / letter
+verification) that a product page can afford to spend more space on.
+
+| Photo                  | Used for           | Focal        |
+| ---------------------- | ------------------ | ------------ |
+| `rentflow.webp`        | RentFlow card      | `85% center` |
+| `rentflow-review.webp` | RentFlow page hero | `center 40%` |
+| `pms.webp`             | PMS card           | `30% center` |
+| `pms-verify.webp`      | PMS page hero      | `center 25%` |
+
+Focals were chosen the same way as before: render the actual crop, verify no
+UI element is cut mid-word, confirm overlay contrast against the brightest
+pixel beneath each glyph. Worst case across the four new overlays is **5.36:1**
+(RentFlow arrow chip) — all clear 4.5:1.
+
+This batch's on-screen UI is markedly cleaner than the first nine: short,
+consistent, correctly spelled labels rather than dense pseudo-text, so no crop
+needed to dodge illegible text. One cosmetic note for the client: the mock data
+shows dates in 2024 (e.g. "Applied on May 24, 2024"), which will read as stale
+next to a 2026 site if anyone looks closely — not corrected here since it's
+baked into the source render, not something CSS can fix.
+
+Alt text follows the same discipline as §15: describe only what's visible
+(an applicant's initials and a blurred name, not an invented full name; "a
+colleague visible in a meeting room," not "a calibration session in progress").

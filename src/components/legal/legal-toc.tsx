@@ -40,9 +40,7 @@ export function LegalToc() {
   return (
     <nav aria-label="On this page" className="hidden lg:block">
       <div className="sticky top-28">
-        <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted">
-          On this page
-        </p>
+        <p className="text-[0.68rem] uppercase tracking-[0.16em] text-gray">On this page</p>
         <ul className="mt-4 space-y-1 border-l border-line">
           {entries.map((entry) => (
             <li key={entry.id}>
@@ -51,8 +49,8 @@ export function LegalToc() {
                 className={cn(
                   "-ml-px block border-l-2 py-1 pl-4 text-sm transition-colors duration-300",
                   active === entry.id
-                    ? "border-brand-600 font-medium text-brand-700"
-                    : "border-transparent text-muted hover:border-line-strong hover:text-ink",
+                    ? "border-accent font-medium text-accent-deep"
+                    : "border-transparent text-gray hover:border-line-soft hover:text-ink",
                 )}
               >
                 {entry.label}

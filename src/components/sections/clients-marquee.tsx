@@ -1,25 +1,30 @@
 import { CLIENTS } from "@/content/site";
 import { Marquee } from "@/components/motion/marquee";
+import { Kicker } from "@/components/layout/eyebrow";
 
+/**
+ * Client social proof. The reference keeps logo strips quiet — small, greyscale
+ * and centred beneath a tracked uppercase kicker.
+ */
 export function ClientsMarquee() {
   return (
-    <section aria-label="Clients" className="border-y border-line bg-surface-tint py-10">
-      <h2 className="mb-7 text-center font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted">
+    <section aria-label="Clients" className="bg-surface-tint py-14">
+      <Kicker className="mb-9 text-center">
         Powering operations for teams across MEA &amp; India
-      </h2>
+      </Kicker>
       <Marquee duration="55s">
         {CLIENTS.map((client) => (
           <span
             key={client.name}
-            className="mx-2.5 flex shrink-0 items-center gap-2.5 rounded-full border border-line bg-white py-2 pl-2 pr-4 shadow-hairline"
+            className="mx-3 flex shrink-0 items-center gap-3 rounded-pill border border-line bg-surface py-2.5 pl-2.5 pr-5"
           >
             <span
               aria-hidden="true"
-              className="flex size-7 items-center justify-center rounded-full bg-navy-950 font-mono text-[0.6rem] font-semibold text-white"
+              className="grid size-8 place-items-center rounded-pill bg-accent-mint text-[0.62rem] font-semibold text-accent-deep"
             >
               {client.initials}
             </span>
-            <span className="whitespace-nowrap text-sm font-medium text-body">{client.name}</span>
+            <span className="whitespace-nowrap text-body font-light text-gray">{client.name}</span>
           </span>
         ))}
       </Marquee>

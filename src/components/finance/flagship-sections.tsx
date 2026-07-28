@@ -18,7 +18,7 @@ export function FinanceModules() {
     <Section tone="white" ghost="ERP">
       <Container>
         <SectionHeading
-          badge={FINANCE_MODULES_SECTION.badge}
+          eyebrow={FINANCE_MODULES_SECTION.badge}
           title={FINANCE_MODULES_SECTION.title}
           subtitle={FINANCE_MODULES_SECTION.subtitle}
         />
@@ -26,11 +26,8 @@ export function FinanceModules() {
           {FINANCE_MODULES.map((mod, i) => (
             <li key={mod.title} className="h-full">
               <Reveal delay={(i % 4) * 0.08} className="h-full">
-                <div className="flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-soft">
-                  <span
-                    aria-hidden="true"
-                    className="font-mono text-xs tracking-widest text-emerald-700"
-                  >
+                <div className="flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)">
+                  <span aria-hidden="true" className="text-xs tracking-widest text-emerald-700">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-3 text-base font-semibold text-ink">{mod.title}</h3>
@@ -41,7 +38,7 @@ export function FinanceModules() {
                     {mod.points.map((point) => (
                       <li
                         key={point}
-                        className="flex items-start gap-2 text-[0.8125rem] leading-relaxed text-body"
+                        className="flex items-start gap-2 text-[0.8125rem] leading-relaxed text-gray"
                       >
                         <Check
                           className="mt-0.5 size-3.5 shrink-0 text-emerald-700"
@@ -67,7 +64,7 @@ export function FinanceCompliance() {
     <Section tone="tint">
       <Container>
         <SectionHeading
-          badge={FINANCE_COMPLIANCE_SECTION.badge}
+          eyebrow={FINANCE_COMPLIANCE_SECTION.badge}
           title={FINANCE_COMPLIANCE_SECTION.title}
           subtitle={FINANCE_COMPLIANCE_SECTION.subtitle}
         />
@@ -75,14 +72,14 @@ export function FinanceCompliance() {
           {FINANCE_COUNTRIES.map((country, i) => (
             <li key={country.name} className="h-full">
               <Reveal delay={i * 0.09} className="h-full">
-                <div className="flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-soft">
+                <div className="flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)">
                   <span aria-hidden="true" className="text-3xl leading-none">
                     {country.flag}
                   </span>
                   <h3 className="mt-4 text-lg font-semibold text-ink">{country.name}</h3>
                   <ul className="mt-3 space-y-2">
                     {country.points.map((point) => (
-                      <li key={point} className="flex items-start gap-2 text-sm text-body">
+                      <li key={point} className="flex items-start gap-2 text-sm text-gray">
                         <span
                           aria-hidden="true"
                           className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500"
@@ -106,7 +103,7 @@ export function FinanceIntegrations() {
     <Section tone="white" compact>
       <Container>
         <SectionHeading
-          badge={FINANCE_INTEGRATIONS_SECTION.badge}
+          eyebrow={FINANCE_INTEGRATIONS_SECTION.badge}
           title={FINANCE_INTEGRATIONS_SECTION.title}
           subtitle={FINANCE_INTEGRATIONS_SECTION.subtitle}
         />
@@ -115,7 +112,7 @@ export function FinanceIntegrations() {
             {FINANCE_INTEGRATIONS.map((integration) => (
               <li
                 key={integration.name}
-                className="flex items-center gap-2.5 rounded-full border border-line bg-surface-tint px-5 py-2.5 text-sm font-medium text-body shadow-hairline transition-all duration-400 ease-(--ease-swift) hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-soft"
+                className="flex items-center gap-2.5 rounded-full border border-line bg-surface-tint px-5 py-2.5 text-sm font-medium text-gray shadow-(--shadow-hairline) transition-all duration-400 ease-(--ease-1) hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-(--shadow-soft)"
               >
                 <integration.icon
                   className="size-4 text-emerald-700"
@@ -137,7 +134,7 @@ export function FinanceSecurity() {
     <Section tone="tint">
       <Container>
         <SectionHeading
-          badge={FINANCE_SECURITY_SECTION.badge}
+          eyebrow={FINANCE_SECURITY_SECTION.badge}
           title={FINANCE_SECURITY_SECTION.title}
           subtitle={FINANCE_SECURITY_SECTION.subtitle}
         />
@@ -145,7 +142,7 @@ export function FinanceSecurity() {
           {FINANCE_SECURITY.map((item, i) => (
             <li key={item.title} className="h-full">
               <Reveal delay={(i % 3) * 0.09} className="h-full">
-                <div className="flex h-full items-start gap-4 rounded-(--radius-shell) border border-line bg-surface p-5 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-0.5 hover:shadow-soft">
+                <div className="flex h-full items-start gap-4 rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-0.5 hover:shadow-(--shadow-soft)">
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
                     <item.icon className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
                   </span>
@@ -153,7 +150,7 @@ export function FinanceSecurity() {
                     <span className="block text-[0.9375rem] font-semibold text-ink">
                       {item.title}
                     </span>
-                    <span className="mt-1 block text-sm text-body">{item.description}</span>
+                    <span className="mt-1 block text-sm text-gray">{item.description}</span>
                   </span>
                 </div>
               </Reveal>

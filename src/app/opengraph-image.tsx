@@ -91,7 +91,7 @@ export default function OpengraphImage() {
           color: "rgba(255,255,255,0.55)",
         }}
       >
-        <div style={{ display: "flex" }}>Seven Systems. One Operating Fabric.</div>
+        <div style={{ display: "flex" }}>Nine Systems. One Operating Fabric.</div>
         <div style={{ display: "flex" }}>flowza.ai</div>
       </div>
     </div>,

@@ -1,80 +1,84 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FINANCE_SPOTLIGHT } from "@/content/home";
 import { Container, Section } from "@/components/layout/container";
-import { SectionHeading } from "@/components/layout/section-heading";
+import { Eyebrow } from "@/components/layout/eyebrow";
+import { ImageFrame } from "@/components/ui/image-frame";
+import { TextButton } from "@/components/ui/button";
 import { Reveal } from "@/components/motion";
 
+/**
+ * Media/content split in the reference's rhythm: image on one side inside a mint
+ * card, content on the other, with a hairline rule separating the capability list.
+ */
 export function FinanceSpotlight() {
   return (
-    <Section tone="tint" ghost="LIVE">
+    <Section tone="white">
       <Container>
-        <SectionHeading
-          badge={FINANCE_SPOTLIGHT.badge}
-          title={FINANCE_SPOTLIGHT.title}
-          subtitle={FINANCE_SPOTLIGHT.subtitle}
-        />
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
-          {/* Screenshot with floating KPI chips */}
-          <Reveal className="relative">
-            <div className="bezel shadow-mega">
-              <div className="overflow-hidden rounded-[calc(var(--radius-shell)-0.375rem)] border border-line bg-white">
-                <Image
-                  src={FINANCE_SPOTLIGHT.screenshot.src}
-                  alt={FINANCE_SPOTLIGHT.screenshot.alt}
-                  width={1510}
-                  height={1013}
-                  sizes="(max-width: 1024px) 92vw, 52vw"
-                  className="h-auto w-full"
-                />
-              </div>
-            </div>
-            <div className="absolute -bottom-5 left-1/2 flex -translate-x-1/2 gap-2.5 sm:gap-3">
-              {FINANCE_SPOTLIGHT.kpis.map((kpi) => (
-                <div
-                  key={kpi.label}
-                  className="rounded-2xl border border-line bg-white/95 px-3.5 py-2.5 text-center shadow-lift backdrop-blur-sm sm:px-5 sm:py-3"
-                >
-                  <p className="font-mono text-base font-semibold tracking-tight text-emerald-700 sm:text-lg">
-                    {kpi.value}
-                  </p>
-                  <p className="mt-0.5 whitespace-nowrap font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted sm:text-[0.62rem]">
-                    {kpi.label}
-                  </p>
-                </div>
-              ))}
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
+          <Reveal className="w-full lg:w-[52%]">
+            <div className="rounded-card bg-surface-mint p-4 sm:p-6">
+              <ImageFrame
+                image={FINANCE_SPOTLIGHT.image}
+                ratio="16/10"
+                sizes="(max-width: 1024px) 92vw, 50vw"
+                className="shadow-(--shadow-soft)"
+              />
+              <ul className="mt-6 flex flex-wrap justify-between gap-4 px-2">
+                {FINANCE_SPOTLIGHT.kpis.map((kpi) => (
+                  <li key={kpi.label}>
+                    <span className="block text-h3 font-medium tracking-[-0.02em] text-accent-deep">
+                      {kpi.value}
+                    </span>
+                    <span className="mt-1 block text-caption font-light uppercase tracking-[2px] text-gray">
+                      {kpi.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </Reveal>
 
-          {/* Capabilities */}
-          <div className="flex flex-col gap-4">
-            {FINANCE_SPOTLIGHT.capabilities.map((cap, i) => (
-              <Reveal key={cap.title} delay={i * 0.1}>
-                <div className="group flex items-start gap-4 rounded-(--radius-shell) border border-line bg-white p-5 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-0.5 hover:shadow-soft">
-                  <span
+          <div className="w-full lg:w-[44%]">
+            <Reveal>
+              <Eyebrow>{FINANCE_SPOTLIGHT.badge}</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h2 className="mt-5 text-h2 text-ink">{FINANCE_SPOTLIGHT.title}</h2>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <p className="mt-5 text-lede text-gray">{FINANCE_SPOTLIGHT.subtitle}</p>
+            </Reveal>
+            <ul className="mt-8 divide-y divide-line border-y border-line">
+              {FINANCE_SPOTLIGHT.capabilities.map((cap, i) => (
+                <li key={cap.title}>
+                  <Reveal delay={0.2 + i * 0.08}>
+                    <div className="flex gap-4 py-5">
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 size-2.5 shrink-0 rounded-full bg-accent"
+                      />
+                      <div>
+                        <h3 className="text-h5 text-ink">{cap.title}</h3>
+                        <p className="mt-1.5 text-body font-light leading-relaxed text-gray">
+                          {cap.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+            <Reveal delay={0.44}>
+              <Link href={FINANCE_SPOTLIGHT.cta.href} className="group mt-8 inline-flex">
+                <TextButton>
+                  {FINANCE_SPOTLIGHT.cta.label}
+                  <ArrowRight
+                    className="size-4 transition-transform duration-300 ease-(--ease-1) group-hover:translate-x-1"
+                    strokeWidth={2}
                     aria-hidden="true"
-                    className="mt-1 flex size-2.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: cap.color }}
                   />
-                  <div>
-                    <h3 className="text-[1.0625rem] font-semibold text-ink">{cap.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-body">{cap.description}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-            <Reveal delay={0.32}>
-              <Link
-                href={FINANCE_SPOTLIGHT.cta.href}
-                className="group mt-2 inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-brand-700 transition-colors hover:text-brand-800"
-              >
-                {FINANCE_SPOTLIGHT.cta.label}
-                <ArrowRight
-                  className="size-4 transition-transform duration-500 ease-(--ease-soft-spring) group-hover:translate-x-1"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                />
+                </TextButton>
               </Link>
             </Reveal>
           </div>

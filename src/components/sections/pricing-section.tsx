@@ -13,7 +13,7 @@ import {
   yearlyTotal,
 } from "@/content/pricing";
 import { Badge } from "@/components/ui/badge";
-import { Button, ButtonIcon } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Container, Section } from "@/components/layout/container";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal } from "@/components/motion";
@@ -26,7 +26,7 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
     <Section id="pricing" tone="white" ghost="PLANS">
       <Container>
         <SectionHeading
-          badge={PRICING_COPY.badge}
+          eyebrow={PRICING_COPY.badge}
           title={PRICING_COPY.title}
           subtitle={PRICING_COPY.subtitle}
           as={standalone ? "h1" : "h2"}
@@ -37,15 +37,15 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
           <div
             role="group"
             aria-label="Billing period"
-            className="relative inline-flex items-center rounded-full border border-line bg-surface-tint p-1 shadow-hairline"
+            className="relative inline-flex items-center rounded-full border border-line bg-surface-tint p-1 shadow-(--shadow-hairline)"
           >
             <button
               type="button"
               onClick={() => setYearly(false)}
               aria-pressed={!yearly}
               className={cn(
-                "rounded-full px-5 py-2 text-sm font-medium transition-all duration-400 ease-(--ease-swift)",
-                !yearly ? "bg-navy-950 text-white shadow-soft" : "text-body hover:text-ink",
+                "rounded-full px-5 py-2 text-sm font-medium transition-all duration-400 ease-(--ease-1)",
+                !yearly ? "bg-ink text-white shadow-(--shadow-soft)" : "text-gray hover:text-ink",
               )}
             >
               Monthly
@@ -55,14 +55,14 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
               onClick={() => setYearly(true)}
               aria-pressed={yearly}
               className={cn(
-                "flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-400 ease-(--ease-swift)",
-                yearly ? "bg-navy-950 text-white shadow-soft" : "text-body hover:text-ink",
+                "flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-400 ease-(--ease-1)",
+                yearly ? "bg-ink text-white shadow-(--shadow-soft)" : "text-gray hover:text-ink",
               )}
             >
               Yearly
               <span
                 className={cn(
-                  "rounded-full px-2 py-0.5 font-mono text-[0.65rem] font-semibold",
+                  "rounded-full px-2 py-0.5  text-[0.65rem] font-semibold",
                   yearly ? "bg-emerald-400/20 text-emerald-300" : "bg-emerald-100 text-emerald-700",
                 )}
               >
@@ -81,14 +81,14 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
                 <Reveal delay={i * 0.1} className="h-full">
                   <div
                     className={cn(
-                      "relative flex h-full flex-col rounded-(--radius-shell) border bg-surface p-7 transition-all duration-600 ease-(--ease-swift)",
+                      "relative flex h-full flex-col rounded-card border bg-surface p-7 transition-all duration-600 ease-(--ease-1)",
                       plan.highlighted
-                        ? "border-brand-600/40 shadow-lift ring-4 ring-brand-600/10"
-                        : "border-line shadow-hairline hover:shadow-soft",
+                        ? "border-accent/40 shadow-(--shadow-lift) ring-4 ring-accent/10"
+                        : "border-line shadow-(--shadow-hairline) hover:shadow-(--shadow-soft)",
                     )}
                   >
                     {plan.highlighted ? (
-                      <span className="fx-gradient absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5 font-mono text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-white shadow-glow-brand">
+                      <span className="bg-accent-deep absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-white shadow-(--shadow-soft)">
                         Most Popular
                       </span>
                     ) : null}
@@ -98,8 +98,8 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
                         className={cn(
                           "flex size-10 items-center justify-center rounded-xl",
                           plan.highlighted
-                            ? "bg-brand-600 text-white"
-                            : "bg-brand-50 text-brand-700",
+                            ? "bg-accent-deep text-white"
+                            : "bg-accent-mint text-accent-deep",
                         )}
                       >
                         <plan.icon className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
@@ -107,15 +107,15 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
                       <h3 className="text-lg font-semibold text-ink">{plan.name}</h3>
                     </div>
 
-                    <p className="mt-4 text-sm text-body">{plan.description}</p>
+                    <p className="mt-4 text-sm text-gray">{plan.description}</p>
 
                     <p className="mt-5 flex items-baseline gap-1.5">
-                      <span className="font-mono text-4xl font-semibold tracking-tight text-ink">
+                      <span className="text-4xl font-semibold tracking-tight text-ink">
                         ${formatPrice(price)}
                       </span>
-                      <span className="text-sm text-muted">/mo</span>
+                      <span className="text-sm text-gray">/mo</span>
                     </p>
-                    <p className="mt-1.5 min-h-5 text-[0.8125rem] text-muted">
+                    <p className="mt-1.5 min-h-5 text-[0.8125rem] text-gray">
                       {yearly
                         ? `Billed yearly — $${formatPrice(yearlyTotal(plan.monthlyPrice))} per year`
                         : "Billed monthly"}
@@ -123,7 +123,7 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
 
                     <ul className="mt-6 flex-1 space-y-2.5 border-t border-line pt-6">
                       {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-2.5 text-sm text-body">
+                        <li key={feature} className="flex items-start gap-2.5 text-sm text-gray">
                           <Check
                             className="mt-0.5 size-4 shrink-0 text-emerald-700"
                             strokeWidth={2}
@@ -137,7 +137,7 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
                     <div className="mt-7 grid grid-cols-2 gap-2.5">
                       <Button
                         asChild
-                        variant={plan.highlighted ? "primary" : "outline"}
+                        variant={plan.highlighted ? "filled" : "outlined"}
                         size="lg"
                         className="w-full"
                       >
@@ -147,7 +147,7 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
                       </Button>
                       <Button
                         asChild
-                        variant={plan.highlighted ? "dark" : "ghost"}
+                        variant={plan.highlighted ? "secondary" : "outlined"}
                         size="lg"
                         className={cn("w-full", !plan.highlighted && "border border-line")}
                       >
@@ -165,27 +165,25 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
 
         {/* Enterprise Plus */}
         <Reveal delay={0.2}>
-          <div className="fx-aurora-dark mt-6 flex flex-col items-center justify-between gap-5 rounded-(--radius-shell) bg-navy-950 px-8 py-8 text-center sm:flex-row sm:text-left">
+          <div className="mt-6 flex flex-col items-center justify-between gap-5 rounded-card bg-ink px-8 py-8 text-center sm:flex-row sm:text-left">
             <div>
               <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-white sm:justify-start">
                 {ENTERPRISE_PLUS.name}
-                <Badge variant="dark">Custom</Badge>
+                <Badge variant="brand">Custom</Badge>
               </h3>
               <p className="mt-1.5 text-sm text-white/70">{ENTERPRISE_PLUS.description}</p>
             </div>
             <Button asChild variant="white" size="lg">
               <Link href="/contact?service=Sales%20Inquiry">
                 {ENTERPRISE_PLUS.ctaLabel}
-                <ButtonIcon className="bg-slate-900/10">
-                  <ArrowRight strokeWidth={2} />
-                </ButtonIcon>
+                <ArrowRight strokeWidth={2} />
               </Link>
             </Button>
           </div>
         </Reveal>
 
         <Reveal delay={0.26}>
-          <p className="mt-8 text-center text-sm text-muted">{PRICING_COPY.note}</p>
+          <p className="mt-8 text-center text-sm text-gray">{PRICING_COPY.note}</p>
         </Reveal>
       </Container>
     </Section>

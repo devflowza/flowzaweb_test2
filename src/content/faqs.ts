@@ -33,6 +33,6 @@ export const HOME_FAQS: Faq[] = [
   {
     question: "Can the platforms work together?",
     answer:
-      "Yes — that is the point. Seven purpose-built systems share one operating fabric: FlowZa POS posts straight into FlowZa Finance, and every platform shares customer, inventory and ledger data without manual re-entry.",
+      "Yes — that is the point. Nine purpose-built systems share one operating fabric: FlowZa POS posts straight into FlowZa Finance, and every platform shares customer, inventory and ledger data without manual re-entry.",
   },
 ];

@@ -48,7 +48,7 @@ export default function LocationsPage() {
               <li key={office.city} className="h-full">
                 <Reveal delay={i * 0.1} className="h-full">
                   <div
-                    className="flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-7 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-soft"
+                    className="flex h-full flex-col rounded-card border border-line bg-surface p-7 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)"
                     style={{ borderTopColor: office.accent, borderTopWidth: 3 }}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -63,11 +63,11 @@ export default function LocationsPage() {
                     <h2 className="mt-5 text-xl font-semibold text-ink">
                       {office.city}, {office.country}
                     </h2>
-                    <address className="mt-3 flex-1 text-sm not-italic leading-relaxed text-body">
+                    <address className="mt-3 flex-1 text-sm not-italic leading-relaxed text-gray">
                       {office.entity ? (
                         <span className="mb-1 flex items-center gap-1.5 font-semibold text-ink">
                           <Building2
-                            className="size-3.5 text-muted"
+                            className="size-3.5 text-gray"
                             strokeWidth={1.75}
                             aria-hidden="true"
                           />
@@ -91,20 +91,20 @@ export default function LocationsPage() {
       <Section tone="tint" compact>
         <Container>
           <SectionHeading
-            badge="One Team"
+            eyebrow="One Team"
             title="Three Hubs, One Fabric"
             subtitle="Engineering, product and support work as a single distributed team across India and the Gulf."
           />
           <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
             {LOCATION_HIGHLIGHTS.map((h, i) => (
               <Reveal key={h.title} delay={i * 0.1} className="h-full">
-                <div className="flex h-full items-start gap-4 rounded-(--radius-shell) border border-line bg-surface p-6 shadow-hairline">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                <div className="flex h-full items-start gap-4 rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline)">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-mint text-accent-deep">
                     <Globe className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
                   </span>
                   <span>
                     <span className="block text-[0.9875rem] font-semibold text-ink">{h.title}</span>
-                    <span className="mt-1 block text-sm leading-relaxed text-body">
+                    <span className="mt-1 block text-sm leading-relaxed text-gray">
                       {h.description}
                     </span>
                   </span>

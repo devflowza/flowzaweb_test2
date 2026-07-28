@@ -12,10 +12,10 @@ export const SITE = {
   tagline: "Business Operating Systems",
   url: "https://flowza.ai",
   description:
-    "FlowZa AI delivers seven purpose-built, AI-powered business operating systems for MEA & India — from finance and logistics to wellness, retail and clubs.",
+    "FlowZa AI delivers nine purpose-built, AI-powered business operating systems for MEA & India — from finance and logistics to wellness, retail and clubs.",
   ogDescription:
-    "Seven purpose-built AI platforms. One operating fabric. Transforming how businesses across MEA & India operate.",
-  positioning: "Seven Systems. One Operating Fabric.",
+    "Nine purpose-built AI platforms. One operating fabric. Transforming how businesses across MEA & India operate.",
+  positioning: "Nine Systems. One Operating Fabric.",
   manifesto:
     "We believe software should disappear into the work. FlowZa quietly automates the busywork — invoices, routes, rosters, stock — so a team of ten can move like a team of fifty.",
   foundingYear: 2024,

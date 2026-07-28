@@ -8,23 +8,40 @@ interface EyebrowProps {
 }
 
 /**
- * The FlowZa kicker — two nodes joined by a hairline ("systems on one fabric"),
- * followed by mono uppercase micro-type.
+ * The reference's `.mainLabel`: an inline-flex row-reverse label preceded by two
+ * 10px dots — deep teal then accent green — with light-weight text beside them.
  */
 export function Eyebrow({ children, className, dark = false }: EyebrowProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2.5 font-mono text-eyebrow font-medium uppercase",
-        dark ? "text-white/70" : "text-muted",
+        "inline-flex flex-row-reverse items-center gap-[5px] text-lede font-light",
+        dark ? "text-white" : "text-ink",
         className,
       )}
     >
-      <span aria-hidden="true" className="flex items-center">
-        <span className="size-1.5 rounded-full bg-accent-400" />
-        <span className="h-px w-4 bg-gradient-to-r from-accent-400 to-brand-600" />
-        <span className="size-1.5 rounded-full bg-brand-600" />
+      {children}
+      <span aria-hidden="true" className="flex items-center gap-[5px]">
+        <span className="size-2.5 rounded-full bg-accent-deep" />
+        <span className="size-2.5 rounded-full bg-accent" />
       </span>
+    </span>
+  );
+}
+
+interface KickerProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+/**
+ * The reference's uppercase micro-label: 14px, weight 500, 3px tracking, grey.
+ */
+export function Kicker({ children, className }: KickerProps) {
+  return (
+    <span
+      className={cn("block text-caption font-medium uppercase tracking-[3px] text-gray", className)}
+    >
       {children}
     </span>
   );

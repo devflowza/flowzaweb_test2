@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PLATFORMS } from "@/content/products";
 import { SITE } from "@/content/site";
 import { Badge } from "@/components/ui/badge";
+import { ImageFrame } from "@/components/ui/image-frame";
 import { Container, Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { Reveal } from "@/components/motion";
@@ -19,9 +19,9 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Platforms — Seven Systems. One Operating Fabric.",
+  title: "Platforms — Nine Systems. One Operating Fabric.",
   description:
-    "Explore the seven FlowZa AI platforms: Finance, LogisPro, Spa Master, Fleetza, QRForge, POS and Club — purpose-built systems that share one operating fabric.",
+    "Explore the nine FlowZa AI platforms: Finance, LogisPro, Spa Master, Fleetza, QRForge, POS, Club, RentFlow and PMS — purpose-built systems that share one operating fabric.",
   alternates: { canonical: "/products" },
 };
 
@@ -33,7 +33,7 @@ export default function ProductsPage() {
           webPageNode(
             "/products",
             "FlowZa AI Platforms",
-            "The seven FlowZa AI business platforms — one operating fabric.",
+            "The nine FlowZa AI business platforms — one operating fabric.",
             "CollectionPage",
           ),
           platformsCollectionNode(),
@@ -44,10 +44,25 @@ export default function ProductsPage() {
       <PageHeader
         crumbs={[{ label: "Platforms" }]}
         badge="Our Platforms"
-        title="Seven Systems."
+        title="Nine Systems."
         titleHighlight="One Operating Fabric."
         subtitle={`Purpose-built AI platforms for every business vertical — each one deep enough to run your operation, all connected to the same fabric. ${SITE.manifesto}`}
-      />
+      >
+        {/* Brand-level banner: the whole platform range, not one product */}
+        <Reveal immediate delay={0.28} className="mt-12">
+          <ImageFrame
+            image={{
+              src: "/images/photos/brand-expo.webp",
+              alt: "A hand holding a phone to scan a QR code at a FlowZa stand, below a wall headline reading One Platform. All Possibilities. Visitors talk in the background.",
+              focal: "left center",
+            }}
+            ratio="16/7"
+            priority
+            sizes="(max-width: 1600px) 92vw, 1500px"
+            rounded="rounded-card lg:rounded-[0_10vh_0_10vh]"
+          />
+        </Reveal>
+      </PageHeader>
 
       <Section tone="tint" ghost="SYSTEMS" className="pt-(--spacing-section-sm)">
         <Container>
@@ -57,13 +72,13 @@ export default function ProductsPage() {
                 <Reveal delay={Math.min(i * 0.05, 0.2)}>
                   <Link
                     href={`/products/${p.slug}`}
-                    className="group grid items-center gap-6 rounded-(--radius-shell) border border-line bg-surface p-5 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-1 hover:shadow-lift sm:p-6 lg:grid-cols-[minmax(0,1fr)_20rem]"
+                    className="group grid items-center gap-6 rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-lift) sm:p-6 lg:grid-cols-[minmax(0,1fr)_20rem]"
                   >
                     <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
                       <div className="flex items-start gap-4">
                         <span
                           aria-hidden="true"
-                          className="hidden font-mono text-sm tracking-widest text-faint sm:block"
+                          className="hidden text-sm tracking-widest text-gray-soft sm:block"
                         >
                           {p.index}
                         </span>
@@ -82,7 +97,7 @@ export default function ProductsPage() {
                         <p className="mt-0.5 text-sm font-medium" style={{ color: p.colorDeep }}>
                           {p.tagline}
                         </p>
-                        <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-body">
+                        <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-gray">
                           {p.description}
                         </p>
                         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -92,24 +107,18 @@ export default function ProductsPage() {
                             </Badge>
                           ))}
                         </div>
-                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-colors group-hover:text-brand-800">
+                        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-deep transition-colors group-hover:text-accent-deep">
                           Explore {p.shortName}
                           <ArrowRight
-                            className="size-4 transition-transform duration-500 ease-(--ease-soft-spring) group-hover:translate-x-1"
+                            className="size-4 transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-1"
                             strokeWidth={2}
                             aria-hidden="true"
                           />
                         </span>
                       </div>
                     </div>
-                    <div className="relative hidden h-44 overflow-hidden rounded-(--radius-card) border border-line bg-navy-950 lg:block">
-                      <Image
-                        src={p.image}
-                        alt={p.imageAlt}
-                        fill
-                        sizes="20rem"
-                        className="object-cover object-left-top opacity-95 transition-transform duration-700 ease-(--ease-swift) group-hover:scale-[1.04]"
-                      />
+                    <div className="hidden w-80 shrink-0 lg:block">
+                      <ImageFrame image={p.image} ratio="4/3" sizes="20rem" />
                     </div>
                   </Link>
                 </Reveal>

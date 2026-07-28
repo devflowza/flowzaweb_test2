@@ -74,7 +74,7 @@ export const HELP_FAQS: Faq[] = [
   {
     question: "Can we use more than one FlowZa platform?",
     answer:
-      "Yes — that's the design. All seven platforms — FlowZa Finance, Club, LogisPro, Spa Master, QRForge, POS and Fleetza — share a common data layer, so customers, inventory and ledger data flow between systems without manual re-entry.",
+      "Yes — that's the design. All nine platforms — FlowZa Finance, Club, LogisPro, Spa Master, QRForge, POS, Fleetza, RentFlow and PMS — share a common data layer, so customers, inventory and ledger data flow between systems without manual re-entry.",
   },
   {
     question: "How does pricing and billing work?",

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface Crumb {
@@ -14,14 +13,17 @@ interface BreadcrumbsProps {
   dark?: boolean;
 }
 
-/** Visual breadcrumb — pair with the BreadcrumbList JSON-LD from lib/seo. */
+/**
+ * The reference places breadcrumbs inside the page title block as a simple
+ * slash-separated trail in light-weight type.
+ */
 export function Breadcrumbs({ items, className, dark = false }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb" className={className}>
       <ol
         className={cn(
-          "flex flex-wrap items-center gap-1 font-mono text-[0.72rem] uppercase tracking-[0.1em]",
-          dark ? "text-white/55" : "text-muted",
+          "flex flex-wrap items-center gap-2 text-caption font-light",
+          dark ? "text-white/70" : "text-gray-soft",
         )}
       >
         <li>
@@ -29,7 +31,7 @@ export function Breadcrumbs({ items, className, dark = false }: BreadcrumbsProps
             href="/"
             className={cn(
               "rounded-sm transition-colors",
-              dark ? "hover:text-white" : "hover:text-ink",
+              dark ? "hover:text-white" : "hover:text-accent-deep",
             )}
           >
             Home
@@ -38,20 +40,22 @@ export function Breadcrumbs({ items, className, dark = false }: BreadcrumbsProps
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
           return (
-            <li key={item.label} className="flex items-center gap-1">
-              <ChevronRight className="size-3 opacity-60" strokeWidth={1.75} aria-hidden="true" />
+            <li key={item.label} className="flex items-center gap-2">
+              <span aria-hidden="true" className="opacity-50">
+                /
+              </span>
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
                   className={cn(
                     "rounded-sm transition-colors",
-                    dark ? "hover:text-white" : "hover:text-ink",
+                    dark ? "hover:text-white" : "hover:text-accent-deep",
                   )}
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span aria-current="page" className={dark ? "text-white/85" : "text-ink"}>
+                <span aria-current="page" className={dark ? "text-white" : "text-accent-deep"}>
                   {item.label}
                 </span>
               )}

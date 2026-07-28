@@ -11,33 +11,42 @@ interface CtaBandProps {
   className?: string;
 }
 
-/** The conversion spine — a navy aurora band with CTAs, closing most pages. */
+/**
+ * The conversion spine. The reference uses a tinted, hairline-bordered inner
+ * panel on a light background rather than a dark slab.
+ */
 export function CtaBand({ eyebrow, title, subtitle, children, className }: CtaBandProps) {
   return (
-    <section className={cn("fx-aurora-dark relative overflow-hidden bg-navy-950", className)}>
-      <span
-        aria-hidden="true"
-        className="fx-ghost-text absolute -bottom-10 left-0 select-none text-[15vw] leading-none text-white opacity-[0.04]"
-      >
-        FLOWZA
-      </span>
-      <Container className="relative flex flex-col items-center gap-6 py-(--spacing-section-sm) text-center">
-        {eyebrow ? (
-          <Reveal>
-            <Eyebrow dark>{eyebrow}</Eyebrow>
-          </Reveal>
-        ) : null}
-        <Reveal delay={0.06}>
-          <h2 className="max-w-3xl text-display-lg text-white">{title}</h2>
-        </Reveal>
-        {subtitle ? (
-          <Reveal delay={0.12}>
-            <p className="max-w-2xl text-lede text-white/70">{subtitle}</p>
-          </Reveal>
-        ) : null}
-        <Reveal delay={0.18}>
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">{children}</div>
-        </Reveal>
+    <section className={cn("bg-surface section-y", className)}>
+      <Container>
+        <div className="relative overflow-hidden rounded-card border border-brand-100 bg-gradient-to-br from-[#f6fff8] to-surface-tint px-6 py-16 text-center sm:px-12 lg:py-20">
+          <span
+            aria-hidden="true"
+            className="fx-ghost absolute -bottom-6 left-0 select-none text-[12vw] leading-none"
+          >
+            FlowZa
+          </span>
+          <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6">
+            {eyebrow ? (
+              <Reveal>
+                <Eyebrow>{eyebrow}</Eyebrow>
+              </Reveal>
+            ) : null}
+            <Reveal delay={0.06}>
+              <h2 className="text-h2 text-ink">{title}</h2>
+            </Reveal>
+            {subtitle ? (
+              <Reveal delay={0.12}>
+                <p className="text-lede text-gray">{subtitle}</p>
+              </Reveal>
+            ) : null}
+            <Reveal delay={0.18}>
+              <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+                {children}
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </Container>
     </section>
   );

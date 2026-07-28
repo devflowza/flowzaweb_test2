@@ -52,15 +52,15 @@ export default function HelpPage() {
             {HELP_TOPICS.map((topic, i) => (
               <li key={topic.title} className="h-full">
                 <Reveal delay={(i % 3) * 0.07} className="h-full">
-                  <div className="flex h-full items-start gap-4 rounded-(--radius-shell) border border-line bg-surface p-5 shadow-hairline transition-all duration-600 ease-(--ease-swift) hover:-translate-y-0.5 hover:shadow-soft">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                  <div className="flex h-full items-start gap-4 rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-0.5 hover:shadow-(--shadow-soft)">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-mint text-accent-deep">
                       <topic.icon className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
                     </span>
                     <span>
                       <span className="block text-[0.9875rem] font-semibold text-ink">
                         {topic.title}
                       </span>
-                      <span className="mt-0.5 block text-sm text-body">{topic.description}</span>
+                      <span className="mt-0.5 block text-sm text-gray">{topic.description}</span>
                     </span>
                   </div>
                 </Reveal>
@@ -74,7 +74,7 @@ export default function HelpPage() {
       <Section tone="tint" ghost="FAQ">
         <Container className="max-w-4xl">
           <SectionHeading
-            badge="FAQ"
+            eyebrow="FAQ"
             title="Common Questions"
             subtitle="Everything from onboarding speed to security and data export."
           />
@@ -95,7 +95,7 @@ export default function HelpPage() {
       <Section tone="white" compact>
         <Container>
           <SectionHeading
-            badge="Talk to a Human"
+            eyebrow="Talk to a Human"
             title="Still Need a Hand?"
             subtitle="Two direct channels — no ticket queues, no bots."
           />
@@ -104,10 +104,12 @@ export default function HelpPage() {
               const isWhatsApp = channel.title === "WhatsApp";
               return (
                 <Reveal key={channel.title} delay={i * 0.08} className="h-full">
-                  <div className="flex h-full flex-col rounded-(--radius-shell) border border-line bg-surface p-6 text-center shadow-hairline">
+                  <div className="flex h-full flex-col rounded-card border border-line bg-surface p-6 text-center shadow-(--shadow-hairline)">
                     <span
                       className={`mx-auto flex size-12 items-center justify-center rounded-2xl ${
-                        isWhatsApp ? "bg-emerald-50 text-emerald-600" : "bg-brand-50 text-brand-700"
+                        isWhatsApp
+                          ? "bg-emerald-50 text-emerald-600"
+                          : "bg-accent-mint text-accent-deep"
                       }`}
                     >
                       <channel.icon className="size-5.5" strokeWidth={1.75} aria-hidden="true" />
@@ -115,7 +117,7 @@ export default function HelpPage() {
                     <h3 className="mt-4 text-[1.0625rem] font-semibold text-ink">
                       {channel.title}
                     </h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-body">
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-gray">
                       {channel.description}
                     </p>
                     <div className="mt-5">
@@ -127,7 +129,7 @@ export default function HelpPage() {
                           </a>
                         </Button>
                       ) : (
-                        <Button asChild variant="outline" size="md" className="w-full">
+                        <Button asChild variant="outlined" size="md" className="w-full">
                           <a href={`mailto:${CONTACT.supportEmail}`}>{channel.ctaLabel}</a>
                         </Button>
                       )}

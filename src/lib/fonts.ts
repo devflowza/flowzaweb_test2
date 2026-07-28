@@ -1,21 +1,13 @@
-import { IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
 /**
- * Primary face — display through body. Variable (wght 400–700), self-hosted by next/font.
+ * The reference uses Plus Jakarta Sans as its single family, relying on weight
+ * rather than a second face for hierarchy: 200 for lede copy, 300 for body,
+ * 500 for headings, 600 for emphasis and nav.
  */
-export const instrumentSans = Instrument_Sans({
+export const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   display: "swap",
-  variable: "--font-instrument",
-});
-
-/**
- * Data voice — eyebrows, stat numerals, badges. A nod to the IBM Plex heritage
- * of the previous FlowZa site.
- */
-export const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-  variable: "--font-plex-mono",
+  variable: "--font-jakarta",
 });

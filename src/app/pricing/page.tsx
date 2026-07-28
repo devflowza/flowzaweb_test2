@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { HOME_FAQS } from "@/content/faqs";
 import { CONTACT } from "@/content/site";
-import { Button, ButtonIcon } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/layout/social-icons";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { FaqSection } from "@/components/sections/faq";
@@ -53,9 +53,7 @@ export default function PricingPage() {
         <Button asChild size="xl" variant="white">
           <Link href="/get-started">
             Start Free Trial
-            <ButtonIcon className="bg-slate-900/10">
-              <ArrowRight strokeWidth={2} />
-            </ButtonIcon>
+            <ArrowRight strokeWidth={2} />
           </Link>
         </Button>
         <Button asChild size="xl" variant="whatsapp">
