@@ -167,7 +167,11 @@ export const PLATFORMS: Platform[] = [
       company: "Brightline Retail Group",
       initials: "AO",
     },
-    related: ["pos", "club", "logispro"],
+    /* pms over logispro: Finance's own copy already claims "Payroll & HR,
+       Built In" — PMS is the direct, textually-grounded cross-sell for that,
+       and the only back-office/HR pick among an otherwise all-operational
+       set of three. */
+    related: ["pos", "club", "pms"],
   },
   {
     ...PLATFORM_NAV_MAP.logispro,
@@ -647,7 +651,10 @@ export const PLATFORMS: Platform[] = [
       company: "Whitefield Golf & Country Club",
       initials: "RM",
     },
-    related: ["finance", "spamaster", "pos"],
+    /* rentflow over spamaster: both Club and RentFlow are recurring,
+       access-controlled relationships (member <-> club, tenant <-> unit) —
+       a closer thematic pair than spa scheduling. */
+    related: ["finance", "pos", "rentflow"],
   },
   {
     ...PLATFORM_NAV_MAP.rentflow,
