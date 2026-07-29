@@ -39,6 +39,7 @@ export default function DocsPage() {
         title={DOCS_PAGE.title}
         titleHighlight={DOCS_PAGE.titleHighlight}
         subtitle={DOCS_PAGE.subtitle}
+        image={DOCS_PAGE.image}
       />
 
       {/* Browse by product */}

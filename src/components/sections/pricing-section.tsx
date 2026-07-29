@@ -14,6 +14,7 @@ import {
 } from "@/content/pricing";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ImageFrame } from "@/components/ui/image-frame";
 import { Container, Section } from "@/components/layout/container";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal } from "@/components/motion";
@@ -31,6 +32,20 @@ export function PricingSection({ standalone = false }: { standalone?: boolean })
           subtitle={PRICING_COPY.subtitle}
           as={standalone ? "h1" : "h2"}
         />
+
+        {/* Plan banner — only on /pricing; the homepage section already sits
+            below a hero and doesn't need a second piece of artwork. */}
+        {standalone ? (
+          <Reveal immediate delay={0.24} className="mb-14">
+            <ImageFrame
+              image={PRICING_COPY.image}
+              ratio="16/7"
+              priority
+              sizes="(max-width: 1600px) 92vw, 1500px"
+              rounded="rounded-card lg:rounded-[0_10vh_0_10vh]"
+            />
+          </Reveal>
+        ) : null}
 
         {/* Billing toggle */}
         <Reveal className="mb-12 flex justify-center">

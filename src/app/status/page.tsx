@@ -36,6 +36,7 @@ export default function StatusPage() {
         title={STATUS_PAGE.title}
         titleHighlight={STATUS_PAGE.titleHighlight}
         subtitle={STATUS_PAGE.subtitle}
+        image={STATUS_PAGE.image}
       />
 
       <Section tone="white" className="pt-(--spacing-section-sm)">

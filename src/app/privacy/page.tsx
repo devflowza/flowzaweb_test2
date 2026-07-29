@@ -24,7 +24,15 @@ export default function PrivacyPage() {
           breadcrumbNode("/privacy", [{ label: "Privacy Policy", href: "/privacy" }]),
         )}
       />
-      <LegalLayout badge="Legal" title="Privacy Policy" lastUpdated="July 26, 2026">
+      <LegalLayout
+        badge="Legal"
+        title="Privacy Policy"
+        lastUpdated="July 26, 2026"
+        image={{
+          src: "/images/pages/legal-privacy.webp",
+          alt: "A privacy policy document beside a shield-and-padlock mark and a clause index, standing for encrypted, access-controlled data.",
+        }}
+      >
         <PrivacyContent />
       </LegalLayout>
     </>

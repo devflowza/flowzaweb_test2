@@ -10,6 +10,10 @@ export const DOCS_PAGE = {
   titleHighlight: "help you?",
   subtitle:
     "Platform guides and onboarding resources, organized by product. Full self-serve documentation is expanding — your onboarding specialist walks you through everything in the meantime.",
+  image: {
+    src: "/images/pages/docs.webp",
+    alt: "A documentation page in a browser window: a contents rail down the left with the current guide highlighted, a written section beside it, and a dark code sample below.",
+  },
 } as const;
 
 export const DOCS_GETTING_STARTED = [
@@ -44,6 +48,10 @@ export const HELP_PAGE = {
   titleHighlight: "help",
   subtitle:
     "Answers to the questions we hear most, plus direct lines to a human when you need one.",
+  image: {
+    src: "/images/pages/help.webp",
+    alt: "A help centre layout: a search field above six topic tiles for getting started, security, guides, account, billing and privacy, with one FAQ answer expanded below.",
+  },
 } as const;
 
 export interface HelpTopic {
@@ -133,6 +141,10 @@ export const STATUS_PAGE = {
   subtitle:
     "Live availability of every FlowZa platform and shared service. We publish incident reports here whenever service is degraded.",
   note: "Uptime is backed by a 99.9% SLA on every plan. For real-time updates during an incident, WhatsApp is the fastest channel.",
+  image: {
+    src: "/images/pages/status.webp",
+    alt: "A status dashboard: a run of daily uptime bars, almost all green with one amber dip, a 99.9% completion ring, a response-time trace and a list of services all reporting healthy.",
+  },
 } as const;
 
 export interface StatusService {

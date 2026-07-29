@@ -41,6 +41,7 @@ export default function AboutPage() {
         title={ABOUT_HERO.title}
         titleHighlight={ABOUT_HERO.titleHighlight}
         subtitle={ABOUT_HERO.subtitle}
+        image={ABOUT_HERO.image}
       />
 
       {/* Stats */}

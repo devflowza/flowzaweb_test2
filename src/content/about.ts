@@ -7,6 +7,10 @@ export const ABOUT_HERO = {
   titleHighlight: "Every Business",
   subtitle:
     "FlowZa AI was founded on the belief that powerful AI tools shouldn't be reserved for enterprises with nine-figure budgets. We build for the rest.",
+  image: {
+    src: "/images/pages/about.webp",
+    alt: "Diagram of the FlowZa operating fabric: one shared core at the centre, with nine purpose-built platforms orbiting it and connected back by dotted data links.",
+  },
 } as const;
 
 export const ABOUT_STATS = [

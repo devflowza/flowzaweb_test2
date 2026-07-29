@@ -32,6 +32,10 @@ export const CONTACT_PAGE = {
   consentLead: "By submitting this form you agree to our",
   consentTail:
     ". We never sell your data, and we only use your details to respond to your inquiry.",
+  image: {
+    src: "/images/pages/contact.webp",
+    alt: "A support conversation in progress — a WhatsApp-style thread with replies going both ways, a live-agent badge and a reply still being typed — beside cards for chat, business hours and office address.",
+  },
   successTitle: "Message sent",
   successBody:
     "Thanks for reaching out — our team will get back to you within one business day. For anything urgent, WhatsApp is the fastest way to reach us.",
