@@ -78,7 +78,6 @@ export const FOOTER_QUICK_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Locations", href: "/locations" },
   { label: "Documentation", href: "/docs" },
   { label: "Help Center", href: "/help" },
   { label: "Status", href: "/status" },
