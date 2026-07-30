@@ -45,7 +45,7 @@ export function TestimonialCard({
         </span>
         <span>
           <span className="block text-body font-medium text-ink">{testimonial.name}</span>
-          <span className="block text-caption font-light text-gray">
+          <span className="block text-caption text-gray">
             {testimonial.role} · {testimonial.company}
           </span>
         </span>

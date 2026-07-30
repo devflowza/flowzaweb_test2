@@ -114,7 +114,7 @@ export function ProductPricingSection({
                 >
                   {tier.highlighted ? (
                     <span
-                      className="absolute -top-3 left-6 rounded-full px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-white"
+                      className="absolute -top-3 left-6 rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white"
                       style={{ backgroundColor: platform.colorDeep }}
                     >
                       Most popular
@@ -178,9 +178,7 @@ export function ProductPricingSection({
 
         {product.note ? (
           <Reveal delay={0.1}>
-            <p className="mt-5 max-w-3xl text-[0.8125rem] leading-relaxed text-gray">
-              {product.note}
-            </p>
+            <p className="mt-5 max-w-3xl text-sm leading-relaxed text-gray">{product.note}</p>
           </Reveal>
         ) : null}
       </Container>

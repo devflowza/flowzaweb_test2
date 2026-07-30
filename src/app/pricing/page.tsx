@@ -76,9 +76,7 @@ export default function PricingPage() {
           <Container>
             <Reveal className="flex flex-col items-center gap-5 text-center">
               <BillingToggle targetId="pricing-root" />
-              <p className="max-w-2xl text-[0.8125rem] leading-relaxed text-gray">
-                {PRICING_PAGE.note}
-              </p>
+              <p className="max-w-2xl text-sm leading-relaxed text-gray">{PRICING_PAGE.note}</p>
             </Reveal>
           </Container>
           <Container className="mt-8">

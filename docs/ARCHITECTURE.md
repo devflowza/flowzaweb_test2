@@ -863,3 +863,37 @@ Swept all 23 rendered routes (22 from the sitemap plus the 404) in Chromium
 checking four signals at once: marquee sections present, `.marquee-track` nodes,
 any element running a marquee animation, and any element over 90px of type. All
 four are zero everywhere.
+
+---
+
+## 20. Text visibility pass (2026-07-30)
+
+The reference's typography was deliberately airy — body at weight 300, ledes at
+200, 1.3 leading, grays lifted well above ink. On the real site that read as
+washed out (user-reported on /pricing), so legibility now wins over reference
+fidelity. Grounded against the ui-ux-pro-max ruleset: body ≥400, line-height
+1.5–1.75, contrast ≥4.5:1 AA, no sub-12px body text.
+
+Measured, then changed at token level so it cascades:
+
+| Token                 | Was                              | Now               |
+| --------------------- | -------------------------------- | ----------------- |
+| `--color-gray`        | `#5d5e5f` (6.5:1)                | `#45484b` (9.2:1) |
+| `--color-gray-soft`   | `#a3a3a4` (**2.52:1 — AA fail**) | `#717376` (4.8:1) |
+| body weight / leading | 300 / 1.3                        | 400 / 1.5         |
+| lede weight / leading | 200 / 1.3                        | 400 / 1.45        |
+
+The `gray-soft` failure was live text — the hero kicker, light-mode breadcrumbs
+and the products-page index numerals all used it. Alongside the tokens, all 15
+component-level `font-light` overrides were stripped (they re-imposed 300 on
+descriptions, accordions, footer and nav), the 0.62rem (9.9px) badge floor rose
+to 0.68rem, and the two pricing disclaimers went from 13px to 14px.
+
+Verified by sweeping **every text element on all 22 sitemap routes in Chromium**
+— 2,822 elements checked against size-aware WCAG thresholds (4.5:1 normal, 3:1
+large), zero failures; 236 elements on image/gradient backgrounds are skipped by
+the sweep and were eyeballed instead. The sweep script lives in the session
+scratchpad; re-run it after any palette change.
+
+`CLIENTS` in `content/site.ts` was also deleted this pass (user call) — the
+social-proof data outlived its last renderer.

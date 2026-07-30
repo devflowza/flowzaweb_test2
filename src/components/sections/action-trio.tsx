@@ -33,10 +33,10 @@ export function ActionTrio() {
                   </span>
                 </div>
                 <h3 className="mt-8 text-h4 text-ink">{card.title}</h3>
-                <p className="mt-3 flex-1 text-body font-light leading-relaxed text-gray">
+                <p className="mt-3 flex-1 text-body leading-relaxed text-gray">
                   {card.description}
                 </p>
-                <span className="mt-6 inline-flex w-fit rounded-pill border border-brand-200 bg-surface px-4 py-1.5 text-caption font-light text-accent-deep">
+                <span className="mt-6 inline-flex w-fit rounded-pill border border-brand-200 bg-surface px-4 py-1.5 text-caption text-accent-deep">
                   {card.badge}
                 </span>
               </>

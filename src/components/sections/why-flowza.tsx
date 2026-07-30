@@ -23,9 +23,7 @@ export function WhyFlowza() {
                       <card.icon className="size-6" strokeWidth={1.5} aria-hidden="true" />
                     </span>
                     <h3 className="mt-5 text-h5 text-ink">{card.title}</h3>
-                    <p className="mt-3 text-body font-light leading-relaxed text-gray">
-                      {card.description}
-                    </p>
+                    <p className="mt-3 text-body leading-relaxed text-gray">{card.description}</p>
                   </div>
                 </Reveal>
               </li>
@@ -50,7 +48,7 @@ export function WhyFlowza() {
                     className="absolute left-0 top-1/2 hidden h-16 w-px -translate-y-1/2 bg-white/25 lg:block"
                   />
                 ) : null}
-                <dt className="order-2 mt-2 text-caption font-light uppercase tracking-[2px] text-white/85">
+                <dt className="order-2 mt-2 text-caption uppercase tracking-[2px] text-white/85">
                   {stat.label}
                 </dt>
                 <dd className="order-1 text-h1 font-medium tracking-[-0.03em] text-white">

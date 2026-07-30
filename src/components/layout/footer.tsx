@@ -25,7 +25,7 @@ export function Footer() {
           {/* Brand */}
           <div className="max-w-sm">
             <Logo />
-            <p className="mt-6 text-body font-light leading-relaxed text-gray">
+            <p className="mt-6 text-body leading-relaxed text-gray">
               AI-powered business operating systems for MEA &amp; India. Nine purpose-built
               platforms. One unified vision.
             </p>
@@ -34,8 +34,8 @@ export function Footer() {
                 <Clock className="size-4" strokeWidth={1.75} aria-hidden="true" />
                 Working Hours
               </p>
-              <p className="mt-3 text-body font-light text-ink">{CONTACT.hours}</p>
-              <p className="mt-1 text-body font-light text-gray">{CONTACT.hoursClosed}</p>
+              <p className="mt-3 text-body text-ink">{CONTACT.hours}</p>
+              <p className="mt-1 text-body text-gray">{CONTACT.hoursClosed}</p>
               <a
                 href={CONTACT.whatsappUrl}
                 target="_blank"
@@ -86,7 +86,7 @@ export function Footer() {
             <p className="text-caption font-medium uppercase tracking-[1px] text-accent-deep">
               Contact Info
             </p>
-            <ul className="mt-6 space-y-4 text-body font-light">
+            <ul className="mt-6 space-y-4 text-body">
               <li>
                 <a
                   href={CONTACT.whatsappUrl}
@@ -138,7 +138,7 @@ export function Footer() {
           {TRUST_BADGES.map((badge) => (
             <li
               key={badge}
-              className="rounded-pill border border-line bg-surface px-4 py-2 text-caption font-light text-gray"
+              className="rounded-pill border border-line bg-surface px-4 py-2 text-caption text-gray"
             >
               {badge}
             </li>
@@ -146,7 +146,7 @@ export function Footer() {
         </ul>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-line py-7 text-caption font-light text-gray sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-line py-7 text-caption text-gray sm:flex-row">
           <p>
             © {new Date().getFullYear()} {SITE.name} · {SITE.legalName}. All Rights Reserved.
           </p>
@@ -190,7 +190,7 @@ function FooterLink<T extends string>({
     <li>
       <Link
         href={href}
-        className="rounded-sm text-body font-light text-ink transition-colors hover:text-accent-deep"
+        className="rounded-sm text-body text-ink transition-colors hover:text-accent-deep"
       >
         {children}
       </Link>

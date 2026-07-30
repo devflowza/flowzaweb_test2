@@ -49,7 +49,7 @@ export function PlatformHero({ platform }: { platform: Platform }) {
           <Reveal immediate delay={0.24} className="lg:pb-2">
             <ul className="flex flex-col gap-3">
               {platform.badges.map((badge) => (
-                <li key={badge} className="flex items-center gap-3 text-body font-light text-ink">
+                <li key={badge} className="flex items-center gap-3 text-body text-ink">
                   <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-accent" />
                   {badge}
                 </li>

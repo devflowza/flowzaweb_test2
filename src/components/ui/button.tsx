@@ -74,7 +74,7 @@ export function TextButton({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 text-body font-light tracking-[1px] text-accent-deep",
+        "inline-flex items-center gap-1.5 text-body tracking-[1px] text-accent-deep",
         className,
       )}
     >

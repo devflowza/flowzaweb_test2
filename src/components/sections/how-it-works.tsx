@@ -33,9 +33,7 @@ export function HowItWorks() {
                   </span>
                   <div>
                     <h3 className="text-h4 text-ink">{step.title}</h3>
-                    <p className="mt-3 text-body font-light leading-relaxed text-gray">
-                      {step.description}
-                    </p>
+                    <p className="mt-3 text-body leading-relaxed text-gray">{step.description}</p>
                   </div>
                 </div>
               </Reveal>
