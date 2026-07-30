@@ -1,6 +1,9 @@
 import { ImageResponse } from "next/og";
 import { getPlatform, PLATFORM_SLUGS } from "@/content/products";
 
+// Required by `output: "export"` — metadata routes must opt in to static generation.
+export const dynamic = "force-static";
+
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -8,18 +11,11 @@ export function generateStaticParams() {
   return PLATFORM_SLUGS.map((slug) => ({ slug }));
 }
 
-export async function generateImageMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const platform = getPlatform(slug);
-  return [
-    {
-      id: "og",
-      size,
-      contentType,
-      alt: platform ? `${platform.name} — ${platform.tagline}` : "FlowZa AI platform",
-    },
-  ];
-}
+/* `generateImageMetadata` is deliberately absent: it introduces a synthetic
+   `[__metadata_id__]` segment that cannot receive `generateStaticParams`, which
+   breaks `output: "export"`. Its only payload here was a per-product alt text —
+   a static alt is an acceptable trade for a buildable export. */
+export const alt = "FlowZa AI platform";
 
 export default async function OpengraphImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

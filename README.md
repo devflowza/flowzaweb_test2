@@ -17,7 +17,7 @@ contact pipeline that remains compatible with the existing `/adm` admin portal.
 | Motion     | CSS keyframes/transitions + rAF count-ups — zero animation deps |
 | Content    | Typed TS modules + MDX (`src/content`)                          |
 | Backend    | Supabase (contact form → `contact_submissions`, RLS insert)     |
-| Deploy     | Cloudflare Workers via OpenNext · Docker (standalone) fallback  |
+| Deploy     | Cloudflare Pages (static export) · Docker (standalone) fallback |
 
 ## Getting started
 
@@ -27,18 +27,17 @@ cp .env.example .env.local   # optional — site runs without Supabase (WhatsApp
 npm run dev
 ```
 
-| Script                         | Purpose                                       |
-| ------------------------------ | --------------------------------------------- |
-| `npm run dev`                  | Dev server (Turbopack)                        |
-| `npm run build` / `start`      | Production build / serve                      |
-| `npm run lint`                 | ESLint (flat config, next/core-web-vitals)    |
-| `npm run typecheck`            | `tsc --noEmit`                                |
-| `npm run format`               | Prettier                                      |
-| `npm run optimize:images`      | Re-run the sharp asset pipeline               |
-| `npm run generate:page-images` | Redraw the generated page illustrations       |
-| `npm run cf:build`             | Build the Cloudflare worker (`.open-next/`)   |
-| `npm run cf:preview`           | Preview on the workerd runtime locally        |
-| `npm run cf:deploy`            | Deploy to Cloudflare Workers (approval-gated) |
+| Script                         | Purpose                                    |
+| ------------------------------ | ------------------------------------------ |
+| `npm run dev`                  | Dev server (Turbopack)                     |
+| `npm run build` / `start`      | Production build / serve                   |
+| `npm run lint`                 | ESLint (flat config, next/core-web-vitals) |
+| `npm run typecheck`            | `tsc --noEmit`                             |
+| `npm run format`               | Prettier                                   |
+| `npm run optimize:images`      | Re-run the sharp asset pipeline            |
+| `npm run generate:page-images` | Redraw the generated page illustrations    |
+| `npm run pages:preview`        | Build + serve `out/` on the Pages emulator |
+| `npm run pages:deploy`         | Build + deploy `out/` to Cloudflare Pages  |
 
 ## Project layout
 
@@ -79,32 +78,46 @@ prefix). Do not change `src/content/contact.ts` service options or the insert ma
 
 ## Deployment
 
-**Cloudflare Workers (primary):** `npm run cf:build` produces `.open-next/`; deploy with
-`npm run cf:deploy` (needs `CLOUDFLARE_API_TOKEN`; set `SUPABASE_URL`/`SUPABASE_ANON_KEY`
-via `wrangler secret put`). CI (`.github/workflows/ci.yml`) runs format/lint/typecheck/build
-on every push.
+**Cloudflare Pages (primary):** the site is a full static export — `npm run build`
+writes `out/` (`output: "export"`), and Pages hosts it as plain files. There is no
+server at request time: legacy redirects live in `public/_redirects`, OG-image MIME
+types in `public/_headers`, and the contact form submits to Supabase **from the
+browser** (anon key + RLS, exactly the security model the server action had).
 
-**Workers Builds (git-connected):** this must be a **Workers** project, not Pages —
-`wrangler.jsonc` declares a worker (`main`, `assets`), not a `pages_build_output_dir`.
-Settings → Build:
+Git-connected Pages project — Settings → Build:
 
-| Setting        | Value                     |
-| -------------- | ------------------------- |
-| Build command  | `npm run cf:build`        |
-| Deploy command | `npx wrangler deploy`     |
-| Node version   | from `.node-version` (24) |
+| Setting          | Value                     |
+| ---------------- | ------------------------- |
+| Build command    | `npm run build`           |
+| Build output dir | `out`                     |
+| Node version     | from `.node-version` (24) |
 
-`wrangler deploy` detects `open-next.config.ts` and delegates to
-`opennextjs-cloudflare deploy`, so the build command **must** be `cf:build` — plain
-`npm run build` skips the worker bundle and the deploy fails with "Could not find compiled
-Open Next config". Secrets are not read from `wrangler.jsonc`; set them with
-`wrangler secret put` or in the dashboard.
+Build-time environment variables (Settings → Environment variables — these are
+inlined into the bundle, so set them for Production _and_ Preview):
+
+| Variable                        | Value                                    |
+| ------------------------------- | ---------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | `https://flowza.ai`                      |
+| `NEXT_PUBLIC_SUPABASE_URL`      | project URL (contact form)               |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon key — public by design, RLS-guarded |
+
+Without the Supabase vars the site still builds and runs; the contact form shows
+its WhatsApp fallback. Manual deploys: `npm run pages:deploy` (needs
+`CLOUDFLARE_API_TOKEN`; adjust `--project-name`). Local preview of the exact
+artifact: `npm run pages:preview` (pass `--compatibility-date=<recent>` if the
+bundled workerd rejects today's date).
+
+CI (`.github/workflows/ci.yml`) runs format/lint/typecheck/build on every push;
+deployment stays with the Pages Git integration.
 
 Do not use `@cloudflare/next-on-pages` — it's deprecated, unsupported on Next 16, and its
-`@cloudflare/workers-types@^4` peer conflicts with `wrangler@^4.114`.
+`@cloudflare/workers-types@^4` peer conflicts with `wrangler@^4.114`. The previous
+Workers/OpenNext deploy chain (`wrangler.jsonc`, `open-next.config.ts`,
+`@opennextjs/cloudflare`) was removed with the move to Pages; see git history if a
+server runtime is ever needed again.
 
 **Docker (fallback):** `docker build -t flowzaweb . && docker run -p 3000:3000 flowzaweb`
-(standalone output, Node 24 alpine, non-root).
+(standalone output via `NEXT_OUTPUT=standalone`, Node 24 alpine, non-root).
 
 ## SEO & AI-SEO
 

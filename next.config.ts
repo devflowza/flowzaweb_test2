@@ -3,20 +3,16 @@ import createMDX from "@next/mdx";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "mdx"],
-  // `standalone` is used by the Dockerfile; OpenNext (Cloudflare) uses the default output.
-  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
+  // Static export for Cloudflare Pages is the default; `standalone` remains for
+  // the Dockerfile. Every route prerenders, so export costs nothing — the one
+  // former server dependency (the contact action) now runs client-side.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : "export",
   typedRoutes: true,
-  images: {
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920],
-  },
-  async redirects() {
-    return [
-      // Legacy routes from the previous site — the Finance demo now lives on the flagship page.
-      { source: "/finance", destination: "/products/finance", permanent: true },
-      { source: "/finance-demo", destination: "/products/finance", permanent: true },
-    ];
-  },
+  // No request-time optimizer in an export. The photos are pre-optimized webps
+  // (~60–120KB), so browsers just skip the resize step.
+  images: { unoptimized: true },
+  // Legacy-route redirects live in public/_redirects (Cloudflare Pages format):
+  // `redirects()` needs a server, which a static export doesn't have.
 };
 
 const withMDX = createMDX({

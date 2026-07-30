@@ -1,0 +1,4 @@
+# Legacy routes from the previous site — the Finance demo now lives on the flagship page.
+# (Was next.config `redirects()`; static export has no server, Pages reads this file.)
+/finance       /products/finance  301
+/finance-demo  /products/finance  301

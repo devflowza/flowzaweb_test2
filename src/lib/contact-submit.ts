@@ -1,8 +1,17 @@
-"use server";
-
 import { z } from "zod";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
 import { SERVICE_OPTIONS } from "@/content/contact";
+
+/**
+ * Client-side contact submission.
+ *
+ * This was a server action until the site moved to a static export for
+ * Cloudflare Pages — an export has no server to act on, so the same logic now
+ * runs in the browser via React 19's `useActionState`, which accepts any async
+ * function. Validation here is UX, not security: the honeypot filters dumb
+ * bots, zod produces the field errors, and the only real boundary is Supabase
+ * RLS, exactly as it was when this ran on the server.
+ */
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter your full name.").max(120),

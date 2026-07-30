@@ -897,3 +897,49 @@ scratchpad; re-run it after any palette change.
 
 `CLIENTS` in `content/site.ts` was also deleted this pass (user call) — the
 social-proof data outlived its last renderer.
+
+---
+
+## 21. Static export → Cloudflare Pages (2026-07-30)
+
+The Workers/OpenNext deployment kept drifting — manual `cf:deploy` runs went
+stale and one shipped a partial asset upload (the broken product tiles). The
+site is a marketing site where **every route already prerendered**, so it now
+builds with `output: "export"` and deploys to Cloudflare Pages as plain static
+files with atomic, Git-triggered deploys. `NEXT_OUTPUT=standalone` still selects
+the Docker output.
+
+What the export forced, and how each was resolved:
+
+- **The one server dependency** — the contact form's server action — became a
+  client-side submit (`lib/contact-submit.ts`) via React 19 `useActionState`,
+  which accepts any async function, so `contact-form.tsx` changed by one import.
+  Security is unchanged: the anon key was already public by design and RLS on
+  `contact_submissions` (INSERT-only) was always the real boundary. Env vars
+  became `NEXT_PUBLIC_*` because the browser does the talking now.
+- **`redirects()`** needs a server → the two legacy routes moved to
+  `public/_redirects` (Pages-native).
+- **`/_next/image`** needs a server → `images.unoptimized`. The photos are
+  pre-optimized 60–120KB webps, so the cost is the resize step, not the bytes.
+  This also retires the optimizer implicated in the worker's broken tiles.
+- **Metadata routes** (manifest, robots, sitemap, both OG images) must declare
+  `dynamic = "force-static"` under export.
+- **`generateImageMetadata`** on the per-product OG route introduces a synthetic
+  `[__metadata_id__]` segment that cannot receive static params → dropped for a
+  static `alt`; the per-product OG _visuals_ are unchanged.
+- **`dynamicParams` on `/products/[slug]`** flipped `true → false`: the `true`
+  was itself a workaround for OpenNext's dummy incremental cache, which is gone
+  with the worker. Under export every slug is enumerated; unknown slugs hit the
+  static 404.
+- OG images export as **extensionless files**, which Pages would serve as
+  `octet-stream` → `public/_headers` pins `Content-Type: image/png`.
+
+Deleted outright: `wrangler.jsonc`, `open-next.config.ts`,
+`@opennextjs/cloudflare`, `server-only` (nothing server-side remains to guard),
+and the `cf:*` scripts — replaced by `pages:preview` / `pages:deploy`.
+
+Verified on `wrangler pages dev` (the Pages runtime emulator): all routes 200,
+`_redirects` 301s, static `404.html`, OG images as `image/png`, all nine grid
+tiles rendering **without** the optimizer, tile click-through, the billing
+toggle, client-side form validation, and the WhatsApp fallback when Supabase env
+is absent — with zero failed network requests.
