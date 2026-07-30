@@ -50,12 +50,21 @@ const PHOTOS_LOCATIONS = [
   ["Dubai.png", "location-dubai.webp"],
 ];
 
+/** About-page section backgrounds — sources in-repo under Photos/About Page. */
+const SRC_ABOUT = path.resolve(import.meta.dirname, "../Photos/About Page");
+const PHOTOS_ABOUT = [
+  ["About Landing Background Image.png", "about-hero-bg.webp"],
+  ["Our Mission Section Background.png", "about-mission-bg.webp"],
+  ["What we stand for background.png", "about-values-bg.webp"],
+];
+
 await mkdir(OUT, { recursive: true });
 
 for (const [srcDir, list] of [
   [SRC, PHOTOS],
   [SRC_V2, PHOTOS_V2],
   [SRC_LOCATIONS, PHOTOS_LOCATIONS],
+  [SRC_ABOUT, PHOTOS_ABOUT],
 ]) {
   for (const [src, out] of list) {
     const dest = path.join(OUT, out);
