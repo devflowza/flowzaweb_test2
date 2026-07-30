@@ -13,6 +13,7 @@ import path from "node:path";
 
 const SRC = path.resolve(import.meta.dirname, "../../images");
 const SRC_V2 = path.resolve(SRC, "v2");
+const SRC_LOCATIONS = path.resolve(import.meta.dirname, "../Photos/Locations");
 const OUT = path.resolve(import.meta.dirname, "../public/images/photos");
 
 /** [source file, output name] — Finance2.png is deliberately excluded: it is a
@@ -41,11 +42,20 @@ const PHOTOS_V2 = [
   ["angle2.png", "pms-verify.webp"],
 ];
 
+/** Office-city photography for the location picker and /locations —
+ *  sources live in-repo under Photos/Locations (user-supplied). */
+const PHOTOS_LOCATIONS = [
+  ["Bangalore.png", "location-bengaluru.webp"],
+  ["Oman.png", "location-muscat.webp"],
+  ["Dubai.png", "location-dubai.webp"],
+];
+
 await mkdir(OUT, { recursive: true });
 
 for (const [srcDir, list] of [
   [SRC, PHOTOS],
   [SRC_V2, PHOTOS_V2],
+  [SRC_LOCATIONS, PHOTOS_LOCATIONS],
 ]) {
   for (const [src, out] of list) {
     const dest = path.join(OUT, out);

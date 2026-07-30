@@ -32,8 +32,8 @@ export const OFFICES: OfficeLocation[] = [
     addressLines: ["Sai Sree Layout, Parappana Agrahara,", "Bengaluru, Karnataka, India"],
     accent: "#f59e0b",
     image: {
-      src: "/images/pages/locations-bengaluru.webp",
-      alt: "Street-plan illustration of the Bengaluru head office neighbourhood — city blocks, two lakes and green parks, with a pin on the office.",
+      src: "/images/photos/location-bengaluru.webp",
+      alt: "Bengaluru at sunset — glass office towers rising out of dense green tree cover, the sky washed orange behind the skyline.",
     },
   },
   {
@@ -44,8 +44,8 @@ export const OFFICES: OfficeLocation[] = [
     addressLines: ["Near Centara Hotel,", "Ghala, Muscat,", "Oman"],
     accent: "#10b981",
     image: {
-      src: "/images/pages/locations-muscat.webp",
-      alt: "Street-plan illustration of the Muscat development centre neighbourhood — city blocks running down to the coastline, with a pin on the office.",
+      src: "/images/photos/location-muscat.webp",
+      alt: "Muscat at dusk — the Grand Mosque's dome and minaret lit warm against the Hajar mountains, white low-rise city all around.",
     },
   },
   {
@@ -60,8 +60,8 @@ export const OFFICES: OfficeLocation[] = [
     ],
     accent: "#2563eb",
     image: {
-      src: "/images/pages/locations-dubai.webp",
-      alt: "Street-plan illustration of the Deira, Dubai office neighbourhood — city blocks either side of the creek, with a pin on the office.",
+      src: "/images/photos/location-dubai.webp",
+      alt: "The Dubai skyline at golden hour, the Burj Khalifa rising at its centre above downtown towers and highway interchanges.",
     },
   },
 ];
