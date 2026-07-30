@@ -5,7 +5,7 @@
   //   npm run cf:preview → local preview on the workerd runtime
   //   npm run cf:deploy  → wrangler deploy (requires CLOUDFLARE_API_TOKEN)
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "flowzaweb",
+  "name": "flowzaweb-test3",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-07-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
