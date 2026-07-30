@@ -10,27 +10,53 @@ import {
   FINANCE_SECURITY_SECTION,
 } from "@/content/finance";
 import { Container, Section } from "@/components/layout/container";
+import { SectionBackdrop } from "@/components/layout/section-backdrop";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal } from "@/components/motion";
 
 export function FinanceModules() {
   return (
-    <Section tone="white">
-      <Container>
+    <Section tone="white" className="relative overflow-hidden">
+      {/* Mockup backdrop: the About hero photograph under a near-white wash,
+          with the mockup's dot-grid patch on the left edge. */}
+      <SectionBackdrop
+        src="/images/photos/about-hero-bg.webp"
+        wash="bg-gradient-to-br from-white via-white/95 to-white/85"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute left-0 top-24 hidden h-72 w-24 opacity-70 lg:block"
+        style={{
+          backgroundImage: "radial-gradient(rgb(19 120 101 / 0.35) 1.5px, transparent 1.5px)",
+          backgroundSize: "16px 16px",
+          maskImage: "linear-gradient(to right, black, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, black, transparent)",
+        }}
+      />
+      <Container className="relative">
         <SectionHeading
           eyebrow={FINANCE_MODULES_SECTION.badge}
-          title={FINANCE_MODULES_SECTION.title}
+          title={
+            <>
+              {FINANCE_MODULES_SECTION.title}{" "}
+              <span className="text-accent-deep">{FINANCE_MODULES_SECTION.titleHighlight}</span>
+              <span aria-hidden="true" className="mt-4 block h-1 w-16 rounded-full bg-accent" />
+            </>
+          }
           subtitle={FINANCE_MODULES_SECTION.subtitle}
         />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {FINANCE_MODULES.map((mod, i) => (
             <li key={mod.title} className="h-full">
               <Reveal delay={(i % 4) * 0.08} className="h-full">
-                <div className="flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)">
+                <div className="flex h-full flex-col rounded-card bg-surface p-6 shadow-(--shadow-soft) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-lift)">
                   <span aria-hidden="true" className="text-xs tracking-widest text-emerald-700">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 text-base font-semibold text-ink">{mod.title}</h3>
+                  <span className="mt-4 flex size-14 items-center justify-center rounded-full bg-accent-mint text-accent-deep">
+                    <mod.icon className="size-6" strokeWidth={1.75} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-4 text-base font-semibold text-ink">{mod.title}</h3>
                   <p className="mt-1 text-[0.8125rem] font-medium italic text-emerald-700">
                     {mod.hook}
                   </p>
