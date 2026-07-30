@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { CheckCircle2, LoaderCircle, Send } from "lucide-react";
-import { submitContact, type ContactFormState } from "@/lib/actions/contact";
+import { submitContact, type ContactFormState } from "@/lib/contact-submit";
 import { CONTACT_PAGE, SERVICE_OPTIONS } from "@/content/contact";
 import { CONTACT } from "@/content/site";
 import { Button } from "@/components/ui/button";

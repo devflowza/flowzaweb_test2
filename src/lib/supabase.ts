@@ -1,14 +1,18 @@
-import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
-const anonKey = process.env.SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
 /**
- * The anon key is public-by-design; write access is enforced by RLS
- * (contact_submissions allows INSERT only). The site must render fully
- * without these vars — the contact form then falls back to WhatsApp.
+ * Browser Supabase client.
+ *
+ * Intentionally client-safe (no `server-only`): the site is a static export
+ * (`output: "export"`), so the contact form talks to Supabase directly from the
+ * browser and the `NEXT_PUBLIC_*` values are inlined at build time. That is not
+ * a security regression — the anon key is public by design, and write access is
+ * enforced by RLS (`contact_submissions` allows INSERT only). The site must
+ * render fully without these vars; the contact form then falls back to WhatsApp.
  */
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
 export const isSupabaseConfigured = Boolean(url && anonKey);
 
 let client: SupabaseClient | null = null;

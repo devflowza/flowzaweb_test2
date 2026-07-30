@@ -26,17 +26,12 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbNode, graph, softwareNode, webPageNode } from "@/lib/seo";
 
 /**
- * Must stay `true` (Next's own default) on this deployment. The Cloudflare
- * Workers build has no R2/KV bound for OpenNext's incremental cache, so it
- * falls back to the "dummy" cache — whose `get()` unconditionally throws.
- * `false` here told Next.js to 404 rather than fall back to on-demand
- * rendering when a cache read fails, which 404's every one of these pages
- * in production despite `generateStaticParams` prerendering all of them
- * correctly at build time. `getPlatform` is synchronous, in-memory content
- * with no external I/O, so on-demand rendering costs nothing meaningful —
- * an unknown slug still 404s correctly via the `notFound()` call below.
+ * `false` is required by `output: "export"`: every slug must be enumerated at
+ * build time, and there is no server to render an unknown one on demand — an
+ * unlisted slug becomes the static 404. (The old `true` here worked around the
+ * OpenNext Workers dummy incremental cache, which is gone with that deploy.)
  */
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return PLATFORM_SLUGS.map((slug) => ({ slug }));

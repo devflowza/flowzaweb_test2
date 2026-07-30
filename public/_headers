@@ -1,0 +1,6 @@
+# Next writes metadata OG images as extensionless files, so Pages cannot infer
+# their MIME type from the path. Most crawlers sniff, but declare it anyway.
+/opengraph-image
+  Content-Type: image/png
+/products/*/opengraph-image
+  Content-Type: image/png

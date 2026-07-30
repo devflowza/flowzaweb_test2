@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/content/site";
 import { PLATFORMS } from "@/content/products";
 
+// Required by `output: "export"` — metadata routes must opt in to static generation.
+export const dynamic = "force-static";
+
 /**
  * Deliberately no lastModified: a build timestamp on every URL tells crawlers
  * nothing. Add real per-entity dates to the content layer if that changes.
