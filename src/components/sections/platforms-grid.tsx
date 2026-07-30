@@ -80,26 +80,6 @@ export function PlatformsGrid() {
               </Reveal>
             </li>
           ))}
-
-          {/* Closing prompt tile, in the same rhythm as the cards */}
-          <li className="w-full sm:w-[49.4%] lg:w-[32.53%]">
-            <Reveal delay={0.18}>
-              <Link
-                href={PLATFORMS_SECTION.ctaTile.href}
-                className="group flex aspect-square flex-col justify-between rounded-card border border-dashed border-line-soft bg-surface-mint p-8 transition-colors duration-300 ease-(--ease-1) hover:border-accent"
-              >
-                <span className="fx-arrow-chip !static grid size-14 place-items-center rounded-pill bg-accent-deep text-white before:hidden">
-                  <ArrowRight className="size-5" strokeWidth={1.75} aria-hidden="true" />
-                </span>
-                <span>
-                  <span className="block text-h4 text-ink">{PLATFORMS_SECTION.ctaTile.title}</span>
-                  <span className="mt-2 block max-w-xs text-body text-gray">
-                    {PLATFORMS_SECTION.ctaTile.description}
-                  </span>
-                </span>
-              </Link>
-            </Reveal>
-          </li>
         </ul>
       </Container>
     </Section>

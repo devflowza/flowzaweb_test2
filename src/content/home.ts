@@ -157,11 +157,6 @@ export const PLATFORMS_SECTION = {
   title: "Nine Systems. One Operating Fabric.",
   subtitle:
     "Purpose-built AI platforms for every business vertical — each one deep enough to run your operation, all connected to the same fabric.",
-  ctaTile: {
-    title: "Not sure where to start?",
-    description: "Talk to us — we'll map your operation to the right platform.",
-    href: "/contact",
-  },
 } as const;
 
 export const TESTIMONIALS_SECTION = {
