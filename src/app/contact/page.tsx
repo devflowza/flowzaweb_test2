@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 
-import Link from "next/link";
-import { ArrowRight, Clock, Mail, MapPin } from "lucide-react";
+import { Clock, Mail, MapPin } from "lucide-react";
 import { CONTACT, SOCIALS } from "@/content/site";
 import { CONTACT_PAGE } from "@/content/contact";
-import { OFFICES } from "@/content/locations";
+
 import { Container, Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { WhatsAppIcon, socialIconFor } from "@/components/layout/social-icons";
 import { Reveal } from "@/components/motion";
 import { ContactForm } from "@/components/contact/contact-form";
+import { LocationPicker } from "@/components/contact/location-picker";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbNode, graph, webPageNode } from "@/lib/seo";
 
@@ -160,49 +160,7 @@ export default function ContactPage() {
         </Container>
       </Section>
 
-      {/* Real offices, for people who prefer to walk in — full detail on /locations */}
-      <Section tone="tint" compact>
-        <Container>
-          <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <h2 className="text-h4 text-ink">Prefer to visit?</h2>
-              <Link
-                href="/locations"
-                className="group inline-flex items-center gap-1.5 text-sm font-semibold text-accent-deep"
-              >
-                See all locations
-                <ArrowRight
-                  className="size-3.5 transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-0.5"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                />
-              </Link>
-            </div>
-          </Reveal>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-3">
-            {OFFICES.map((office, i) => (
-              <li key={office.city} className="h-full">
-                <Reveal delay={i * 0.08} className="h-full">
-                  <div
-                    className="flex h-full flex-col rounded-card border border-line bg-surface p-5 shadow-(--shadow-hairline)"
-                    style={{ borderTopColor: office.accent, borderTopWidth: 3 }}
-                  >
-                    <span className="text-[0.66rem] uppercase tracking-[0.14em] text-gray">
-                      {office.label}
-                    </span>
-                    <span className="mt-1.5 text-[1.0625rem] font-semibold text-ink">
-                      {office.city}, {office.country}
-                    </span>
-                    <span className="mt-2 text-sm leading-relaxed text-gray">
-                      {office.addressLines.join(" ")}
-                    </span>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
+      <LocationPicker />
     </>
   );
 }
