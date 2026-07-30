@@ -35,7 +35,7 @@ export function WhyFlowza() {
       </Section>
 
       {/* Solid accent band — the reference punctuates with full-bleed colour */}
-      <Section tone="accent" flush ghost="IMPACT">
+      <Section tone="accent" flush>
         <Container>
           <dl className="flex flex-wrap py-16 lg:py-20">
             {COMPANY_STATS.map((stat, i) => (

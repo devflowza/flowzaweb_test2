@@ -43,7 +43,7 @@ export default function LocationsPage() {
         image={LOCATIONS_PAGE.image}
       />
 
-      <Section tone="white" className="pt-(--spacing-section-sm)" ghost="GLOBAL">
+      <Section tone="white" className="pt-(--spacing-section-sm)">
         <Container>
           <ul className="grid gap-5 md:grid-cols-3">
             {OFFICES.map((office, i) => (

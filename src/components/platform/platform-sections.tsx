@@ -12,12 +12,7 @@ import { Stars } from "@/components/sections/testimonials";
 /** Solid accent band of headline numbers — the reference's `highlights` strip. */
 export function PlatformStats({ platform }: { platform: Platform }) {
   return (
-    <Section
-      tone="accent"
-      flush
-      aria-label={`${platform.shortName} in numbers`}
-      ghost={platform.index}
-    >
+    <Section tone="accent" flush aria-label={`${platform.shortName} in numbers`}>
       <Container>
         <dl className="flex flex-wrap py-14 lg:py-16">
           {platform.stats.map((stat, i) => (

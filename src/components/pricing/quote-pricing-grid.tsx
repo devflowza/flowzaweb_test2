@@ -18,7 +18,7 @@ import { Reveal } from "@/components/motion";
  */
 export function QuotePricingGrid({ products }: { products: ProductPricing[] }) {
   return (
-    <Section id="custom-pricing" tone="tint" ghost="QUOTED" className="scroll-mt-28">
+    <Section id="custom-pricing" tone="tint" className="scroll-mt-28">
       <Container>
         <SectionHeading
           eyebrow="Quoted Per Operation"

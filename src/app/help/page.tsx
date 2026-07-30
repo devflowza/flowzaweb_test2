@@ -72,7 +72,7 @@ export default function HelpPage() {
       </Section>
 
       {/* FAQs */}
-      <Section tone="tint" ghost="FAQ">
+      <Section tone="tint">
         <Container className="max-w-4xl">
           <SectionHeading
             eyebrow="FAQ"

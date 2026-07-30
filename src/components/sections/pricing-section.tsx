@@ -23,7 +23,7 @@ export function PricingSection() {
   const tiers = FINANCE_TIERS.filter((tier) => typeof tier.monthly === "number");
 
   return (
-    <Section id="pricing" tone="white" ghost="PLANS">
+    <Section id="pricing" tone="white">
       <Container>
         <SectionHeading
           eyebrow={FINANCE_PRICING_TEASER.badge}

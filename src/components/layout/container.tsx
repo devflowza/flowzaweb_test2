@@ -23,8 +23,6 @@ const toneClasses: Record<SectionTone, string> = {
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   tone?: SectionTone;
-  /** Ghost watermark word behind the section. */
-  ghost?: string;
   /** Drop the vertical rhythm (for full-bleed bands that pad internally). */
   flush?: boolean;
   /** Tighter vertical rhythm for secondary sections. */
@@ -33,7 +31,6 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 
 export function Section({
   tone = "white",
-  ghost,
   flush = false,
   compact = false,
   className,
@@ -50,17 +47,6 @@ export function Section({
       )}
       {...props}
     >
-      {ghost ? (
-        <span
-          aria-hidden="true"
-          className={cn(
-            "fx-ghost absolute -top-4 right-0 select-none text-[10vw] leading-none",
-            (tone === "accent" || tone === "ink") && "text-white opacity-[0.08]",
-          )}
-        >
-          {ghost}
-        </span>
-      ) : null}
       <div className="relative">{children}</div>
     </section>
   );

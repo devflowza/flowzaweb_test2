@@ -56,7 +56,7 @@ export function TestimonialCard({
 
 export function Testimonials() {
   return (
-    <Section id="testimonials" tone="tint" ghost="TRUST">
+    <Section id="testimonials" tone="tint">
       <Container>
         <SectionHeading
           eyebrow={TESTIMONIALS_SECTION.badge}

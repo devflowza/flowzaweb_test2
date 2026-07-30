@@ -74,7 +74,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Mission */}
-      <Section tone="tint" ghost="MISSION">
+      <Section tone="tint">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
@@ -93,12 +93,6 @@ export default function AboutPage() {
             <Reveal delay={0.15} className="relative">
               <div className="shadow-(--shadow-soft)">
                 <div className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-card bg-ink p-8">
-                  <span
-                    aria-hidden="true"
-                    className="fx-ghost absolute -right-4 top-2 text-[8rem] leading-none text-white opacity-[0.05]"
-                  >
-                    07
-                  </span>
                   <p className="relative max-w-xs text-h4 text-white">
                     &ldquo;{SITE.positioning}&rdquo;
                   </p>

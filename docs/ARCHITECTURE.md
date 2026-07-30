@@ -37,16 +37,16 @@ flagship Flowza.ai website, to be built from scratch in this folder.
 
 The reference is a B2B industrial lead-gen site (AQOZA). Its value to us is conceptual:
 
-| Concept                           | What it is                                                                                                                                                        | How Flowza adopts it                                                                                             |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Fluid token system**            | Everything is `clamp()`: type scale, `--section-space-x/y` (24→64px / 40→128px), radii (`clamp(20px,2vw,30px)`), a `.section` gutter formula centering at 1500px  | Rebuilt as Tailwind v4 `@theme` tokens — fluid type + spacing + radius scales, one container primitive           |
-| **Section-primitive composition** | Pages are stacks of ~20 named section patterns (hero, title-div, card-div, CTA band, FAQ)                                                                         | A real React section library — composable, typed, reused across all pages                                        |
-| **Motion tokens**                 | `--transition1/2/3` cubic-bezier variables consumed everywhere                                                                                                    | Central motion constants (durations/easings) shared by CSS + Motion                                              |
-| **Signature moves**               | Text marquee with `*` separators, ghost watermark type, glass arrow chips, aurora light-leak behind hero, dual-dot eyebrow, gradient stats band, concentric radii | Reinterpreted in Flowza cyan/blue as the brand's visual signatures                                               |
-| **Doc-style product page**        | Sticky TOC sidebar + anchored content blocks + stacked Product JSON-LD                                                                                            | The template for the FlowZa Finance flagship page                                                                |
-| **Conversion spine**              | Every page drains into one repeated CTA band + lead form; FAQs sit below the form for SEO                                                                         | Repeated CTA band + FAQ accordion pattern across the new site                                                    |
-| **SEO scaffolding**               | Per-page `@graph` JSON-LD, BreadcrumbList mirrored in UI, segmented dynamic sitemap with image extensions                                                         | Systematized via a typed JSON-LD builder + `sitemap.ts`                                                          |
-| **Four-pillar IA**                | Solutions/Products/Industries/Insights clusters                                                                                                                   | Adapted: Platforms as the product pillar; hub page + 7 detail pages with cross-linking ("Works Better Together") |
+| Concept                           | What it is                                                                                                                                                       | How Flowza adopts it                                                                                             |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Fluid token system**            | Everything is `clamp()`: type scale, `--section-space-x/y` (24→64px / 40→128px), radii (`clamp(20px,2vw,30px)`), a `.section` gutter formula centering at 1500px | Rebuilt as Tailwind v4 `@theme` tokens — fluid type + spacing + radius scales, one container primitive           |
+| **Section-primitive composition** | Pages are stacks of ~20 named section patterns (hero, title-div, card-div, CTA band, FAQ)                                                                        | A real React section library — composable, typed, reused across all pages                                        |
+| **Motion tokens**                 | `--transition1/2/3` cubic-bezier variables consumed everywhere                                                                                                   | Central motion constants (durations/easings) shared by CSS + Motion                                              |
+| **Signature moves**               | Text marquee with `*` separators, glass arrow chips, aurora light-leak behind hero, dual-dot eyebrow, gradient stats band, concentric radii                      | Reinterpreted in Flowza cyan/blue as the brand's visual signatures (ghost watermark type dropped — see §19)      |
+| **Doc-style product page**        | Sticky TOC sidebar + anchored content blocks + stacked Product JSON-LD                                                                                           | The template for the FlowZa Finance flagship page                                                                |
+| **Conversion spine**              | Every page drains into one repeated CTA band + lead form; FAQs sit below the form for SEO                                                                        | Repeated CTA band + FAQ accordion pattern across the new site                                                    |
+| **SEO scaffolding**               | Per-page `@graph` JSON-LD, BreadcrumbList mirrored in UI, segmented dynamic sitemap with image extensions                                                        | Systematized via a typed JSON-LD builder + `sitemap.ts`                                                          |
+| **Four-pillar IA**                | Solutions/Products/Industries/Insights clusters                                                                                                                  | Adapted: Platforms as the product pillar; hub page + 7 detail pages with cross-linking ("Works Better Together") |
 
 Anti-patterns identified and deliberately avoided: 617 KB monolithic CSS, dead AOS attributes,
 no lazy loading/srcset, missing skip link, href-less nav anchors, empty-alt-by-default images,
@@ -141,7 +141,7 @@ deep-navy dark surfaces (top bar, footer, stats/CTA bands) for rhythm and contra
 3. Stats band: navy surface with gradient hairline dividers and mono numerals that count up.
 4. Platforms grid: image tiles with frosted icon chips, Live pills, hover reveal.
 5. CTA band ("How would you like to begin?") repeated as the conversion spine on every page.
-6. Ghost watermark type ("FLOWZA" / section numerals) at very low opacity behind key sections.
+6. ~~Ghost watermark type behind key sections~~ — removed, see §19.
 
 ---
 
@@ -268,7 +268,7 @@ flowzaweb/
 - **Variants** via `class-variance-authority` (comes with shadcn): button
   (primary-gradient / whatsapp / outline / ghost × sizes), badge, card treatments.
 - **One `<Section>`/`<Container>` primitive** owns rhythm (fluid padding, tint variants,
-  optional ghost-text/watermark slot) so every page inherits identical spacing.
+  so every page inherits identical spacing.
 - **Per-product theming** through a `--product-accent` CSS variable set at the page level —
   the same section components render each platform in its accent color.
 
@@ -818,3 +818,26 @@ leaving `/pricing` as the single place any platform's pricing is stated.
 `/pricing` is the one inner page with no `PageHeader` banner image — removed on
 request, and the sticky product nav occupies that space instead. The generator
 entry and asset were deleted with it rather than left orphaned.
+
+---
+
+## 19. Removing the ghost watermark type (2026-07-30)
+
+`Section` accepted a `ghost` prop that painted a word — `QUOTED`, `PLANS`,
+`IMPACT`, `MISSION`, a platform numeral — at `10vw` and 5% opacity behind the
+section, one of the signature moves inherited from the reference design.
+
+Removed everywhere, on request. At `10vw` the word is 140px+ on a laptop, and
+because it sat top-right at low contrast it collided with real content — on
+`/pricing` the tail of `QUOTED` ran straight through the section's lede, which is
+what surfaced it.
+
+Taken out in full rather than left switchable: the `ghost` prop and its `<span>`
+are gone from `Section`, all 11 call sites are stripped, the `fx-ghost` utility is
+deleted from globals.css, and the two hand-rolled uses of that utility outside the
+prop — `FlowZa` at `12vw` in `CtaBand`, `07` at `8rem` in the About mission panel —
+are gone with it. A DOM sweep across eight pages confirms no element over 90px of
+type remains.
+
+Note this is distinct from the **text marquee** (`LogisPro * Spa Master * …`),
+which is real scrolling content and stays.

@@ -87,7 +87,7 @@ export default function DocsPage() {
       </Section>
 
       {/* Getting started */}
-      <Section tone="tint" ghost="START">
+      <Section tone="tint">
         <Container className="max-w-4xl">
           <SectionHeading
             eyebrow="Getting Started"

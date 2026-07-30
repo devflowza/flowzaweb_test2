@@ -312,18 +312,6 @@
   color: transparent;
 }
 
-/* Ghost watermark type */
-@utility fx-ghost {
-  color: var(--color-ink);
-  font-weight: 800;
-  font-style: italic;
-  letter-spacing: -0.3vw;
-  opacity: 0.05;
-  text-transform: uppercase;
-  user-select: none;
-  pointer-events: none;
-}
-
 /* Dark frost for small white labels laid over a photograph. */
 @utility fx-frost {
   background-color: rgb(4 22 10 / 0.62);
