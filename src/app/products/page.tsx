@@ -47,22 +47,13 @@ export default function ProductsPage() {
         title="Nine Systems."
         titleHighlight="One Operating Fabric."
         subtitle={`Purpose-built AI platforms for every business vertical — each one deep enough to run your operation, all connected to the same fabric. ${SITE.manifesto}`}
-      >
-        {/* Brand-level banner: the whole platform range, not one product */}
-        <Reveal immediate delay={0.28} className="mt-12">
-          <ImageFrame
-            image={{
-              src: "/images/photos/brand-expo.webp",
-              alt: "A hand holding a phone to scan a QR code at a FlowZa stand, below a wall headline reading One Platform. All Possibilities. Visitors talk in the background.",
-              focal: "left center",
-            }}
-            ratio="16/7"
-            priority
-            sizes="(max-width: 1600px) 92vw, 1500px"
-            rounded="rounded-card lg:rounded-[0_10vh_0_10vh]"
-          />
-        </Reveal>
-      </PageHeader>
+        /* Brand-level banner: the whole platform range, not one product */
+        image={{
+          src: "/images/photos/brand-expo.webp",
+          alt: "A hand holding a phone to scan a QR code at a FlowZa stand, below a wall headline reading One Platform. All Possibilities. Visitors talk in the background.",
+          focal: "left center",
+        }}
+      />
 
       <Section tone="tint" ghost="SYSTEMS" className="pt-(--spacing-section-sm)">
         <Container>

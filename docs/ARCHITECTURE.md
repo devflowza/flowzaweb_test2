@@ -680,3 +680,62 @@ baked into the source render, not something CSS can fix.
 Alt text follows the same discipline as §15: describe only what's visible
 (an applicant's initials and a blurred name, not an invented full name; "a
 colleague visible in a meeting room," not "a calibration session in progress").
+
+---
+
+## 17. Page imagery for the routes with no photography (2026-07-29)
+
+Eleven routes carried no image at all: `/about`, `/contact`, `/pricing`,
+`/locations`, `/get-started`, `/help`, `/docs`, `/status`, the three legal
+documents and the 404. The branded shoot in `../images` covers products, not
+these — there is no photograph of an onboarding path or an uptime record — so
+these fifteen images are **drawn**, by `scripts/generate-page-images.mjs`
+(`npm run generate:page-images`), and land in `public/images/pages/`.
+
+**Why drawn rather than sourced.** Composing them from the same tokens as
+`globals.css` means the accent ramp, the card radius, the elevation tiers and
+the 28px lattice `ImageFrame`'s placeholder already draws are shared by
+construction, not by eye — and a token change can be pushed through the whole
+set by re-running one script. Every scene is emitted as SVG and rasterised
+through sharp's librsvg, so output is 9–56 KB per banner against 75–120 KB for
+a photograph, and a seeded PRNG (`rng()`) keeps re-runs byte-identical.
+
+**Text-free by rule.** No scene contains a glyph of type. A headline baked into
+a raster can't be translated, re-cropped or read by a screen reader, and it goes
+stale independently of the copy beside it. Structure is carried by the UI
+skeleton idiom — grey bars where text would sit — which is also why the set
+needs no font installed on the machine that renders it. It follows that alts
+here describe the _kind_ of panel and its state, never a figure the image
+appears to quote.
+
+**One ratio.** Every banner is authored at 16/7, matching the `/products` hub
+banner that already existed, so `PageHeader` grew a single `image?: ImageSlot`
+prop instead of a per-page crop. `/products` was refactored onto that prop and
+its inline `ImageFrame` block deleted. Only the office cards differ (16/9, sized
+for a card header).
+
+| Image                   | Route              | Shows                                                              |
+| ----------------------- | ------------------ | ------------------------------------------------------------------ |
+| `about.webp`            | `/about`           | nine platforms orbiting one shared core                            |
+| `contact.webp`          | `/contact`         | a WhatsApp-style thread mid-reply, beside the three contact routes |
+| `locations.webp`        | `/locations`       | dot-matrix regional map, three hubs, dashed routes between them    |
+| `locations-{city}.webp` | `/locations` cards | street plan per office, tinted with that office's `accent`         |
+| `get-started.webp`      | `/get-started`     | the five onboarding steps, three done and one in progress          |
+| `help.webp`             | `/help`            | search, six topic tiles, one answer expanded                       |
+| `docs.webp`             | `/docs`            | contents rail, prose column, dark code sample                      |
+| `status.webp`           | `/status`          | daily uptime bars with one amber dip, SLA ring, latency trace      |
+| `pricing.webp`          | `/pricing`         | monthly vs yearly billing over 12 months, and the saving           |
+| `legal-{doc}.webp`      | legal pages        | the document, its mark (shield / page+tick / cookie), clause index |
+| `not-found.webp`        | 404                | a card grid with one tile missing                                  |
+
+**Two judgement calls worth keeping.** The office cards started as skylines;
+flat saturated blocks read as clip-art next to this design system and fought the
+address text under them, so they became plan views instead — which also rhyme
+with the dot-matrix banner higher up the page. And `/pricing` started as a
+drawing of three plan columns, which put an illustration of the plan grid
+directly above the real plan grid; it now shows the billing comparison and the
+yearly saving, the part of the pricing story the component below doesn't tell.
+
+The `/pricing` banner renders only when `PricingSection` has `standalone` set —
+the homepage instance of that section sits below the hero and doesn't need a
+second piece of artwork.

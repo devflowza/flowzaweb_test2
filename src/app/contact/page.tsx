@@ -71,6 +71,7 @@ export default function ContactPage() {
         title="Let's Build Something"
         titleHighlight="Together"
         subtitle={CONTACT_PAGE.subtitle}
+        image={CONTACT_PAGE.image}
       />
 
       <Section tone="white" className="pt-(--spacing-section-sm)">

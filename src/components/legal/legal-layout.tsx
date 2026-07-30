@@ -2,6 +2,7 @@ import * as React from "react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Container, Section } from "@/components/layout/container";
 import { Reveal } from "@/components/motion";
+import type { ImageSlot } from "@/components/ui/image-frame";
 import { LegalToc } from "./legal-toc";
 
 interface LegalLayoutProps {
@@ -9,11 +10,20 @@ interface LegalLayoutProps {
   title: string;
   lastUpdated: string;
   version?: string;
+  /** Banner for this document — each legal page passes its own. */
+  image?: ImageSlot;
   children: React.ReactNode;
 }
 
 /** Shared frame for legal documents: header, sticky TOC (scroll-spy), prose body. */
-export function LegalLayout({ badge, title, lastUpdated, version, children }: LegalLayoutProps) {
+export function LegalLayout({
+  badge,
+  title,
+  lastUpdated,
+  version,
+  image,
+  children,
+}: LegalLayoutProps) {
   return (
     <>
       <PageHeader
@@ -26,6 +36,7 @@ export function LegalLayout({ badge, title, lastUpdated, version, children }: Le
             {version ? ` · Version ${version}` : ""}
           </>
         }
+        image={image}
       />
       <Section tone="white" className="pt-(--spacing-section-sm)">
         <Container>

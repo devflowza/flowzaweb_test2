@@ -124,4 +124,9 @@ export const PRICING_COPY = {
   subtitle:
     "Start free, scale as you grow. Every plan includes purchase management, banking, reports and multi-currency support.",
   note: "Plans apply to FlowZa Finance. Every plan can be started as a free trial — no card required.",
+  /** Shown only on the standalone /pricing page, not in the homepage section. */
+  image: {
+    src: "/images/pages/pricing.webp",
+    alt: "The three FlowZa Finance plans side by side with a monthly and yearly billing switch above them, the middle plan marked as most popular and each listing its included features.",
+  },
 } as const;

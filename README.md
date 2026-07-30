@@ -27,17 +27,18 @@ cp .env.example .env.local   # optional — site runs without Supabase (WhatsApp
 npm run dev
 ```
 
-| Script                    | Purpose                                       |
-| ------------------------- | --------------------------------------------- |
-| `npm run dev`             | Dev server (Turbopack)                        |
-| `npm run build` / `start` | Production build / serve                      |
-| `npm run lint`            | ESLint (flat config, next/core-web-vitals)    |
-| `npm run typecheck`       | `tsc --noEmit`                                |
-| `npm run format`          | Prettier                                      |
-| `npm run optimize:images` | Re-run the sharp asset pipeline               |
-| `npm run cf:build`        | Build the Cloudflare worker (`.open-next/`)   |
-| `npm run cf:preview`      | Preview on the workerd runtime locally        |
-| `npm run cf:deploy`       | Deploy to Cloudflare Workers (approval-gated) |
+| Script                         | Purpose                                       |
+| ------------------------------ | --------------------------------------------- |
+| `npm run dev`                  | Dev server (Turbopack)                        |
+| `npm run build` / `start`      | Production build / serve                      |
+| `npm run lint`                 | ESLint (flat config, next/core-web-vitals)    |
+| `npm run typecheck`            | `tsc --noEmit`                                |
+| `npm run format`               | Prettier                                      |
+| `npm run optimize:images`      | Re-run the sharp asset pipeline               |
+| `npm run generate:page-images` | Redraw the generated page illustrations       |
+| `npm run cf:build`             | Build the Cloudflare worker (`.open-next/`)   |
+| `npm run cf:preview`           | Preview on the workerd runtime locally        |
+| `npm run cf:deploy`            | Deploy to Cloudflare Workers (approval-gated) |
 
 ## Project layout
 

@@ -4,6 +4,7 @@ import { LOCATIONS_PAGE, LOCATION_HIGHLIGHTS, OFFICES } from "@/content/location
 import { CONTACT } from "@/content/site";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ImageFrame } from "@/components/ui/image-frame";
 import { PageHeader } from "@/components/layout/page-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbNode, graph, webPageNode } from "@/lib/seo";
@@ -39,6 +40,7 @@ export default function LocationsPage() {
         title={LOCATIONS_PAGE.title}
         titleHighlight={LOCATIONS_PAGE.titleHighlight}
         subtitle={LOCATIONS_PAGE.subtitle}
+        image={LOCATIONS_PAGE.image}
       />
 
       <Section tone="white" className="pt-(--spacing-section-sm)" ghost="GLOBAL">
@@ -48,38 +50,47 @@ export default function LocationsPage() {
               <li key={office.city} className="h-full">
                 <Reveal delay={i * 0.1} className="h-full">
                   <div
-                    className="flex h-full flex-col rounded-card border border-line bg-surface p-7 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)"
+                    className="flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-soft)"
                     style={{ borderTopColor: office.accent, borderTopWidth: 3 }}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <span
-                        className="flex size-11 items-center justify-center rounded-xl"
-                        style={{ backgroundColor: `${office.accent}14`, color: office.accent }}
-                      >
-                        <MapPin className="size-5" strokeWidth={1.75} aria-hidden="true" />
-                      </span>
-                      <Badge>{office.label}</Badge>
+                    {/* Map plate, tinted with this office's accent */}
+                    <ImageFrame
+                      image={office.image}
+                      ratio="16/9"
+                      sizes="(max-width: 768px) 92vw, (max-width: 1500px) 31vw, 27rem"
+                      rounded="rounded-none"
+                    />
+                    <div className="flex flex-1 flex-col p-7">
+                      <div className="flex items-start justify-between gap-3">
+                        <span
+                          className="flex size-11 items-center justify-center rounded-xl"
+                          style={{ backgroundColor: `${office.accent}14`, color: office.accent }}
+                        >
+                          <MapPin className="size-5" strokeWidth={1.75} aria-hidden="true" />
+                        </span>
+                        <Badge>{office.label}</Badge>
+                      </div>
+                      <h2 className="mt-5 text-xl font-semibold text-ink">
+                        {office.city}, {office.country}
+                      </h2>
+                      <address className="mt-3 flex-1 text-sm not-italic leading-relaxed text-gray">
+                        {office.entity ? (
+                          <span className="mb-1 flex items-center gap-1.5 font-semibold text-ink">
+                            <Building2
+                              className="size-3.5 text-gray"
+                              strokeWidth={1.75}
+                              aria-hidden="true"
+                            />
+                            {office.entity}
+                          </span>
+                        ) : null}
+                        {office.addressLines.map((line) => (
+                          <span key={line} className="block">
+                            {line}
+                          </span>
+                        ))}
+                      </address>
                     </div>
-                    <h2 className="mt-5 text-xl font-semibold text-ink">
-                      {office.city}, {office.country}
-                    </h2>
-                    <address className="mt-3 flex-1 text-sm not-italic leading-relaxed text-gray">
-                      {office.entity ? (
-                        <span className="mb-1 flex items-center gap-1.5 font-semibold text-ink">
-                          <Building2
-                            className="size-3.5 text-gray"
-                            strokeWidth={1.75}
-                            aria-hidden="true"
-                          />
-                          {office.entity}
-                        </span>
-                      ) : null}
-                      {office.addressLines.map((line) => (
-                        <span key={line} className="block">
-                          {line}
-                        </span>
-                      ))}
-                    </address>
                   </div>
                 </Reveal>
               </li>
