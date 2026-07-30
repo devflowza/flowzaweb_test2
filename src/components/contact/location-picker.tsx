@@ -60,7 +60,7 @@ export function LocationPicker() {
                     <div className="relative">
                       <ImageFrame
                         image={office.image}
-                        ratio="16/8"
+                        ratio="5/2"
                         rounded="rounded-[calc(var(--radius-card)-0.625rem)]"
                         sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
                       />
@@ -113,7 +113,7 @@ export function LocationPicker() {
           <div className="mt-9 flex justify-center">
             <Link
               href="/locations"
-              className="group inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-accent-deep shadow-(--shadow-hairline) transition-all duration-300 ease-(--ease-1) hover:border-accent hover:shadow-(--shadow-soft)"
+              className="group inline-flex items-center gap-2 rounded-full border border-brand-100 bg-accent-mint px-5 py-2.5 text-sm font-semibold text-accent-deep transition-all duration-300 ease-(--ease-1) hover:border-accent hover:shadow-(--shadow-soft)"
             >
               <Globe className="size-4" strokeWidth={1.75} aria-hidden="true" />
               See all locations
