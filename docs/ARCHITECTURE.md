@@ -821,7 +821,7 @@ entry and asset were deleted with it rather than left orphaned.
 
 ---
 
-## 19. Removing the ghost watermark type (2026-07-30)
+## 19. Removing the ghost watermark type and the site-wide marquee (2026-07-30)
 
 `Section` accepted a `ghost` prop that painted a word — `QUOTED`, `PLANS`,
 `IMPACT`, `MISSION`, a platform numeral — at `10vw` and 5% opacity behind the
@@ -839,5 +839,17 @@ prop — `FlowZa` at `12vw` in `CtaBand`, `07` at `8rem` in the About mission pa
 are gone with it. A DOM sweep across eight pages confirms no element over 90px of
 type remains.
 
-Note this is distinct from the **text marquee** (`LogisPro * Spa Master * …`),
-which is real scrolling content and stays.
+### The site-wide marquee went with it
+
+`MarqueeStrip` — the platform names scrolling in `clamp(1.6rem, 3vw, 2.4rem)`
+`text-line` grey above the footer on **every** page, rendered from `layout.tsx` —
+is removed too, and its component file deleted. The CTA band now runs straight
+into the footer.
+
+Two things deliberately survive, because they are not the same device:
+
+- **`ClientsMarquee`** on the homepage — client names in pills under a kicker.
+  That is social proof, i.e. content, not decorative type. It is now the only
+  marquee on the site.
+- **The `Marquee` motion primitive** and its CSS (`--animate-marquee`,
+  `marquee-track`, the keyframes), since `ClientsMarquee` still uses them.
