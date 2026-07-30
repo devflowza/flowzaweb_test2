@@ -1,6 +1,7 @@
 import { CONTACT, SITE, TRUST_BADGES } from "@/content/site";
 import { PLATFORMS } from "@/content/products";
-import { PRICING_PLANS, YEARLY_DISCOUNT_PERCENT } from "@/content/pricing";
+import { PRODUCT_PRICING, formatPrice, yearlySavingPercent } from "@/content/pricing";
+import { PLATFORM_NAV_MAP } from "@/content/platforms-nav";
 import { HOME_FAQS } from "@/content/faqs";
 
 export const dynamic = "force-static";
@@ -15,9 +16,25 @@ export function GET(): Response {
       `- [${p.name}](${SITE.url}/products/${p.slug}): ${p.tagline}. ${p.description}${p.live ? " (Live today.)" : " (Rolling out — early access via contact.)"}`,
   ).join("\n");
 
-  const plans = PRICING_PLANS.map(
-    (p) => `- ${p.name}: $${p.monthlyPrice}/mo — ${p.description}`,
-  ).join("\n");
+  /* One block per platform: each is priced independently, so a single flat plan
+     list would misattribute Finance's $16 tier to all nine. */
+  const pricing = PRODUCT_PRICING.map((product) => {
+    const platform = PLATFORM_NAV_MAP[product.slug];
+    if (product.mode === "quote") {
+      const summary = product.tiers[0]?.description ?? "Quoted per operation.";
+      return `### ${platform.name}\nQuoted per operation — ${summary} Contact ${CONTACT.email}.`;
+    }
+    const tiers = product.tiers
+      .map((tier) => {
+        if (tier.monthly === null) return `- ${tier.name}: custom pricing (contact sales)`;
+        if (tier.monthly === 0) return `- ${tier.name}: $0 — ${tier.description}`;
+        const saving = yearlySavingPercent(tier);
+        const yearly = `$${formatPrice(tier.yearly ?? 0)}/yr${saving ? ` (saves ${saving}%)` : ""}`;
+        return `- ${tier.name}: $${formatPrice(tier.monthly)}/mo or ${yearly} — ${tier.description}`;
+      })
+      .join("\n");
+    return `### ${platform.name}\n${tiers}`;
+  }).join("\n\n");
 
   const faqs = HOME_FAQS.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n");
 
@@ -34,11 +51,14 @@ Contact: ${CONTACT.email} · WhatsApp ${CONTACT.whatsappDisplay} · ${CONTACT.ho
 
 ${platforms}
 
-## Pricing (FlowZa Finance)
+## Pricing
 
-${plans}
-- Enterprise Plus: custom pricing (contact sales)
-- Yearly billing saves ${YEARLY_DISCOUNT_PERCENT}%. Every plan starts as a free trial, no card required.
+Each platform is priced independently, in USD per organisation, excluding local
+taxes. Every paid plan can start as a free trial with no card. Platforms share
+one data layer, so running several is quoted as a single subscription.
+
+${pricing}
+
 - Pricing page: ${SITE.url}/pricing
 
 ## Key pages
