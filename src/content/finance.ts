@@ -1,18 +1,24 @@
 import {
   Banknote,
+  BarChart2,
   Calendar,
   CreditCard,
   FileText,
   Fingerprint,
-  Landmark,
   Hash,
+  IdCard,
+  Landmark,
   Mail,
   MessageCircle,
+  Package,
   ShieldCheck,
+  ShoppingBag,
+  ShoppingCart,
   Upload,
+  Users,
   Wallet,
+  type LucideIcon,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
 /** FlowZa Finance flagship-page content (migrated from the retired /finance demo page). */
 
@@ -168,6 +174,7 @@ export const FINANCE_SCREENSHOTS: FinanceScreenshot[] = [
 ];
 
 export interface FinanceModule {
+  icon: LucideIcon;
   title: string;
   hook: string;
   points: string[];
@@ -175,13 +182,16 @@ export interface FinanceModule {
 
 export const FINANCE_MODULES_SECTION = {
   badge: "The whole back office",
-  title: "Far More Than Accounting",
+  /* Split so the component can render "Accounting" in the accent, per mockup. */
+  title: "Far More Than",
+  titleHighlight: "Accounting",
   subtitle:
     "FinanceOS replaces the five tools you're stitching together — sales, purchases, inventory, accounting, payroll and HR, unified on one ledger.",
 } as const;
 
 export const FINANCE_MODULES: FinanceModule[] = [
   {
+    icon: ShoppingCart,
     title: "Sales & Receivables",
     hook: "From quote to cash, every step linked.",
     points: [
@@ -192,6 +202,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: ShoppingBag,
     title: "Purchases & Payables",
     hook: "Control every unit of spend.",
     points: [
@@ -202,6 +213,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: Package,
     title: "Inventory & Stock",
     hook: "Stock and books, always in sync.",
     points: [
@@ -212,6 +224,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: Landmark,
     title: "Accounting & Banking",
     hook: "Audit-ready books that check themselves.",
     points: [
@@ -222,6 +235,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: Users,
     title: "Payroll",
     hook: "Compliant payroll in minutes.",
     points: [
@@ -232,6 +246,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: IdCard,
     title: "HR Suite (HRMS)",
     hook: "Hire-to-retire, all in one place.",
     points: [
@@ -242,6 +257,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: BarChart2,
     title: "Reporting & Analytics",
     hook: "Every number, one click away.",
     points: [
@@ -252,6 +268,7 @@ export const FINANCE_MODULES: FinanceModule[] = [
     ],
   },
   {
+    icon: FileText,
     title: "Documents & PDF",
     hook: "On-brand documents, no designer needed.",
     points: [
