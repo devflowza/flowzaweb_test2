@@ -21,9 +21,18 @@ export const SITE = {
   foundingYear: 2024,
 } as const;
 
+const WHATSAPP_NUMBER = "96892107562";
+const WHATSAPP_PREFILL =
+  "Hello FlowZa team! I'm interested in your business platforms and would like to learn more. Could you please share the details?";
+
 export const CONTACT = {
   whatsappDisplay: "+968 9210 7562",
-  whatsappUrl: "https://wa.me/96892107562?text=Hello!%20FlowZa",
+  /**
+   * api.whatsapp.com/send rather than wa.me — wa.me stopped resolving for this
+   * number. The prefilled text is URL-encoded at build time; edit the plain
+   * string above the CONTACT block, never the encoded URL.
+   */
+  whatsappUrl: `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(WHATSAPP_PREFILL)}`,
   email: "sales@flowza.ai",
   supportEmail: "support@flowza.ai",
   privacyEmail: "privacy@flowza.ai",
