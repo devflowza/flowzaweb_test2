@@ -11,18 +11,6 @@ export interface OfficeLocation {
   image: ImageSlot;
 }
 
-export const LOCATIONS_PAGE = {
-  badge: "Office Locations",
-  title: "Wherever You Are,",
-  titleHighlight: "We're There Too",
-  subtitle:
-    "FlowZa operates globally with offices strategically positioned across India and the Middle East. Connect with our teams across three major hubs.",
-  image: {
-    src: "/images/pages/locations.webp",
-    alt: "Dot-matrix map of the Middle East and India with the three FlowZa hubs marked — Dubai, Muscat and Bengaluru — linked by dashed flight paths.",
-  },
-} as const;
-
 export const OFFICES: OfficeLocation[] = [
   {
     label: "Head Office",
@@ -65,15 +53,3 @@ export const OFFICES: OfficeLocation[] = [
     },
   },
 ];
-
-export const LOCATION_HIGHLIGHTS = [
-  {
-    title: "Diverse Teams",
-    description: "50+ talented professionals united by a mission to transform business operations.",
-  },
-  {
-    title: "24/7 Support",
-    description:
-      "Round-the-clock availability across all time zones, WhatsApp-first — reach a human, not a ticket queue.",
-  },
-] as const;

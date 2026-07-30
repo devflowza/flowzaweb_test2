@@ -87,7 +87,6 @@ ${pricing}
 - [Pricing](${SITE.url}/pricing)
 - [Get started](${SITE.url}/get-started)
 - [About](${SITE.url}/about)
-- [Locations](${SITE.url}/locations)
 - [Help Center](${SITE.url}/help)
 - [Contact](${SITE.url}/contact)
 

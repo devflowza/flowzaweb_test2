@@ -1,7 +1,6 @@
 import * as React from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, Building2, Globe, MapPin } from "lucide-react";
+import { Building2, Globe, MapPin } from "lucide-react";
 import { OFFICES } from "@/content/locations";
 import { Container, Section } from "@/components/layout/container";
 import { ImageFrame } from "@/components/ui/image-frame";
@@ -90,17 +89,6 @@ export function LocationPicker() {
                         />
                         <span>{office.addressLines.join(" ")}</span>
                       </p>
-
-                      <div className="mt-5 flex-1" />
-                      <Link
-                        href="/locations"
-                        className="group inline-flex w-fit items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 ease-(--ease-1) hover:gap-3"
-                        style={{ backgroundColor: `${office.accent}14`, color: office.accent }}
-                      >
-                        Explore location
-                        <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
-                        <span className="sr-only">— {office.city}</span>
-                      </Link>
                     </div>
                   </div>
                 </Reveal>
@@ -108,23 +96,6 @@ export function LocationPicker() {
             );
           })}
         </ul>
-
-        <Reveal delay={0.28}>
-          <div className="mt-9 flex justify-center">
-            <Link
-              href="/locations"
-              className="group inline-flex items-center gap-2 rounded-full border border-brand-100 bg-accent-mint px-5 py-2.5 text-sm font-semibold text-accent-deep transition-all duration-300 ease-(--ease-1) hover:border-accent hover:shadow-(--shadow-soft)"
-            >
-              <Globe className="size-4" strokeWidth={1.75} aria-hidden="true" />
-              See all locations
-              <ArrowRight
-                className="size-4 transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-0.5"
-                strokeWidth={2}
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
-        </Reveal>
       </Container>
     </Section>
   );
