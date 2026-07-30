@@ -1,6 +1,7 @@
 import { CONTACT, SITE, SOCIALS } from "@/content/site";
 import { PLATFORMS, type Platform } from "@/content/products";
-import { PRICING_PLANS, YEARLY_DISCOUNT_PERCENT } from "@/content/pricing";
+import { PRODUCT_PRICING, SELF_SERVE_PRICING, yearlySavingPercent } from "@/content/pricing";
+import { PLATFORM_NAV_MAP } from "@/content/platforms-nav";
 import type { Faq } from "@/content/faqs";
 import type { Crumb } from "@/components/layout/breadcrumbs";
 
@@ -118,16 +119,26 @@ export function softwareNode(platform: Platform): JsonLdNode {
     publisher: { "@id": ORG_ID },
     featureList: platform.features.map((f) => f.title).join(", "),
   };
-  if (platform.slug === "finance") {
-    node.offers = PRICING_PLANS.map((plan) => ({
-      "@type": "Offer",
-      name: `${plan.name} plan`,
-      price: plan.monthlyPrice,
-      priceCurrency: "USD",
-      description: `${plan.description}. Yearly billing saves ${YEARLY_DISCOUNT_PERCENT}%.`,
-      url: `${SITE.url}/pricing`,
-      availability: "https://schema.org/InStock",
-    }));
+  /* Offers are emitted for every platform that publishes a list price, not just
+     Finance — a quoted-only platform gets none rather than a zero-price Offer,
+     which Google reads as free. */
+  const pricing = PRODUCT_PRICING.find((p) => p.slug === platform.slug);
+  const priced = pricing?.tiers.filter((t) => typeof t.monthly === "number") ?? [];
+  if (priced.length) {
+    node.offers = priced.map((tier) => {
+      const saving = yearlySavingPercent(tier);
+      return {
+        "@type": "Offer",
+        name: `${tier.name} plan`,
+        price: tier.monthly,
+        priceCurrency: "USD",
+        description: saving
+          ? `${tier.description}. Yearly billing saves ${saving}%.`
+          : tier.description,
+        url: `${SITE.url}/pricing#${platform.slug}`,
+        availability: "https://schema.org/InStock",
+      };
+    });
   }
   return node;
 }
@@ -146,19 +157,27 @@ export function platformsCollectionNode(): JsonLdNode {
   };
 }
 
+/** Every published plan across every platform, grouped per product. */
 export function offerCatalogNode(): JsonLdNode {
   return {
     "@type": "OfferCatalog",
     "@id": `${SITE.url}/pricing#catalog`,
-    name: "FlowZa Finance Plans",
-    itemListElement: PRICING_PLANS.map((plan) => ({
-      "@type": "Offer",
-      name: `${plan.name} plan`,
-      price: plan.monthlyPrice,
-      priceCurrency: "USD",
-      description: plan.description,
-      availability: "https://schema.org/InStock",
-      seller: { "@id": ORG_ID },
+    name: "FlowZa AI Platform Plans",
+    itemListElement: SELF_SERVE_PRICING.map((product) => ({
+      "@type": "OfferCatalog",
+      name: `${PLATFORM_NAV_MAP[product.slug].name} plans`,
+      url: `${SITE.url}/pricing#${product.slug}`,
+      itemListElement: product.tiers
+        .filter((tier) => typeof tier.monthly === "number")
+        .map((tier) => ({
+          "@type": "Offer",
+          name: `${PLATFORM_NAV_MAP[product.slug].shortName} ${tier.name}`,
+          price: tier.monthly,
+          priceCurrency: "USD",
+          description: tier.description,
+          availability: "https://schema.org/InStock",
+          seller: { "@id": ORG_ID },
+        })),
     })),
   };
 }

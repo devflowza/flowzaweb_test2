@@ -360,6 +360,19 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Pricing billing switch. Every tier renders both its monthly and its yearly
+   figure server-side; BillingToggle flips `data-billing` on the wrapper and
+   these two rules reveal the matching set. Nine products' prices therefore ship
+   in the static HTML — crawlable, and correct with JS disabled (monthly shows,
+   because that is the wrapper's server-rendered default).
+--------------------------------------------------------------------------- */
+
+[data-billing="monthly"] [data-price="yearly"],
+[data-billing="yearly"] [data-price="monthly"] {
+  display: none;
+}
+
 /* Marquee track — halts entirely for reduced motion */
 @utility marquee-track {
   display: flex;
