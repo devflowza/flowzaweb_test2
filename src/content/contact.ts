@@ -28,10 +28,10 @@ export const CONTACT_PAGE = {
   subtitle:
     "Whether you're exploring a product, ready to buy, or just have a question — our team responds within one business day.",
   formTitle: "Send us a message",
-  // Split so the component can render "Privacy Policy" as a real link.
-  consentLead: "By submitting this form you agree to our",
-  consentTail:
-    ". We never sell your data, and we only use your details to respond to your inquiry.",
+  formSubtitle: "We'd love to hear from you. Fill out the form and we'll get back soon.",
+  /* The word "privacy" links to the policy, so the mockup's one-liner still
+     carries the legal path the old consent sentence had. */
+  privacyNote: "We respect your privacy. Your information is safe with us.",
   successTitle: "Message sent",
   successBody:
     "Thanks for reaching out — our team will get back to you within one business day. For anything urgent, WhatsApp is the fastest way to reach us.",

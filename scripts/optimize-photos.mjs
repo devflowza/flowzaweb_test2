@@ -52,6 +52,9 @@ const PHOTOS_LOCATIONS = [
 
 /** About-page section backgrounds — sources in-repo under Photos/About Page. */
 const SRC_ABOUT = path.resolve(import.meta.dirname, "../Photos/About Page");
+const SRC_CONTACT = path.resolve(import.meta.dirname, "../Photos/Contact Us");
+const PHOTOS_CONTACT = [["Background.png", "contact-hero-bg.webp"]];
+
 const PHOTOS_ABOUT = [
   ["About Landing Background Image.png", "about-hero-bg.webp"],
   ["Our Mission Section Background.png", "about-mission-bg.webp"],
@@ -65,6 +68,7 @@ for (const [srcDir, list] of [
   [SRC_V2, PHOTOS_V2],
   [SRC_LOCATIONS, PHOTOS_LOCATIONS],
   [SRC_ABOUT, PHOTOS_ABOUT],
+  [SRC_CONTACT, PHOTOS_CONTACT],
 ]) {
   for (const [src, out] of list) {
     const dest = path.join(OUT, out);

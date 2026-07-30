@@ -1,5 +1,4 @@
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Car,
@@ -20,6 +19,7 @@ import { PLATFORM_NAV, type PlatformNav } from "@/content/platforms-nav";
 import { ABOUT_HERO, ABOUT_MISSION, ABOUT_STATS, ABOUT_VALUES } from "@/content/about";
 import { SITE } from "@/content/site";
 import { Container } from "@/components/layout/container";
+import { SectionBackdrop } from "@/components/layout/section-backdrop";
 import { Eyebrow } from "@/components/layout/eyebrow";
 import { Reveal } from "@/components/motion";
 import { cn } from "@/lib/utils";
@@ -31,15 +31,6 @@ import { cn } from "@/lib/utils";
  * (white cards over the forest backdrop). Each sits on its supplied background
  * photograph under a white wash heavy enough to keep text at AA contrast.
  */
-
-function SectionBackdrop({ src, wash }: { src: string; wash: string }) {
-  return (
-    <div aria-hidden="true" className="absolute inset-0">
-      <Image src={src} alt="" fill sizes="100vw" className="object-cover" />
-      <div className={cn("absolute inset-0", wash)} />
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------------- */
 /* Hero: copy + orbit panel + ecosystem strip + stats                        */
