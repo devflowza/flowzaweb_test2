@@ -11,6 +11,7 @@ import { SectionHeading } from "@/components/layout/section-heading";
 import { WhatsAppIcon } from "@/components/layout/social-icons";
 import { CountUp, Reveal } from "@/components/motion";
 import { CtaBand } from "@/components/sections/cta-band";
+import { FabricDiagram } from "@/components/about/fabric-diagram";
 import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbNode, graph, webPageNode } from "@/lib/seo";
 
@@ -41,8 +42,10 @@ export default function AboutPage() {
         title={ABOUT_HERO.title}
         titleHighlight={ABOUT_HERO.titleHighlight}
         subtitle={ABOUT_HERO.subtitle}
-        image={ABOUT_HERO.image}
       />
+
+      {/* The operating fabric, drawn from the real platform registry */}
+      <FabricDiagram />
 
       {/* Stats */}
       <Section tone="white" compact className="pt-(--spacing-section-sm)">
@@ -97,16 +100,24 @@ export default function AboutPage() {
                     &ldquo;{SITE.positioning}&rdquo;
                   </p>
                   <ul className="relative flex flex-wrap gap-2">
-                    {["Finance", "Logistics", "Wellness", "Fleet", "QR", "Retail", "Clubs"].map(
-                      (v) => (
-                        <li
-                          key={v}
-                          className="rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[0.68rem] uppercase tracking-[0.12em] text-white/75"
-                        >
-                          {v}
-                        </li>
-                      ),
-                    )}
+                    {[
+                      "Finance",
+                      "Logistics",
+                      "Wellness",
+                      "Fleet",
+                      "QR",
+                      "Retail",
+                      "Clubs",
+                      "Rentals",
+                      "People",
+                    ].map((v) => (
+                      <li
+                        key={v}
+                        className="rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[0.68rem] uppercase tracking-[0.12em] text-white/75"
+                      >
+                        {v}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
