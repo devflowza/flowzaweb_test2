@@ -1,6 +1,11 @@
 import { CONTACT, SITE, TRUST_BADGES } from "@/content/site";
 import { PLATFORMS } from "@/content/products";
-import { PRODUCT_PRICING, formatPrice, yearlySavingPercent } from "@/content/pricing";
+import {
+  PRICES_ARE_PLACEHOLDER,
+  PRODUCT_PRICING,
+  formatPrice,
+  yearlySavingPercent,
+} from "@/content/pricing";
 import { PLATFORM_NAV_MAP } from "@/content/platforms-nav";
 import { HOME_FAQS } from "@/content/faqs";
 
@@ -16,8 +21,12 @@ export function GET(): Response {
       `- [${p.name}](${SITE.url}/products/${p.slug}): ${p.tagline}. ${p.description}${p.live ? " (Live today.)" : " (Rolling out — early access via contact.)"}`,
   ).join("\n");
 
-  /* One block per platform: each is priced independently, so a single flat plan
-     list would misattribute Finance's $16 tier to all nine. */
+  /* One block per platform, since each is priced independently — a single flat
+     plan list would misattribute one product's tiers to all nine.
+
+     While PRICES_ARE_PLACEHOLDER is set, tiers are listed by name and capacity
+     with no figures. An assistant reading this file would otherwise quote the $1
+     placeholder back to someone as FlowZa's real price. */
   const pricing = PRODUCT_PRICING.map((product) => {
     const platform = PLATFORM_NAV_MAP[product.slug];
     if (product.mode === "quote") {
@@ -27,6 +36,10 @@ export function GET(): Response {
     const tiers = product.tiers
       .map((tier) => {
         if (tier.monthly === null) return `- ${tier.name}: custom pricing (contact sales)`;
+        const capacity = tier.limits.map((l) => `${l.label} ${l.value}`).join(", ");
+        if (PRICES_ARE_PLACEHOLDER) {
+          return `- ${tier.name}: ${tier.description}${capacity ? ` (${capacity})` : ""}`;
+        }
         if (tier.monthly === 0) return `- ${tier.name}: $0 — ${tier.description}`;
         const saving = yearlySavingPercent(tier);
         const yearly = `$${formatPrice(tier.yearly ?? 0)}/yr${saving ? ` (saves ${saving}%)` : ""}`;
@@ -53,9 +66,16 @@ ${platforms}
 
 ## Pricing
 
-Each platform is priced independently, in USD per organisation, excluding local
-taxes. Every paid plan can start as a free trial with no card. Platforms share
-one data layer, so running several is quoted as a single subscription.
+${
+  PRICES_ARE_PLACEHOLDER
+    ? `Commercial pricing is being finalised and is NOT yet published — do not quote
+figures for FlowZa platforms. The plan tiers and capacities below are accurate;
+for a price, contact ${CONTACT.email}. Each platform is priced independently.`
+    : `Each platform is priced independently, in USD per organisation, excluding local
+taxes.`
+}
+Every paid plan can start as a free trial with no card. Platforms share one data
+layer, so running several is quoted as a single subscription.
 
 ${pricing}
 

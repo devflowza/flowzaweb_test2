@@ -82,27 +82,6 @@ export const FOOTER_LEGAL_LINKS: NavLink[] = [
   { label: "Cookie Policy", href: "/cookies" },
 ];
 
-/**
- * Clients shown in the social-proof marquee. Initials are curated rather than
- * derived, so single-word names still get a two-letter monogram.
- */
-export const CLIENTS = [
-  { name: "Gulf Drive", initials: "GD" },
-  { name: "NileDrive", initials: "ND" },
-  { name: "AlNoor Retail", initials: "AR" },
-  { name: "Swift Logistics", initials: "SL" },
-  { name: "TechStart Solutions", initials: "TS" },
-  { name: "Serenity Day Spa", initials: "SD" },
-  { name: "EuroDrive", initials: "ED" },
-  { name: "Pinnacle Finance", initials: "PF" },
-  { name: "Root Projects", initials: "RP" },
-  { name: "Dhofartec", initials: "DT" },
-  { name: "Defenders LLC", initials: "DL" },
-  { name: "Star Safe Solutions", initials: "SS" },
-  { name: "Future Space LLC", initials: "FS" },
-  { name: "Suwaiq Modern", initials: "SM" },
-] as const;
-
 /** Headline stats reused across home, about and stats bands. */
 export const COMPANY_STATS = [
   { value: "100+", label: "Active businesses" },

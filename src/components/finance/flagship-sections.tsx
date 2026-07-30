@@ -15,7 +15,7 @@ import { Reveal } from "@/components/motion";
 
 export function FinanceModules() {
   return (
-    <Section tone="white" ghost="ERP">
+    <Section tone="white">
       <Container>
         <SectionHeading
           eyebrow={FINANCE_MODULES_SECTION.badge}

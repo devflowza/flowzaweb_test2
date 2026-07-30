@@ -48,14 +48,17 @@ export function BillingToggle({ targetId }: { targetId: string }) {
         )}
       >
         Yearly
-        <span
-          className={cn(
-            "rounded-full px-2 py-0.5 text-[0.65rem] font-semibold",
-            yearly ? "bg-emerald-400/20 text-emerald-300" : "bg-emerald-100 text-emerald-700",
-          )}
-        >
-          save up to {HEADLINE_YEARLY_SAVING}%
-        </span>
+        {/* Suppressed while prices are placeholders — every tier's saving is 0%. */}
+        {HEADLINE_YEARLY_SAVING > 0 ? (
+          <span
+            className={cn(
+              "rounded-full px-2 py-0.5 text-[0.65rem] font-semibold",
+              yearly ? "bg-emerald-400/20 text-emerald-300" : "bg-emerald-100 text-emerald-700",
+            )}
+          >
+            save up to {HEADLINE_YEARLY_SAVING}%
+          </span>
+        ) : null}
       </button>
     </div>
   );

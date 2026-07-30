@@ -55,7 +55,7 @@ export default function ProductsPage() {
         }}
       />
 
-      <Section tone="tint" ghost="SYSTEMS" className="pt-(--spacing-section-sm)">
+      <Section tone="tint" className="pt-(--spacing-section-sm)">
         <Container>
           <ul className="flex flex-col gap-5">
             {PLATFORMS.map((p, i) => (

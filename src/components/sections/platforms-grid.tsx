@@ -52,7 +52,7 @@ export function PlatformsGrid() {
                       <ArrowRight className="relative size-5" strokeWidth={1.75} />
                     </span>
                     {p.live ? (
-                      <span className="absolute left-4 top-4 rounded-pill bg-accent-deep px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[1px] text-white">
+                      <span className="absolute left-4 top-4 rounded-pill bg-accent-deep px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[1px] text-white">
                         Live
                       </span>
                     ) : null}
@@ -60,7 +60,7 @@ export function PlatformsGrid() {
                         numeral over a blown-out sky or a white wall. */}
                     <span
                       aria-hidden="true"
-                      className="fx-frost absolute right-4 top-4 rounded-pill px-2.5 py-0.5 text-caption font-light text-white"
+                      className="fx-frost absolute right-4 top-4 rounded-pill px-2.5 py-0.5 text-caption text-white"
                     >
                       {p.index}
                     </span>
@@ -70,7 +70,7 @@ export function PlatformsGrid() {
                     <h3 className="text-h4 text-ink transition-colors duration-300 group-hover:text-accent-deep">
                       {p.name}
                     </h3>
-                    <p className="mt-1.5 text-body font-light text-gray">{p.cardTagline}</p>
+                    <p className="mt-1.5 text-body text-gray">{p.cardTagline}</p>
                     <TextButton className="mt-3 opacity-0 transition-opacity duration-300 ease-(--ease-1) group-hover:opacity-100">
                       Explore
                       <ArrowRight className="size-3.5" strokeWidth={2} aria-hidden="true" />
@@ -93,7 +93,7 @@ export function PlatformsGrid() {
                 </span>
                 <span>
                   <span className="block text-h4 text-ink">{PLATFORMS_SECTION.ctaTile.title}</span>
-                  <span className="mt-2 block max-w-xs text-body font-light text-gray">
+                  <span className="mt-2 block max-w-xs text-body text-gray">
                     {PLATFORMS_SECTION.ctaTile.description}
                   </span>
                 </span>

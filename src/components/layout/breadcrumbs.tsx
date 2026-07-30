@@ -22,7 +22,7 @@ export function Breadcrumbs({ items, className, dark = false }: BreadcrumbsProps
     <nav aria-label="Breadcrumb" className={className}>
       <ol
         className={cn(
-          "flex flex-wrap items-center gap-2 text-caption font-light",
+          "flex flex-wrap items-center gap-2 text-caption",
           dark ? "text-white/70" : "text-gray-soft",
         )}
       >

@@ -15,7 +15,7 @@ export function Eyebrow({ children, className, dark = false }: EyebrowProps) {
   return (
     <span
       className={cn(
-        "inline-flex flex-row-reverse items-center gap-[5px] text-lede font-light",
+        "inline-flex flex-row-reverse items-center gap-[5px] text-lede",
         dark ? "text-white" : "text-ink",
         className,
       )}

@@ -97,7 +97,7 @@ export function Header() {
                                 {p.name}
                                 {p.live ? <LivePill /> : null}
                               </span>
-                              <span className="truncate text-caption font-light text-gray">
+                              <span className="truncate text-caption text-gray">
                                 {p.cardTagline}
                               </span>
                             </span>

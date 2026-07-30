@@ -23,7 +23,7 @@ export const HOME_FAQS: Faq[] = [
   {
     question: "Do you offer yearly billing discounts?",
     answer:
-      "Yes. Paying yearly saves 25% compared to monthly billing across Starter, Professional and Enterprise plans.",
+      "Yes — every platform offers monthly and yearly billing, with yearly discounted. The exact discount is being finalised alongside the rest of our pricing, so contact us for current terms.",
   },
   {
     question: "How secure is my business data?",

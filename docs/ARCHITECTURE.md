@@ -37,16 +37,16 @@ flagship Flowza.ai website, to be built from scratch in this folder.
 
 The reference is a B2B industrial lead-gen site (AQOZA). Its value to us is conceptual:
 
-| Concept                           | What it is                                                                                                                                                        | How Flowza adopts it                                                                                             |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Fluid token system**            | Everything is `clamp()`: type scale, `--section-space-x/y` (24→64px / 40→128px), radii (`clamp(20px,2vw,30px)`), a `.section` gutter formula centering at 1500px  | Rebuilt as Tailwind v4 `@theme` tokens — fluid type + spacing + radius scales, one container primitive           |
-| **Section-primitive composition** | Pages are stacks of ~20 named section patterns (hero, title-div, card-div, CTA band, FAQ)                                                                         | A real React section library — composable, typed, reused across all pages                                        |
-| **Motion tokens**                 | `--transition1/2/3` cubic-bezier variables consumed everywhere                                                                                                    | Central motion constants (durations/easings) shared by CSS + Motion                                              |
-| **Signature moves**               | Text marquee with `*` separators, ghost watermark type, glass arrow chips, aurora light-leak behind hero, dual-dot eyebrow, gradient stats band, concentric radii | Reinterpreted in Flowza cyan/blue as the brand's visual signatures                                               |
-| **Doc-style product page**        | Sticky TOC sidebar + anchored content blocks + stacked Product JSON-LD                                                                                            | The template for the FlowZa Finance flagship page                                                                |
-| **Conversion spine**              | Every page drains into one repeated CTA band + lead form; FAQs sit below the form for SEO                                                                         | Repeated CTA band + FAQ accordion pattern across the new site                                                    |
-| **SEO scaffolding**               | Per-page `@graph` JSON-LD, BreadcrumbList mirrored in UI, segmented dynamic sitemap with image extensions                                                         | Systematized via a typed JSON-LD builder + `sitemap.ts`                                                          |
-| **Four-pillar IA**                | Solutions/Products/Industries/Insights clusters                                                                                                                   | Adapted: Platforms as the product pillar; hub page + 7 detail pages with cross-linking ("Works Better Together") |
+| Concept                           | What it is                                                                                                                                                       | How Flowza adopts it                                                                                             |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Fluid token system**            | Everything is `clamp()`: type scale, `--section-space-x/y` (24→64px / 40→128px), radii (`clamp(20px,2vw,30px)`), a `.section` gutter formula centering at 1500px | Rebuilt as Tailwind v4 `@theme` tokens — fluid type + spacing + radius scales, one container primitive           |
+| **Section-primitive composition** | Pages are stacks of ~20 named section patterns (hero, title-div, card-div, CTA band, FAQ)                                                                        | A real React section library — composable, typed, reused across all pages                                        |
+| **Motion tokens**                 | `--transition1/2/3` cubic-bezier variables consumed everywhere                                                                                                   | Central motion constants (durations/easings) shared by CSS + Motion                                              |
+| **Signature moves**               | Text marquee with `*` separators, glass arrow chips, aurora light-leak behind hero, dual-dot eyebrow, gradient stats band, concentric radii                      | Reinterpreted in Flowza cyan/blue as the brand's visual signatures (ghost watermark type dropped — see §19)      |
+| **Doc-style product page**        | Sticky TOC sidebar + anchored content blocks + stacked Product JSON-LD                                                                                           | The template for the FlowZa Finance flagship page                                                                |
+| **Conversion spine**              | Every page drains into one repeated CTA band + lead form; FAQs sit below the form for SEO                                                                        | Repeated CTA band + FAQ accordion pattern across the new site                                                    |
+| **SEO scaffolding**               | Per-page `@graph` JSON-LD, BreadcrumbList mirrored in UI, segmented dynamic sitemap with image extensions                                                        | Systematized via a typed JSON-LD builder + `sitemap.ts`                                                          |
+| **Four-pillar IA**                | Solutions/Products/Industries/Insights clusters                                                                                                                  | Adapted: Platforms as the product pillar; hub page + 7 detail pages with cross-linking ("Works Better Together") |
 
 Anti-patterns identified and deliberately avoided: 617 KB monolithic CSS, dead AOS attributes,
 no lazy loading/srcset, missing skip link, href-less nav anchors, empty-alt-by-default images,
@@ -141,7 +141,7 @@ deep-navy dark surfaces (top bar, footer, stats/CTA bands) for rhythm and contra
 3. Stats band: navy surface with gradient hairline dividers and mono numerals that count up.
 4. Platforms grid: image tiles with frosted icon chips, Live pills, hover reveal.
 5. CTA band ("How would you like to begin?") repeated as the conversion spine on every page.
-6. Ghost watermark type ("FLOWZA" / section numerals) at very low opacity behind key sections.
+6. ~~Ghost watermark type behind key sections~~ — removed, see §19.
 
 ---
 
@@ -268,7 +268,7 @@ flowzaweb/
 - **Variants** via `class-variance-authority` (comes with shadcn): button
   (primary-gradient / whatsapp / outline / ghost × sizes), badge, card treatments.
 - **One `<Section>`/`<Container>` primitive** owns rhythm (fluid padding, tint variants,
-  optional ghost-text/watermark slot) so every page inherits identical spacing.
+  so every page inherits identical spacing.
 - **Per-product theming** through a `--product-accent` CSS variable set at the page level —
   the same section components render each platform in its accent color.
 
@@ -742,65 +742,158 @@ second piece of artwork.
 
 ---
 
-## 18. Pricing: one Finance table → nine independently priced products (2026-07-30)
+## 18. Pricing: nine independently priced products, on placeholder figures (2026-07-30)
 
-`/pricing` quoted three FlowZa Finance tiers and nothing else, so eight of the
-nine platforms had no price anywhere on the site. It is now one section per
-product, each sourced from that product's **own billing table**, read over the
-Supabase MCP connection rather than transcribed.
+`/pricing` carried three FlowZa Finance tiers and nothing else, so eight of the
+nine platforms had no pricing page presence at all. It is now one section per
+product.
 
-### What the databases actually said
+### Prices are placeholders
 
-| Product        | Source                                          | Published                                  |
-| -------------- | ----------------------------------------------- | ------------------------------------------ |
-| Finance        | `Flowza_Finance_PRD · public.plans`             | $16 / $44 / $66 + Enterprise Plus (custom) |
-| LogisPro       | `Flowza_LogisPro · public.subscription_plans`   | $299 / $699 / $1,499                       |
-| PMS            | `Flowza_PMS · public.subscription_plans`        | Free / $49 / $149 / $399                   |
-| QRForge        | `Flowza_QR_Dev · public.subscription_plans`     | Free / $9 / $29 / $79                      |
-| Spa Master     | `Flowza_SpaManager · public.subscription_tiers` | **withheld** — see below                   |
-| Club, RentFlow | no plan table exists                            | quoted                                     |
-| POS, Fleetza   | no database in the account                      | quoted                                     |
+Commercial pricing is not signed off, so **every paid tier shows $1**
+(`PLACEHOLDER_MONTHLY`, with `PLACEHOLDER_YEARLY` twelve months of it). What is
+real is the _structure_ — which plans exist per product, their names, capacities,
+trial lengths and CTAs — read from each product's own billing table over the
+Supabase connection. Only the money is stubbed.
 
-### Three findings that changed the work
+`PRICES_ARE_PLACEHOLDER` gates every surface where a number would otherwise
+escape as a commercial claim:
 
-**The site was under-quoting Finance.** The page said $15 / $40 / $60; the
-billing table says **$16 / $44 / $66**. A marketing page that quotes less than
-the invoice charges is worse than one that quotes nothing, so the published
-figures now come from the table.
+- **schema.org**: `offerCatalogNode()` emits the plan structure with no `Offer`
+  nodes, and `softwareNode()` attaches none. A `price: 1` Offer would be indexed
+  and shown in search results as the real price.
+- **llms.txt**: tiers are listed by name and capacity with an explicit "pricing
+  is not yet published, do not quote figures" preamble — otherwise an assistant
+  reading the file repeats $1 to a prospective customer as fact.
+- **Visible copy**: the note under the billing toggle says the figures are
+  placeholders, and the yearly "save up to X%" pill hides itself when the
+  headline saving is 0 (which it is, by construction, at a flat $1).
 
-**Yearly totals must be stored, not computed.** The old code derived yearly from
-monthly with a flat 25%. That is wrong for Finance Enterprise ($66/mo, $600/yr —
-the formula predicts $594) and wrong for every other product, whose real
-discounts are 17% (LogisPro, structured as ten months' price), 20% (PMS) and
-18–21% (QRForge). `PricingTier.yearly` is now the number the invoice shows, and
-`yearlySavingPercent()` derives the _percentage_ from it, never the reverse.
+To go live: flip the flag and fill in real `monthly`/`yearly` values together.
+Nothing else needs touching. Three things to preserve when doing so:
 
-**Spa Master's ladder is inverted.** `subscription_tiers` has Starter $149 >
-Professional $119 > Enterprise $99, while `max_branches`, `max_staff` and
-`max_users` all ascend correctly. That reads as a data fault rather than a
-pricing strategy, so Spa Master publishes no number and routes to sales. Nothing
-was written back to that database — the fix belongs to whoever owns it.
+**Yearly totals are stored, never computed.** An earlier version derived yearly
+from monthly with a flat 25%. That contradicted the billing tables on every
+product — real discounts differ per tier, and one product prices yearly as a flat
+multiple of monthly rather than a percentage. Quote the figure the invoice shows
+and let `yearlySavingPercent()` derive the percentage from it, never the reverse.
+
+**No price without a source.** Club, RentFlow, POS and Fleetza have no plan table
+at all (Club's `packages` table is its tenants' own membership products, not what
+FlowZa charges for Club), so they are `mode: "quote"` with a contact CTA rather
+than a tier with the number blanked out.
+
+**Spa Master's tier ladder is inverted in its database.** `subscription_tiers`
+descends in price as it ascends in every capacity column — Starter is the most
+expensive, Enterprise the cheapest, while `max_branches`, `max_staff` and
+`max_users` all rise correctly. Treated as a data fault rather than a strategy,
+so Spa Master is quote-only regardless of the placeholder flag. Nothing was
+written back to that database; the fix belongs to whoever owns it. Two other
+provenance caveats are flagged in `pricing.ts` at the point of use: QRForge's
+plan rows come from a _development_ project (the only QRForge database in the
+account), and the LogisPro and PMS tables have no currency column, so USD is
+inferred from the payment-provider price IDs beside them.
 
 ### Structure
 
 All nine products render in the DOM at once, under a sticky anchor nav, rather
-than behind tabs — the whole price list stays crawlable and Cmd-F-able.
+than behind tabs — the whole list stays crawlable and Cmd-F-able.
 
 The monthly/yearly switch carries **no pricing data**. Each tier renders both
 figures server-side inside `[data-price="monthly"]` / `[data-price="yearly"]`
 spans; `BillingToggle` flips `data-billing` on one wrapper and two rules in
-globals.css reveal the matching set. So nine products' prices ship in the static
+globals.css reveal the matching set. So the whole price list ships in the static
 HTML, and with JS off the page still shows monthly — the server-rendered
 default — instead of nothing.
 
+Finance leads with capacity rather than features, because every paid Finance tier
+has an identical feature set in the database (all `has_*` flags true); the shared
+capability list is stated once above the tiers and the tiers differ on
+users/companies/invoices/contacts/storage.
+
 `PricingSection` reverted to what its name implies: a Finance-only teaser for the
 homepage and the Finance product page, now a server component with no toggle,
-pointing at `/pricing` as the single place every platform's price is stated.
-`offerCatalogNode()` emits a nested OfferCatalog per product, and `softwareNode()`
-attaches offers to any platform that publishes a list price — quoted platforms
-get none, since a zero-price Offer reads to Google as free.
+leaving `/pricing` as the single place any platform's pricing is stated.
 
-Prices that came from a **dev** database (QRForge) or from a table with no
-currency column (LogisPro, PMS — USD inferred from the Stripe/provider price IDs
-beside them) are flagged in `pricing.ts` at the point of use. Re-verify those
-before they go to production.
+`/pricing` is the one inner page with no `PageHeader` banner image — removed on
+request, and the sticky product nav occupies that space instead. The generator
+entry and asset were deleted with it rather than left orphaned.
+
+---
+
+## 19. Removing the ghost watermark type and the site-wide marquee (2026-07-30)
+
+`Section` accepted a `ghost` prop that painted a word — `QUOTED`, `PLANS`,
+`IMPACT`, `MISSION`, a platform numeral — at `10vw` and 5% opacity behind the
+section, one of the signature moves inherited from the reference design.
+
+Removed everywhere, on request. At `10vw` the word is 140px+ on a laptop, and
+because it sat top-right at low contrast it collided with real content — on
+`/pricing` the tail of `QUOTED` ran straight through the section's lede, which is
+what surfaced it.
+
+Taken out in full rather than left switchable: the `ghost` prop and its `<span>`
+are gone from `Section`, all 11 call sites are stripped, the `fx-ghost` utility is
+deleted from globals.css, and the two hand-rolled uses of that utility outside the
+prop — `FlowZa` at `12vw` in `CtaBand`, `07` at `8rem` in the About mission panel —
+are gone with it. A DOM sweep across eight pages confirms no element over 90px of
+type remains.
+
+### The site-wide marquee went with it
+
+`MarqueeStrip` — the platform names scrolling in `clamp(1.6rem, 3vw, 2.4rem)`
+`text-line` grey above the footer on **every** page, rendered from `layout.tsx` —
+is removed too, and its component file deleted. The CTA band now runs straight
+into the footer.
+
+`ClientsMarquee` on the homepage — client names in pills under a kicker — went in
+a follow-up pass, so **no marquee remains anywhere on the site**. With its only
+consumer gone, the whole chain below it was dead and is deleted with it:
+
+- `components/motion/marquee.tsx` and its re-export from the motion barrel
+- `--animate-marquee`, `@keyframes marquee` and the `marquee-track` utility in
+  globals.css
+
+`CLIENTS` in `content/site.ts` is kept and marked as currently unrendered. It is
+real customer data rather than scaffolding, and a future logo strip or case-study
+index would want it — deleting live business data to satisfy a dead-code sweep is
+the wrong trade.
+
+Swept all 23 rendered routes (22 from the sitemap plus the 404) in Chromium
+checking four signals at once: marquee sections present, `.marquee-track` nodes,
+any element running a marquee animation, and any element over 90px of type. All
+four are zero everywhere.
+
+---
+
+## 20. Text visibility pass (2026-07-30)
+
+The reference's typography was deliberately airy — body at weight 300, ledes at
+200, 1.3 leading, grays lifted well above ink. On the real site that read as
+washed out (user-reported on /pricing), so legibility now wins over reference
+fidelity. Grounded against the ui-ux-pro-max ruleset: body ≥400, line-height
+1.5–1.75, contrast ≥4.5:1 AA, no sub-12px body text.
+
+Measured, then changed at token level so it cascades:
+
+| Token                 | Was                              | Now               |
+| --------------------- | -------------------------------- | ----------------- |
+| `--color-gray`        | `#5d5e5f` (6.5:1)                | `#45484b` (9.2:1) |
+| `--color-gray-soft`   | `#a3a3a4` (**2.52:1 — AA fail**) | `#717376` (4.8:1) |
+| body weight / leading | 300 / 1.3                        | 400 / 1.5         |
+| lede weight / leading | 200 / 1.3                        | 400 / 1.45        |
+
+The `gray-soft` failure was live text — the hero kicker, light-mode breadcrumbs
+and the products-page index numerals all used it. Alongside the tokens, all 15
+component-level `font-light` overrides were stripped (they re-imposed 300 on
+descriptions, accordions, footer and nav), the 0.62rem (9.9px) badge floor rose
+to 0.68rem, and the two pricing disclaimers went from 13px to 14px.
+
+Verified by sweeping **every text element on all 22 sitemap routes in Chromium**
+— 2,822 elements checked against size-aware WCAG thresholds (4.5:1 normal, 3:1
+large), zero failures; 236 elements on image/gradient backgrounds are skipped by
+the sweep and were eyeballed instead. The sweep script lives in the session
+scratchpad; re-run it after any palette change.
+
+`CLIENTS` in `content/site.ts` was also deleted this pass (user call) — the
+social-proof data outlived its last renderer.

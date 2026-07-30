@@ -5,7 +5,6 @@ import { TopBar } from "@/components/layout/top-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFloat } from "@/components/layout/whatsapp-float";
-import { MarqueeStrip } from "@/components/sections/marquee-strip";
 import { JsonLd } from "@/components/seo/json-ld";
 import { graph, organizationNode, webSiteNode } from "@/lib/seo";
 import { SITE } from "@/content/site";
@@ -59,7 +58,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TopBar />
         <Header />
         <main id="main">{children}</main>
-        <MarqueeStrip />
         <Footer />
         <WhatsAppFloat />
       </body>

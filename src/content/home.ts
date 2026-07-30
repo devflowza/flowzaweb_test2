@@ -134,7 +134,7 @@ export const ACTION_TRIO = {
     {
       icon: Tag,
       title: "View Pricing",
-      description: "Transparent plans from $15/mo — save 25% when you pay yearly.",
+      description: "See what every plan includes across all nine platforms.",
       badge: "No Hidden Fees",
       href: "/pricing",
       external: false,

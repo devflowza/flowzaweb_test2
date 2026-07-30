@@ -87,7 +87,7 @@ export const HELP_FAQS: Faq[] = [
   {
     question: "How does pricing and billing work?",
     answer:
-      "Plans start at $15/month, and paying yearly saves 25% across Starter, Professional and Enterprise. Every plan can begin as a free trial — no card required. Enterprise Plus offers custom pricing for larger groups.",
+      "Each platform is priced independently, per organisation, with monthly and yearly billing. Commercial pricing is being finalised — the figures on the pricing page are placeholders, so contact sales for a quote. Every plan can begin as a free trial with no card required, and Enterprise Plus is quoted for larger groups.",
   },
   {
     question: "Which payment methods do you accept?",

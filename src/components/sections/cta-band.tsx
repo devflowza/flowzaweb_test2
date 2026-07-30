@@ -20,12 +20,6 @@ export function CtaBand({ eyebrow, title, subtitle, children, className }: CtaBa
     <section className={cn("bg-surface section-y", className)}>
       <Container>
         <div className="relative overflow-hidden rounded-card border border-brand-100 bg-gradient-to-br from-[#f6fff8] to-surface-tint px-6 py-16 text-center sm:px-12 lg:py-20">
-          <span
-            aria-hidden="true"
-            className="fx-ghost absolute -bottom-6 left-0 select-none text-[12vw] leading-none"
-          >
-            FlowZa
-          </span>
           <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6">
             {eyebrow ? (
               <Reveal>

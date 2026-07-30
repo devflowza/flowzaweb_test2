@@ -30,7 +30,7 @@ export function FinanceSpotlight() {
                     <span className="block text-h3 font-medium tracking-[-0.02em] text-accent-deep">
                       {kpi.value}
                     </span>
-                    <span className="mt-1 block text-caption font-light uppercase tracking-[2px] text-gray">
+                    <span className="mt-1 block text-caption uppercase tracking-[2px] text-gray">
                       {kpi.label}
                     </span>
                   </li>
@@ -60,7 +60,7 @@ export function FinanceSpotlight() {
                       />
                       <div>
                         <h3 className="text-h5 text-ink">{cap.title}</h3>
-                        <p className="mt-1.5 text-body font-light leading-relaxed text-gray">
+                        <p className="mt-1.5 text-body leading-relaxed text-gray">
                           {cap.description}
                         </p>
                       </div>

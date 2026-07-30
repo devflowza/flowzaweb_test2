@@ -47,7 +47,7 @@ export function Hero() {
               {HERO.pills.map((pill) => (
                 <li
                   key={pill}
-                  className="rounded-pill border border-line bg-surface px-4 py-2 text-caption font-light text-gray"
+                  className="rounded-pill border border-line bg-surface px-4 py-2 text-caption text-gray"
                 >
                   {pill}
                 </li>
@@ -79,7 +79,7 @@ export function Hero() {
               </span>
               <ul className="flex flex-wrap gap-2">
                 {HERO.industries.map((industry) => (
-                  <li key={industry} className="text-caption font-light text-ink">
+                  <li key={industry} className="text-caption text-ink">
                     {industry}
                     <span aria-hidden="true" className="ml-2 text-accent">
                       *

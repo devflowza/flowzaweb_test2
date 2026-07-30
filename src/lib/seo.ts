@@ -1,6 +1,11 @@
 import { CONTACT, SITE, SOCIALS } from "@/content/site";
 import { PLATFORMS, type Platform } from "@/content/products";
-import { PRODUCT_PRICING, SELF_SERVE_PRICING, yearlySavingPercent } from "@/content/pricing";
+import {
+  PRICES_ARE_PLACEHOLDER,
+  PRODUCT_PRICING,
+  SELF_SERVE_PRICING,
+  yearlySavingPercent,
+} from "@/content/pricing";
 import { PLATFORM_NAV_MAP } from "@/content/platforms-nav";
 import type { Faq } from "@/content/faqs";
 import type { Crumb } from "@/components/layout/breadcrumbs";
@@ -119,10 +124,13 @@ export function softwareNode(platform: Platform): JsonLdNode {
     publisher: { "@id": ORG_ID },
     featureList: platform.features.map((f) => f.title).join(", "),
   };
-  /* Offers are emitted for every platform that publishes a list price, not just
-     Finance — a quoted-only platform gets none rather than a zero-price Offer,
-     which Google reads as free. */
-  const pricing = PRODUCT_PRICING.find((p) => p.slug === platform.slug);
+  /* Offers are emitted for every platform that publishes a list price — a
+     quoted-only platform gets none rather than a zero-price Offer, which Google
+     reads as free. Suppressed entirely while prices are placeholders: a $1
+     Offer would be indexed and cited as this product's real price. */
+  const pricing = PRICES_ARE_PLACEHOLDER
+    ? undefined
+    : PRODUCT_PRICING.find((p) => p.slug === platform.slug);
   const priced = pricing?.tiers.filter((t) => typeof t.monthly === "number") ?? [];
   if (priced.length) {
     node.offers = priced.map((tier) => {
@@ -157,8 +165,28 @@ export function platformsCollectionNode(): JsonLdNode {
   };
 }
 
-/** Every published plan across every platform, grouped per product. */
+/**
+ * Every published plan across every platform, grouped per product.
+ *
+ * While prices are placeholders this emits the plan *structure* with no Offers
+ * at all — naming the tiers is useful to crawlers, but attaching a $1 price to
+ * them would publish a commercial claim FlowZa hasn't agreed to.
+ */
 export function offerCatalogNode(): JsonLdNode {
+  if (PRICES_ARE_PLACEHOLDER) {
+    return {
+      "@type": "OfferCatalog",
+      "@id": `${SITE.url}/pricing#catalog`,
+      name: "FlowZa AI Platform Plans",
+      description:
+        "Plan tiers for each FlowZa platform. Commercial pricing is being finalised — contact sales for a quote.",
+      itemListElement: SELF_SERVE_PRICING.map((product) => ({
+        "@type": "OfferCatalog",
+        name: `${PLATFORM_NAV_MAP[product.slug].name} plans`,
+        url: `${SITE.url}/pricing#${product.slug}`,
+      })),
+    };
+  }
   return {
     "@type": "OfferCatalog",
     "@id": `${SITE.url}/pricing#catalog`,
