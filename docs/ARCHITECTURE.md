@@ -943,3 +943,32 @@ Verified on `wrangler pages dev` (the Pages runtime emulator): all routes 200,
 tiles rendering **without** the optimizer, tile click-through, the billing
 toggle, client-side form validation, and the WhatsApp fallback when Supabase env
 is absent — with zero failed network requests.
+
+---
+
+## 22. Mockup-driven redesign: contact picker and the About page (2026-07-30/31)
+
+The user now supplies explicit mockups plus source imagery in-repo under
+`Photos/` (committed from their machine), and sections are matched 1:1 against
+them rather than art-directed from prose. Two rounds so far:
+
+- **Contact location picker** — "Where would you like to go?" photo cards
+  (city photography via the sharp pipeline as
+  `photos/location-{bengaluru,muscat,dubai}.webp`, shared by /locations),
+  accent top edges, overlapping icon badges, tinted Explore buttons, dotted
+  world-map backdrop. The street-map illustrations and their generator entries
+  retired.
+- **About page** — rebuilt as three background-photo sections matching
+  `Photos/About Page`: hero (copy + data-layer card + restyled orbit panel with
+  in-card labels, concentric guides and endpoint dots + ecosystem strip +
+  iconed stats band), mission (dark quote panel with nine vertical chips and a
+  floating Growing Fast badge), values (split heading, mint circle icons,
+  green title rules). Backgrounds ship as `photos/about-*-bg.webp` under white
+  washes strong enough to hold AA contrast on the text side; the old
+  PageHeader/FabricDiagram composition and `fabric-diagram.tsx` are gone.
+
+`optimize-photos.mjs` now carries `PHOTOS_LOCATIONS` and `PHOTOS_ABOUT` lists
+pointing at the in-repo source folders, so `npm run optimize:photos`
+regenerates every derived webp. One deliberate copy deviation: the mission
+keeps "the spa owner managing 12 staff" over the mockup's "the ones owning
+pizzerias" — FlowZa ships a spa platform; it ships no pizzeria anything.

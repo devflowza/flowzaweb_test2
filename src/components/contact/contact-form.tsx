@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, LoaderCircle, Send } from "lucide-react";
+import { CheckCircle2, LoaderCircle, Send, ShieldCheck } from "lucide-react";
 import { submitContact, type ContactFormState } from "@/lib/contact-submit";
 import { CONTACT_PAGE, SERVICE_OPTIONS } from "@/content/contact";
 import { CONTACT } from "@/content/site";
@@ -225,7 +225,7 @@ export function ContactForm() {
       ) : null}
 
       <div className="flex flex-col gap-4">
-        <Button type="submit" size="xl" disabled={pending} className="w-full sm:w-auto">
+        <Button type="submit" size="xl" disabled={pending} className="w-full">
           {pending ? (
             <>
               <LoaderCircle className="size-4.5 animate-spin" strokeWidth={2} aria-hidden="true" />
@@ -233,20 +233,27 @@ export function ContactForm() {
             </>
           ) : (
             <>
-              <Send className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
               Send Message
+              <Send className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
             </>
           )}
         </Button>
-        <p className="text-[0.8125rem] leading-relaxed text-gray">
-          {CONTACT_PAGE.consentLead}{" "}
-          <a
-            href="/privacy"
-            className="font-medium text-accent-deep underline underline-offset-4 hover:text-accent-deep"
-          >
-            Privacy Policy
-          </a>
-          {CONTACT_PAGE.consentTail}
+        <p className="flex items-center justify-center gap-2 text-[0.8125rem] text-gray">
+          <ShieldCheck
+            className="size-4 shrink-0 text-accent-deep"
+            strokeWidth={1.75}
+            aria-hidden="true"
+          />
+          <span>
+            We respect your{" "}
+            <a
+              href="/privacy"
+              className="font-medium text-accent-deep underline underline-offset-4"
+            >
+              privacy
+            </a>
+            . Your information is safe with us.
+          </span>
         </p>
       </div>
     </form>
