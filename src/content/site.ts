@@ -83,8 +83,12 @@ export const FOOTER_LEGAL_LINKS: NavLink[] = [
 ];
 
 /**
- * Clients shown in the social-proof marquee. Initials are curated rather than
- * derived, so single-word names still get a two-letter monogram.
+ * Client names for social proof. Initials are curated rather than derived, so
+ * single-word names still get a two-letter monogram.
+ *
+ * Currently rendered nowhere — the marquee that displayed these was removed. Kept
+ * because it is real customer data, not scaffolding, and a future logo strip or
+ * case-study index would want it. Delete it if that never lands.
  */
 export const CLIENTS = [
   { name: "Gulf Drive", initials: "GD" },

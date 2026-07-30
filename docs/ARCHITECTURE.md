@@ -846,10 +846,20 @@ type remains.
 is removed too, and its component file deleted. The CTA band now runs straight
 into the footer.
 
-Two things deliberately survive, because they are not the same device:
+`ClientsMarquee` on the homepage — client names in pills under a kicker — went in
+a follow-up pass, so **no marquee remains anywhere on the site**. With its only
+consumer gone, the whole chain below it was dead and is deleted with it:
 
-- **`ClientsMarquee`** on the homepage — client names in pills under a kicker.
-  That is social proof, i.e. content, not decorative type. It is now the only
-  marquee on the site.
-- **The `Marquee` motion primitive** and its CSS (`--animate-marquee`,
-  `marquee-track`, the keyframes), since `ClientsMarquee` still uses them.
+- `components/motion/marquee.tsx` and its re-export from the motion barrel
+- `--animate-marquee`, `@keyframes marquee` and the `marquee-track` utility in
+  globals.css
+
+`CLIENTS` in `content/site.ts` is kept and marked as currently unrendered. It is
+real customer data rather than scaffolding, and a future logo strip or case-study
+index would want it — deleting live business data to satisfy a dead-code sweep is
+the wrong trade.
+
+Swept all 23 rendered routes (22 from the sitemap plus the 404) in Chromium
+checking four signals at once: marquee sections present, `.marquee-track` nodes,
+any element running a marquee animation, and any element over 90px of type. All
+four are zero everywhere.

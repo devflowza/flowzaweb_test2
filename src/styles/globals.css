@@ -113,15 +113,8 @@
   --ease-header: cubic-bezier(0.135, 0.9, 0.15, 1);
   --ease-btn: cubic-bezier(0.165, 0.84, 0.44, 1);
 
-  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
   --animate-glow-rotate: glow-rotate 4s linear infinite;
   --animate-pulse-dot: pulse-dot 2.4s var(--ease-1) infinite;
-
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
-  }
 
   @keyframes glow-rotate {
     to {
@@ -359,17 +352,6 @@
 [data-billing="monthly"] [data-price="yearly"],
 [data-billing="yearly"] [data-price="monthly"] {
   display: none;
-}
-
-/* Marquee track — halts entirely for reduced motion */
-@utility marquee-track {
-  display: flex;
-  width: max-content;
-  animation: var(--animate-marquee);
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 /* ---------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/hero";
-import { ClientsMarquee } from "@/components/sections/clients-marquee";
 import { PlatformsGrid } from "@/components/sections/platforms-grid";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { WhyFlowza } from "@/components/sections/why-flowza";
@@ -30,7 +29,6 @@ export default function HomePage() {
         )}
       />
       <Hero />
-      <ClientsMarquee />
       <PlatformsGrid />
       <HowItWorks />
       <WhyFlowza />
