@@ -4,22 +4,41 @@ import { EXTERNAL_APPS } from "./site";
 /**
  * Per-product pricing.
  *
- * Every figure below was read out of that product's own billing table — the same
- * row the app charges against — not transcribed from a deck. The `source` field
- * on each entry records exactly which project and table it came from so the next
- * person to touch this file can re-verify instead of re-guessing.
+ * ## Prices are placeholders
  *
- * Two rules this file exists to enforce:
+ * Commercial pricing is not finalised, so every paid tier shows
+ * `PLACEHOLDER_MONTHLY` — $1 — rather than a real figure. The tier *structure*
+ * (which plans exist, their names, capacities and trial lengths) is real, read
+ * from each product's own billing table; only the money is stubbed.
  *
- * 1. **Yearly totals are stored, never computed.** The old version derived yearly
- *    from monthly with a flat 25% formula. That was wrong for at least one plan:
- *    Finance Enterprise is $66/mo and $600/yr, where the formula predicts $594.
- *    A marketing page must quote the number the invoice will show.
+ * `PRICES_ARE_PLACEHOLDER` gates everywhere a number would otherwise escape as
+ * a commercial claim — schema.org Offers and llms.txt both suppress prices while
+ * it is true. Flip that flag and fill in the real `monthly`/`yearly` values
+ * together; nothing else needs touching.
  *
- * 2. **No price without a source.** A product whose price isn't recorded anywhere
- *    gets `mode: "quote"` and a contact CTA. Inventing a number here would put
- *    false commercial terms on a public page.
+ * Two rules to keep when the real numbers land:
+ *
+ * 1. **Yearly totals are stored, never computed.** An earlier version derived
+ *    yearly from monthly with a flat 25%, which contradicted the billing tables
+ *    on every product — their real discounts differ per tier, and one product
+ *    prices yearly as a flat multiple of monthly rather than a percentage.
+ *    Quote the number the invoice will show, and let `yearlySavingPercent()`
+ *    derive the percentage from it — never the reverse.
+ *
+ * 2. **No price without a source.** A product whose price isn't recorded
+ *    anywhere gets `mode: "quote"` and a contact CTA. Inventing a number here
+ *    would put false commercial terms on a public page.
  */
+
+/** Stand-in monthly price shown until commercial pricing is signed off. */
+export const PLACEHOLDER_MONTHLY = 1;
+/** Twelve months of the placeholder, so the yearly view stays arithmetically sane. */
+export const PLACEHOLDER_YEARLY = PLACEHOLDER_MONTHLY * 12;
+/**
+ * True while the figures above are stubs. Guards the machine-readable surfaces —
+ * a $1 Offer in JSON-LD or llms.txt gets indexed and cited as a real price.
+ */
+export const PRICES_ARE_PLACEHOLDER = true;
 
 export interface PricingLimit {
   label: string;
@@ -91,8 +110,8 @@ const FINANCE: ProductPricing = {
       id: "starter",
       name: "Starter",
       description: "For small businesses ready to streamline their finances",
-      monthly: 16,
-      yearly: 144,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       trialDays: 14,
       limits: [
         { label: "Users", value: "2" },
@@ -108,8 +127,8 @@ const FINANCE: ProductPricing = {
       id: "professional",
       name: "Professional",
       description: "For growing businesses that need the full toolkit",
-      monthly: 44,
-      yearly: 396,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       trialDays: 14,
       highlighted: true,
       limits: [
@@ -126,8 +145,8 @@ const FINANCE: ProductPricing = {
       id: "enterprise",
       name: "Enterprise",
       description: "For established businesses with advanced requirements",
-      monthly: 66,
-      yearly: 600,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       trialDays: 14,
       limits: [
         { label: "Users", value: "10" },
@@ -156,15 +175,15 @@ const FINANCE: ProductPricing = {
       ctaHref: CONTACT("Sales Inquiry"),
     },
   ],
-  note: "Finance is also billed locally in INR for India — ₹1,179, ₹3,185 and ₹5,427 per month respectively. INR is set independently of the USD list price, not converted at spot.",
+  note: "Finance is also billed locally in INR for India, set independently of the USD list price rather than converted at spot.",
 };
 
 /**
  * Flowza_LogisPro · public.subscription_plans.
  *
  * That table has no currency column, so USD is inferred from the Stripe price
- * IDs alongside it. Yearly is exactly ten times monthly on all three tiers —
- * i.e. two months free — which is a different structure to every other product.
+ * IDs alongside it. Its yearly billing is a flat multiple of monthly rather than
+ * a percentage discount — worth preserving when real prices go in.
  */
 const LOGISPRO: ProductPricing = {
   slug: "logispro",
@@ -176,8 +195,8 @@ const LOGISPRO: ProductPricing = {
       name: "Starter",
       description:
         "Essential tools for small freight forwarding operations — core CRM, shipment jobs, customer management and basic invoicing.",
-      monthly: 299,
-      yearly: 2990,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       limits: [{ label: "Users", value: "10" }],
       ctaLabel: "Talk to Sales",
       ctaHref: CONTACT("FlowZa LogisPro"),
@@ -187,8 +206,8 @@ const LOGISPRO: ProductPricing = {
       name: "Professional",
       description:
         "Full logistics suite for growing operations — adds quotations, bookings, containers, customs and finance.",
-      monthly: 699,
-      yearly: 6990,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       highlighted: true,
       limits: [{ label: "Users", value: "30" }],
       ctaLabel: "Talk to Sales",
@@ -199,14 +218,13 @@ const LOGISPRO: ProductPricing = {
       name: "Enterprise",
       description:
         "Complete platform for large logistics enterprises — every module, plus HR, analytics, vendor portal and fleet management.",
-      monthly: 1499,
-      yearly: 14990,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       limits: [{ label: "Users", value: "Unlimited" }],
       ctaLabel: "Talk to Sales",
       ctaHref: CONTACT("FlowZa LogisPro"),
     },
   ],
-  note: "Yearly billing on LogisPro is ten months' price rather than a percentage discount — two months free on every tier.",
 };
 
 /** Flowza_PMS · public.subscription_plans (is_public = true). 20% off yearly. */
@@ -233,8 +251,8 @@ const PMS: ProductPricing = {
       id: "starter",
       name: "Starter",
       description: "Core PMS with calibration and compensation planning",
-      monthly: 49,
-      yearly: 470,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       trialDays: 14,
       limits: [{ label: "Users", value: "50" }],
       ctaLabel: "Start Free Trial",
@@ -244,8 +262,8 @@ const PMS: ProductPricing = {
       id: "professional",
       name: "Professional",
       description: "Advanced talent management with analytics and succession",
-      monthly: 149,
-      yearly: 1430,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       trialDays: 14,
       highlighted: true,
       limits: [{ label: "Users", value: "200" }],
@@ -256,8 +274,8 @@ const PMS: ProductPricing = {
       id: "enterprise",
       name: "Enterprise",
       description: "Full platform with payroll integration and unlimited features",
-      monthly: 399,
-      yearly: 3830,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       trialDays: 30,
       limits: [{ label: "Users", value: "1,000" }],
       ctaLabel: "Start 30-Day Trial",
@@ -270,7 +288,8 @@ const PMS: ProductPricing = {
  * Flowza_QR_Dev · public.subscription_plans.
  *
  * Sourced from the QR **development** project — it is the only QRForge database
- * in the account. Confirm against production billing before these go live.
+ * in the account. Confirm the plan structure against production billing before
+ * real prices go in.
  */
 const QRFORGE: ProductPricing = {
   slug: "qrforge",
@@ -297,8 +316,8 @@ const QRFORGE: ProductPricing = {
       id: "starter",
       name: "Starter",
       description: "For a single brand running everyday campaigns",
-      monthly: 9,
-      yearly: 89,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       limits: [
         { label: "QR codes", value: "50" },
         { label: "Dynamic codes", value: "20" },
@@ -312,8 +331,8 @@ const QRFORGE: ProductPricing = {
       id: "professional",
       name: "Professional",
       description: "Campaign folders, bulk creation and product catalogues",
-      monthly: 29,
-      yearly: 279,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       highlighted: true,
       limits: [
         { label: "QR codes", value: "500" },
@@ -329,8 +348,8 @@ const QRFORGE: ProductPricing = {
       id: "enterprise",
       name: "Enterprise",
       description: "Unlimited codes and scans, with full API access",
-      monthly: 79,
-      yearly: 749,
+      monthly: PLACEHOLDER_MONTHLY,
+      yearly: PLACEHOLDER_YEARLY,
       limits: [
         { label: "QR codes", value: "Unlimited" },
         { label: "Dynamic codes", value: "Unlimited" },
@@ -458,11 +477,7 @@ export const PRICING_PAGE = {
   titleHighlight: "Priced Independently.",
   subtitle:
     "Each FlowZa platform is priced for the operation it runs — a QR campaign and a freight-forwarding desk shouldn't cost the same. Pay for the platforms you use, on one bill, with every plan starting as a free trial.",
-  image: {
-    src: "/images/pages/pricing.webp",
-    alt: "A billing comparison: twelve months of monthly charges beside the lower yearly equivalent, with a ring showing the saving and a free-trial runway.",
-  },
-  note: "Prices are per organisation in USD, excluding local taxes. Every paid plan can start as a free trial — no card required — and platforms share one data layer, so adding a second one never means re-entering your customers or ledger.",
+  note: "Pricing is being finalised — the figures shown are placeholders, not quotes. Plan structure and capacities are accurate. Every paid plan can start as a free trial, no card required, and platforms share one data layer, so adding a second never means re-entering your customers or ledger.",
 } as const;
 
 /** Finance-only teaser copy for the homepage section. */
@@ -470,7 +485,7 @@ export const FINANCE_PRICING_TEASER = {
   badge: "Pricing",
   title: "Simple, Transparent Pricing",
   subtitle:
-    "FlowZa Finance starts at $16/month. Every plan includes accounting, purchases, banking, inventory, payroll and 40+ reports — tiers differ by capacity, not features.",
+    "Every FlowZa Finance plan includes accounting, purchases, banking, inventory, payroll and 40+ reports — tiers differ by capacity, not features. Pricing is being finalised; the figures shown are placeholders.",
   ctaLabel: "See all nine platforms' pricing",
 } as const;
 

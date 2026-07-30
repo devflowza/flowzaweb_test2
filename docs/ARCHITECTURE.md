@@ -742,65 +742,79 @@ second piece of artwork.
 
 ---
 
-## 18. Pricing: one Finance table → nine independently priced products (2026-07-30)
+## 18. Pricing: nine independently priced products, on placeholder figures (2026-07-30)
 
-`/pricing` quoted three FlowZa Finance tiers and nothing else, so eight of the
-nine platforms had no price anywhere on the site. It is now one section per
-product, each sourced from that product's **own billing table**, read over the
-Supabase MCP connection rather than transcribed.
+`/pricing` carried three FlowZa Finance tiers and nothing else, so eight of the
+nine platforms had no pricing page presence at all. It is now one section per
+product.
 
-### What the databases actually said
+### Prices are placeholders
 
-| Product        | Source                                          | Published                                  |
-| -------------- | ----------------------------------------------- | ------------------------------------------ |
-| Finance        | `Flowza_Finance_PRD · public.plans`             | $16 / $44 / $66 + Enterprise Plus (custom) |
-| LogisPro       | `Flowza_LogisPro · public.subscription_plans`   | $299 / $699 / $1,499                       |
-| PMS            | `Flowza_PMS · public.subscription_plans`        | Free / $49 / $149 / $399                   |
-| QRForge        | `Flowza_QR_Dev · public.subscription_plans`     | Free / $9 / $29 / $79                      |
-| Spa Master     | `Flowza_SpaManager · public.subscription_tiers` | **withheld** — see below                   |
-| Club, RentFlow | no plan table exists                            | quoted                                     |
-| POS, Fleetza   | no database in the account                      | quoted                                     |
+Commercial pricing is not signed off, so **every paid tier shows $1**
+(`PLACEHOLDER_MONTHLY`, with `PLACEHOLDER_YEARLY` twelve months of it). What is
+real is the _structure_ — which plans exist per product, their names, capacities,
+trial lengths and CTAs — read from each product's own billing table over the
+Supabase connection. Only the money is stubbed.
 
-### Three findings that changed the work
+`PRICES_ARE_PLACEHOLDER` gates every surface where a number would otherwise
+escape as a commercial claim:
 
-**The site was under-quoting Finance.** The page said $15 / $40 / $60; the
-billing table says **$16 / $44 / $66**. A marketing page that quotes less than
-the invoice charges is worse than one that quotes nothing, so the published
-figures now come from the table.
+- **schema.org**: `offerCatalogNode()` emits the plan structure with no `Offer`
+  nodes, and `softwareNode()` attaches none. A `price: 1` Offer would be indexed
+  and shown in search results as the real price.
+- **llms.txt**: tiers are listed by name and capacity with an explicit "pricing
+  is not yet published, do not quote figures" preamble — otherwise an assistant
+  reading the file repeats $1 to a prospective customer as fact.
+- **Visible copy**: the note under the billing toggle says the figures are
+  placeholders, and the yearly "save up to X%" pill hides itself when the
+  headline saving is 0 (which it is, by construction, at a flat $1).
 
-**Yearly totals must be stored, not computed.** The old code derived yearly from
-monthly with a flat 25%. That is wrong for Finance Enterprise ($66/mo, $600/yr —
-the formula predicts $594) and wrong for every other product, whose real
-discounts are 17% (LogisPro, structured as ten months' price), 20% (PMS) and
-18–21% (QRForge). `PricingTier.yearly` is now the number the invoice shows, and
-`yearlySavingPercent()` derives the _percentage_ from it, never the reverse.
+To go live: flip the flag and fill in real `monthly`/`yearly` values together.
+Nothing else needs touching. Three things to preserve when doing so:
 
-**Spa Master's ladder is inverted.** `subscription_tiers` has Starter $149 >
-Professional $119 > Enterprise $99, while `max_branches`, `max_staff` and
-`max_users` all ascend correctly. That reads as a data fault rather than a
-pricing strategy, so Spa Master publishes no number and routes to sales. Nothing
-was written back to that database — the fix belongs to whoever owns it.
+**Yearly totals are stored, never computed.** An earlier version derived yearly
+from monthly with a flat 25%. That contradicted the billing tables on every
+product — real discounts differ per tier, and one product prices yearly as a flat
+multiple of monthly rather than a percentage. Quote the figure the invoice shows
+and let `yearlySavingPercent()` derive the percentage from it, never the reverse.
+
+**No price without a source.** Club, RentFlow, POS and Fleetza have no plan table
+at all (Club's `packages` table is its tenants' own membership products, not what
+FlowZa charges for Club), so they are `mode: "quote"` with a contact CTA rather
+than a tier with the number blanked out.
+
+**Spa Master's tier ladder is inverted in its database.** `subscription_tiers`
+descends in price as it ascends in every capacity column — Starter is the most
+expensive, Enterprise the cheapest, while `max_branches`, `max_staff` and
+`max_users` all rise correctly. Treated as a data fault rather than a strategy,
+so Spa Master is quote-only regardless of the placeholder flag. Nothing was
+written back to that database; the fix belongs to whoever owns it. Two other
+provenance caveats are flagged in `pricing.ts` at the point of use: QRForge's
+plan rows come from a _development_ project (the only QRForge database in the
+account), and the LogisPro and PMS tables have no currency column, so USD is
+inferred from the payment-provider price IDs beside them.
 
 ### Structure
 
 All nine products render in the DOM at once, under a sticky anchor nav, rather
-than behind tabs — the whole price list stays crawlable and Cmd-F-able.
+than behind tabs — the whole list stays crawlable and Cmd-F-able.
 
 The monthly/yearly switch carries **no pricing data**. Each tier renders both
 figures server-side inside `[data-price="monthly"]` / `[data-price="yearly"]`
 spans; `BillingToggle` flips `data-billing` on one wrapper and two rules in
-globals.css reveal the matching set. So nine products' prices ship in the static
+globals.css reveal the matching set. So the whole price list ships in the static
 HTML, and with JS off the page still shows monthly — the server-rendered
 default — instead of nothing.
 
+Finance leads with capacity rather than features, because every paid Finance tier
+has an identical feature set in the database (all `has_*` flags true); the shared
+capability list is stated once above the tiers and the tiers differ on
+users/companies/invoices/contacts/storage.
+
 `PricingSection` reverted to what its name implies: a Finance-only teaser for the
 homepage and the Finance product page, now a server component with no toggle,
-pointing at `/pricing` as the single place every platform's price is stated.
-`offerCatalogNode()` emits a nested OfferCatalog per product, and `softwareNode()`
-attaches offers to any platform that publishes a list price — quoted platforms
-get none, since a zero-price Offer reads to Google as free.
+leaving `/pricing` as the single place any platform's pricing is stated.
 
-Prices that came from a **dev** database (QRForge) or from a table with no
-currency column (LogisPro, PMS — USD inferred from the Stripe/provider price IDs
-beside them) are flagged in `pricing.ts` at the point of use. Re-verify those
-before they go to production.
+`/pricing` is the one inner page with no `PageHeader` banner image — removed on
+request, and the sticky product nav occupies that space instead. The generator
+entry and asset were deleted with it rather than left orphaned.

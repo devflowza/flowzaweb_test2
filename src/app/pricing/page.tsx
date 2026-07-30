@@ -26,7 +26,7 @@ import { breadcrumbNode, graph, offerCatalogNode, webPageNode } from "@/lib/seo"
 export const metadata: Metadata = {
   title: "Pricing — Nine Platforms, Priced Independently",
   description:
-    "Per-platform FlowZa pricing: Finance from $16/mo, QRForge from $9/mo, PMS from $49/mo, LogisPro from $299/mo, plus quoted pricing for Club, RentFlow, Spa Master, POS and Fleetza. Free trial on every paid plan.",
+    "Plans for all nine FlowZa platforms — Finance, LogisPro, PMS, QRForge, Club, RentFlow, Spa Master, POS and Fleetza — with the capacities each tier includes. Commercial pricing is being finalised; every paid plan starts as a free trial.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -64,7 +64,6 @@ export default function PricingPage() {
         title={PRICING_PAGE.title}
         titleHighlight={PRICING_PAGE.titleHighlight}
         subtitle={PRICING_PAGE.subtitle}
-        image={PRICING_PAGE.image}
       />
 
       {/*
