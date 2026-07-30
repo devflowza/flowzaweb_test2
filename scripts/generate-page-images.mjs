@@ -354,122 +354,6 @@ function pill({
 /* Scenes                                                                     */
 /* -------------------------------------------------------------------------- */
 
-/** /about — nine platforms orbiting one shared core. */
-function aboutFabric(w, h) {
-  const cx = w * 0.5;
-  const cy = h * 0.5;
-  const rx = w * 0.31;
-  const ry = h * 0.33;
-  const nodes = many(9, (i) => {
-    const a = -Math.PI / 2 + (i * 2 * Math.PI) / 9;
-    const nx = cx + Math.cos(a) * rx;
-    const ny = cy + Math.sin(a) * ry;
-    const size = 74;
-    const tints = [
-      P.accent,
-      P.blue,
-      P.violet,
-      P.amber,
-      P.emerald,
-      P.cyan,
-      P.accentDeep,
-      P.rose,
-      "#0f766e",
-    ];
-    /* No `layers` here — that glyph belongs to the core node at the centre */
-    const marks = [
-      "pulse",
-      "globe",
-      "spark",
-      "pin",
-      "clock",
-      "plug",
-      "shield",
-      "message",
-      "document",
-    ];
-    const tint = tints[i];
-    return (
-      pathEl({
-        d: `M${round(cx)} ${round(cy)} Q${round((cx + nx) / 2 + Math.cos(a) * 18)} ${round(
-          (cy + ny) / 2 + Math.sin(a) * 18,
-        )} ${round(nx)} ${round(ny)}`,
-        fill: "none",
-        stroke: P.accentDeep,
-        "stroke-opacity": 0.22,
-        "stroke-width": 1.6,
-        "stroke-dasharray": "5 7",
-      }) +
-      circle({ cx: round(nx), cy: round(ny), r: size * 0.72, fill: P.white, opacity: 0.72 }) +
-      rect({
-        x: round(nx - size / 2),
-        y: round(ny - size / 2),
-        width: size,
-        height: size,
-        rx: 20,
-        fill: P.white,
-        stroke: P.line,
-        "stroke-width": 1,
-        filter: "url(#shadowSoft)",
-      }) +
-      rect({
-        x: round(nx - size / 2 + 13),
-        y: round(ny - size / 2 + 13),
-        width: size - 26,
-        height: size - 26,
-        rx: 14,
-        fill: tint,
-        opacity: 0.14,
-      }) +
-      glyph(marks[i], { x: nx - 14, y: ny - 14, size: 28, color: tint, width: 2 })
-    );
-  });
-
-  return (
-    backdrop(w, h, { leak: "bottom-left" }) +
-    /* Orbit rings */
-    ellipse({
-      cx,
-      cy,
-      rx,
-      ry,
-      fill: "none",
-      stroke: P.accentDeep,
-      "stroke-opacity": 0.14,
-      "stroke-width": 1.5,
-    }) +
-    ellipse({
-      cx,
-      cy,
-      rx: rx * 0.66,
-      ry: ry * 0.66,
-      fill: "none",
-      stroke: P.accentDeep,
-      "stroke-opacity": 0.1,
-      "stroke-width": 1.5,
-      "stroke-dasharray": "3 9",
-    }) +
-    nodes +
-    /* Core */
-    circle({ cx, cy, r: 108, fill: P.accent, opacity: 0.07 }) +
-    circle({ cx, cy, r: 84, fill: P.accent, opacity: 0.1 }) +
-    circle({ cx, cy, r: 62, fill: "url(#brand)", filter: "url(#glowBrand)" }) +
-    glyph("layers", { x: cx - 21, y: cy - 21, size: 42, color: P.white, width: 2 }) +
-    /* Stat strip, bottom-left */
-    floatingChip({ x: w * 0.055, y: h * 0.76, w: 268, h: 86, glyph: "spark" }) +
-    /* Uptime-ish chip, top-right */
-    floatingChip({
-      x: w * 0.69,
-      y: h * 0.1,
-      w: 252,
-      h: 82,
-      glyph: "globe",
-      color: P.blue,
-      bg: "#eff4ff",
-    })
-  );
-}
-
 /** /contact — a WhatsApp-first conversation. */
 function contactConversation(w, h) {
   const px = w * 0.14;
@@ -1764,7 +1648,6 @@ const BANNER = [1600, 700]; // 16/7 — matches the /products page banner
 const CARD = [1200, 675]; // 16/9 — office card headers
 
 const SCENES = [
-  { out: "about.webp", size: BANNER, draw: aboutFabric },
   { out: "contact.webp", size: BANNER, draw: contactConversation },
   { out: "locations.webp", size: BANNER, draw: locationsMap },
   { out: "get-started.webp", size: BANNER, draw: getStartedRail },

@@ -7,16 +7,12 @@ export const ABOUT_HERO = {
   titleHighlight: "Every Business",
   subtitle:
     "FlowZa AI was founded on the belief that powerful AI tools shouldn't be reserved for enterprises with nine-figure budgets. We build for the rest.",
-  image: {
-    src: "/images/pages/about.webp",
-    alt: "Diagram of the FlowZa operating fabric: one shared core at the centre, with nine purpose-built platforms orbiting it and connected back by dotted data links.",
-  },
 } as const;
 
 export const ABOUT_STATS = [
   { value: "100+", label: "Businesses Served" },
   { value: "MEA", label: "Region & India" },
-  { value: "7", label: "AI Platforms" },
+  { value: "9", label: "AI Platforms" },
   { value: "99.9%", label: "Uptime SLA" },
 ] as const;
 
@@ -29,7 +25,7 @@ export const ABOUT_MISSION = {
   ],
   floatingBadge: {
     title: "Growing Fast",
-    subtitle: "50+ team members across 6 cities",
+    subtitle: "Teams in Muscat, Dubai & Bengaluru",
   },
 } as const;
 
