@@ -24,15 +24,7 @@ export default function CookiesPage() {
           breadcrumbNode("/cookies", [{ label: "Cookie Policy", href: "/cookies" }]),
         )}
       />
-      <LegalLayout
-        badge="Legal"
-        title="Cookie Policy"
-        lastUpdated="July 26, 2026"
-        image={{
-          src: "/images/pages/legal-cookies.webp",
-          alt: "A cookie policy document beside a cookie mark and three consent toggles, two switched on and one off, standing for cookie preferences you control.",
-        }}
-      >
+      <LegalLayout badge="Legal" title="Cookie Policy" lastUpdated="July 26, 2026">
         <CookiesContent />
       </LegalLayout>
     </>
