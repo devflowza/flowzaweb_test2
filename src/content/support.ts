@@ -10,10 +10,6 @@ export const DOCS_PAGE = {
   titleHighlight: "help you?",
   subtitle:
     "Platform guides and onboarding resources, organized by product. Full self-serve documentation is expanding — your onboarding specialist walks you through everything in the meantime.",
-  image: {
-    src: "/images/pages/docs.webp",
-    alt: "A documentation page in a browser window: a contents rail down the left with the current guide highlighted, a written section beside it, and a dark code sample below.",
-  },
 } as const;
 
 export const DOCS_GETTING_STARTED = [
