@@ -4,7 +4,6 @@ import type { Route } from "next";
 import { ArrowUpRight, Check } from "lucide-react";
 import { PLATFORM_NAV_MAP } from "@/content/platforms-nav";
 import { entryPrice, formatPrice, type ProductPricing } from "@/content/pricing";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container, Section } from "@/components/layout/container";
 import { Reveal } from "@/components/motion";
@@ -42,7 +41,6 @@ export function ProductPricingSection({
               <div>
                 <h2 className="flex flex-wrap items-center gap-2.5 text-xl font-semibold text-ink">
                   {platform.name}
-                  {platform.live ? <Badge variant="live">Live</Badge> : <Badge>Coming Soon</Badge>}
                 </h2>
                 <p className="mt-0.5 text-sm font-medium" style={{ color: platform.colorDeep }}>
                   {platform.cardTagline}

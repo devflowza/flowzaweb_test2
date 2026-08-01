@@ -17,8 +17,7 @@ export const dynamic = "force-static";
  */
 export function GET(): Response {
   const platforms = PLATFORMS.map(
-    (p) =>
-      `- [${p.name}](${SITE.url}/products/${p.slug}): ${p.tagline}. ${p.description}${p.live ? " (Live today.)" : " (Rolling out — early access via contact.)"}`,
+    (p) => `- [${p.name}](${SITE.url}/products/${p.slug}): ${p.tagline}. ${p.description}`,
   ).join("\n");
 
   /* One block per platform, since each is priced independently — a single flat

@@ -63,14 +63,7 @@ function OrbitNode({ platform, pos }: { platform: PlatformNav; pos: { x: number;
           style={{ color: platform.colorDeep }}
         />
         <span className="text-[0.66rem] font-semibold text-ink">{platform.shortName}</span>
-        {platform.live ? (
-          <span
-            aria-hidden="true"
-            className="absolute right-1.5 top-1.5 size-2 rounded-full bg-accent"
-          />
-        ) : null}
       </span>
-      <span className="sr-only">{platform.live ? "— live today" : "— rolling out"}</span>
     </Link>
   );
 }

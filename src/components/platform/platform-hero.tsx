@@ -31,11 +31,6 @@ export function PlatformHero({ platform }: { platform: Platform }) {
               <p className="flex flex-wrap items-center gap-2.5 text-caption font-medium uppercase tracking-[3px] text-accent-deep">
                 <platform.icon className="size-4" strokeWidth={1.75} aria-hidden="true" />
                 {platform.tagline}
-                {platform.live ? (
-                  <span className="rounded-pill bg-accent-deep px-2.5 py-0.5 text-[0.6rem] font-semibold tracking-[1px] text-white">
-                    LIVE
-                  </span>
-                ) : null}
               </p>
             </Reveal>
             <Reveal immediate delay={0.12}>

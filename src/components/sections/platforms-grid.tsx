@@ -51,11 +51,6 @@ export function PlatformsGrid() {
                     >
                       <ArrowRight className="relative size-5" strokeWidth={1.75} />
                     </span>
-                    {p.live ? (
-                      <span className="absolute left-4 top-4 rounded-pill bg-accent-deep px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[1px] text-white">
-                        Live
-                      </span>
-                    ) : null}
                     {/* Its own frosted chip: the scrim alone cannot carry the
                         numeral over a blown-out sky or a white wall. */}
                     <span

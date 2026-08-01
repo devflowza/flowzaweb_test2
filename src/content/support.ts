@@ -15,7 +15,7 @@ export const DOCS_PAGE = {
 export const DOCS_GETTING_STARTED = [
   {
     title: "Create your account",
-    description: "Start a free trial on a live platform, or request early access for the rest.",
+    description: "Start a free trial on any FlowZa platform — no card required.",
   },
   {
     title: "Choose your product",

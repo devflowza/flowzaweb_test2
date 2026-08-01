@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { PLATFORMS } from "@/content/products";
 import type { PlatformSlug } from "@/content/products";
 import { CONTACT, EXTERNAL_APPS } from "@/content/site";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container, Section } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
@@ -14,10 +12,9 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { breadcrumbNode, graph, webPageNode } from "@/lib/seo";
 
 /**
- * Bespoke trial copy for specific platforms. Anything live but absent here
- * falls back to a generic CTA pointed at its `appUrl` — so a platform can
- * never go missing from this page the way three did when this list was the
- * sole source of "is it live" instead of deriving from `platform.live`.
+ * Bespoke trial copy for specific platforms. Anything absent here falls back to
+ * a generic CTA pointed at its `appUrl`, so every platform appears whether or
+ * not it has hand-written copy.
  */
 const LIVE_TRIAL_OVERRIDES: Partial<
   Record<PlatformSlug, { cta: string; href: string; note: string }>
@@ -34,19 +31,15 @@ const LIVE_TRIAL_OVERRIDES: Partial<
   },
 };
 
-const LIVE_PLATFORM_NAMES = new Intl.ListFormat("en", {
-  style: "long",
-  type: "conjunction",
-}).format(PLATFORMS.filter((p) => p.live).map((p) => p.name));
-
 export const metadata: Metadata = {
   title: "Get Started — Pick Your Platform, Start in Minutes",
-  description: `${LIVE_PLATFORM_NAMES} are live today with self-serve trials. Tell us which platform you need and we'll set you up first.`,
+  description:
+    "Start a free trial on any of the nine FlowZa platforms — no card required, guided onboarding included.",
   alternates: { canonical: "/get-started" },
 };
 
 export default function GetStartedPage() {
-  const live = PLATFORMS.filter((p) => p.live).map((platform) => ({
+  const trials = PLATFORMS.map((platform) => ({
     platform,
     ...(LIVE_TRIAL_OVERRIDES[platform.slug] ?? {
       cta: "Start Free Trial",
@@ -54,7 +47,6 @@ export default function GetStartedPage() {
       note: "No card required",
     }),
   }));
-  const comingSoon = PLATFORMS.filter((p) => !p.live);
 
   return (
     <>
@@ -63,7 +55,7 @@ export default function GetStartedPage() {
           webPageNode(
             "/get-started",
             "Get Started with FlowZa",
-            "Start a free trial on a live FlowZa platform, or request early access.",
+            "Start a free trial on any FlowZa platform.",
           ),
           breadcrumbNode("/get-started", [{ label: "Get Started", href: "/get-started" }]),
         )}
@@ -73,20 +65,14 @@ export default function GetStartedPage() {
         badge="Get Started"
         title="Pick Your Platform."
         titleHighlight="Start in Minutes."
-        subtitle={`${LIVE_PLATFORM_NAMES} are live today with self-serve trials. The rest of the fabric is rolling out — tell us which one you need and we'll set you up first.`}
+        subtitle="Every FlowZa platform is available today with a self-serve trial. Pick the one that runs your operation — or tell us what you need and we'll point you to the right fit."
       />
 
       {/* Live trials */}
       <Section tone="white" className="pt-(--spacing-section-sm)" compact>
         <Container>
-          <Reveal>
-            <h2 className="mb-8 flex items-center gap-3 text-h3 text-ink">
-              Live today
-              <Badge variant="live">Self-serve</Badge>
-            </h2>
-          </Reveal>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {live.map(({ platform, cta, href, note }, i) => (
+            {trials.map(({ platform, cta, href, note }, i) => (
               <Reveal key={platform.slug} delay={i * 0.1} className="h-full">
                 <div
                   className="relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface p-7 shadow-(--shadow-soft) transition-all duration-600 ease-(--ease-1) hover:-translate-y-1 hover:shadow-(--shadow-lift)"
@@ -105,7 +91,6 @@ export default function GetStartedPage() {
                     <div>
                       <h3 className="flex items-center gap-2 text-lg font-semibold text-ink">
                         {platform.name}
-                        <Badge variant="live">Live</Badge>
                       </h3>
                       <p className="text-sm text-gray">{platform.tagline}</p>
                     </div>
@@ -136,58 +121,6 @@ export default function GetStartedPage() {
               </Reveal>
             ))}
           </div>
-        </Container>
-      </Section>
-
-      {/* Coming soon → tagged leads */}
-      <Section tone="tint" compact>
-        <Container>
-          <Reveal>
-            <h2 className="mb-3 text-h3 text-ink">Rolling out next</h2>
-            <p className="mb-8 max-w-2xl text-[0.9375rem] text-gray">
-              These platforms are in controlled rollout. Request early access and we&rsquo;ll
-              prioritize your onboarding.
-            </p>
-          </Reveal>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {comingSoon.map((platform, i) => (
-              <li key={platform.slug} className="h-full">
-                <Reveal delay={(i % 3) * 0.08} className="h-full">
-                  <div className="flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-(--shadow-hairline) transition-all duration-600 ease-(--ease-1) hover:-translate-y-0.5 hover:shadow-(--shadow-soft)">
-                    <div className="flex items-center gap-3">
-                      <span
-                        className="flex size-10 items-center justify-center rounded-xl"
-                        style={{
-                          backgroundColor: `${platform.color}14`,
-                          color: platform.colorDeep,
-                        }}
-                      >
-                        <platform.icon className="size-4.5" strokeWidth={1.75} aria-hidden="true" />
-                      </span>
-                      <div>
-                        <h3 className="text-[0.9875rem] font-semibold text-ink">{platform.name}</h3>
-                        <p className="text-[0.8125rem] text-gray">{platform.tagline}</p>
-                      </div>
-                    </div>
-                    <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-                      <Badge>Coming Soon</Badge>
-                      <Link
-                        href={`/contact?service=${encodeURIComponent(platform.name)}`}
-                        className="group flex items-center gap-1 text-sm font-semibold text-accent-deep transition-colors hover:text-accent-deep"
-                      >
-                        Get Early Access
-                        <ArrowRight
-                          className="size-3.5 transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-0.5"
-                          strokeWidth={2}
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
         </Container>
       </Section>
 
