@@ -74,10 +74,6 @@ export default function GetStartedPage() {
         title="Pick Your Platform."
         titleHighlight="Start in Minutes."
         subtitle={`${LIVE_PLATFORM_NAMES} are live today with self-serve trials. The rest of the fabric is rolling out — tell us which one you need and we'll set you up first.`}
-        image={{
-          src: "/images/pages/get-started.webp",
-          alt: "The five-step FlowZa onboarding path: create your account, choose your product and import your data are complete, configuring the workspace is in progress, and going live is next.",
-        }}
       />
 
       {/* Live trials */}

@@ -4,6 +4,7 @@ import { Container } from "./container";
 import { Eyebrow } from "./eyebrow";
 import { ImageFrame, type ImageSlot } from "@/components/ui/image-frame";
 import { Reveal } from "@/components/motion";
+import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
   crumbs: Crumb[];
@@ -35,7 +36,12 @@ export function PageHeader({
     <section className="relative overflow-hidden bg-surface">
       <div aria-hidden="true" className="absolute inset-0" />
       <div aria-hidden="true" className="absolute inset-0" />
-      <Container className="relative pt-[clamp(2.5rem,5vw,4rem)]">
+      <Container
+        className={cn(
+          "relative pt-[clamp(2.5rem,5vw,4rem)]",
+          !image && "pb-[clamp(1.5rem,3vw,2.5rem)]",
+        )}
+      >
         <Reveal immediate>
           <Breadcrumbs items={crumbs} />
         </Reveal>
