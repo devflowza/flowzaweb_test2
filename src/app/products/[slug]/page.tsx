@@ -95,11 +95,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ slug:
       <CtaBand
         eyebrow={platform.tagline}
         title={`Ready to run on ${platform.name}?`}
-        subtitle={
-          platform.live
-            ? "Start your free trial today — no card required, guided onboarding included."
-            : "Early access is rolling out — tell us about your operation and we'll set you up first."
-        }
+        subtitle={"Start your free trial today — no card required, guided onboarding included."}
       >
         <Button asChild size="xl" variant="white">
           <a href={platform.appUrl} target="_blank" rel="noopener noreferrer">

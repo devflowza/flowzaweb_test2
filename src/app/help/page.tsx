@@ -43,7 +43,6 @@ export default function HelpPage() {
         title={HELP_PAGE.title}
         titleHighlight={HELP_PAGE.titleHighlight}
         subtitle={HELP_PAGE.subtitle}
-        image={HELP_PAGE.image}
       />
 
       {/* Topics */}

@@ -380,14 +380,14 @@ const QRFORGE: ProductPricing = {
  */
 const QUOTE_ONLY: ProductPricing[] = (
   [
-    ["club", "Live today. Membership, booking and billing priced per club size."],
-    ["rentflow", "Live today. Priced on portfolio size and application volume."],
+    ["club", "Membership, booking and billing priced per club size."],
+    ["rentflow", "Priced on portfolio size and application volume."],
     [
       "spamaster",
       "Priced per branch and per practitioner. Published tiers pending a billing review.",
     ],
-    ["pos", "In controlled rollout. Priced per till and per location."],
-    ["fleetza", "In controlled rollout. Priced per tracked vehicle."],
+    ["pos", "Priced per till and per location."],
+    ["fleetza", "Priced per tracked vehicle."],
   ] as const
 ).map(([slug, description]) => ({
   slug,
@@ -404,7 +404,7 @@ const QUOTE_ONLY: ProductPricing[] = (
       monthly: null,
       yearly: null,
       limits: [],
-      ctaLabel: PLATFORM_NAV_MAP[slug].live ? "Get a Quote" : "Request Early Access",
+      ctaLabel: "Get a Quote",
       ctaHref: CONTACT(PLATFORM_NAV_MAP[slug].name),
     },
   ],

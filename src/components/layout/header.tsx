@@ -95,7 +95,6 @@ export function Header() {
                             <span className="flex min-w-0 flex-col gap-1">
                               <span className="flex items-center gap-2 text-[0.9375rem] font-semibold text-ink">
                                 {p.name}
-                                {p.live ? <LivePill /> : null}
                               </span>
                               <span className="truncate text-caption text-gray">
                                 {p.cardTagline}
@@ -190,7 +189,6 @@ export function Header() {
                           </span>
                           <span className="flex items-center gap-2 text-body font-medium text-ink">
                             {p.name}
-                            {p.live ? <LivePill /> : null}
                           </span>
                         </Link>
                       </li>
@@ -231,14 +229,6 @@ export function Header() {
         </div>
       </div>
     </header>
-  );
-}
-
-function LivePill() {
-  return (
-    <span className="rounded-pill bg-accent-deep px-2 py-0.5 text-[0.62rem] font-semibold uppercase tracking-[1px] text-white">
-      Live
-    </span>
   );
 }
 

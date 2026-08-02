@@ -52,7 +52,6 @@ export interface PlatformNav {
   colorDeep: string;
   icon: LucideIcon;
   appUrl: string;
-  live: boolean;
   /**
    * Card / hero photography. Leave `src` unset to render a labelled
    * placeholder; add the path once the shot exists.
@@ -75,7 +74,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#047857",
     icon: DollarSign,
     appUrl: "https://finance.flowza.ai",
-    live: true,
     image: {
       src: "/images/photos/finance.webp",
       alt: "A laptop on a desk showing the FlowZa Finance dashboard — total balance, a cash-flow chart and paid, pending and overdue invoice counts — with one person's hands at the keyboard",
@@ -99,7 +97,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#0369a1",
     icon: Truck,
     appUrl: "https://logispro.flowza.ai",
-    live: false,
     image: {
       src: "/images/photos/logispro.webp",
       alt: "A curtain-side freight truck at a container terminal at sunset, with gantry cranes behind and a shipment-tracking dashboard open on a tablet in the foreground",
@@ -123,7 +120,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#be123c",
     icon: Flower2,
     appUrl: "https://spamaster.flowza.ai",
-    live: false,
     image: {
       src: "/images/photos/spamaster.webp",
       alt: "A staff member at a spa reception desk working in the Spa Master dashboard on a monitor, below a wall sign reading SPA MASTER — RELAX. RENEW. REVIVE.",
@@ -147,7 +143,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#5b21b6",
     icon: Car,
     appUrl: "https://fleetza.flowza.ai",
-    live: false,
     image: {
       src: "/images/photos/fleetza.webp",
       alt: "A phone in a windscreen mount showing the Fleetza app — a route map, a driver score of 87 and today's trip summary — while driving behind a van",
@@ -171,7 +166,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#92400e",
     icon: QrCode,
     appUrl: "https://qrforge.flowza.ai",
-    live: true,
     image: {
       src: "/images/photos/qrforge.webp",
       alt: "A hand holding a phone to scan a counter standee reading Scan to Check-In, marked Powered by QRForge",
@@ -195,7 +189,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#6d28d9",
     icon: ShoppingCart,
     appUrl: "https://pos.flowza.ai",
-    live: false,
     image: {
       src: "/images/photos/pos-cafe.webp",
       alt: "A hand entering an order on a café POS touchscreen as the receipt prints beside it, with a barista at work behind the counter",
@@ -219,7 +212,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#7e22ce",
     icon: Crown,
     appUrl: "https://club.flowza.ai",
-    live: true,
     image: {
       src: "/images/photos/club.webp",
       alt: "A tablet on a sports-club reception desk showing FlowZa Club — court and class booking options and upcoming member events — beside a branded bottle and towel",
@@ -243,7 +235,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#0f766e",
     icon: ClipboardCheck,
     appUrl: "https://rentflow.flowza.ai",
-    live: true,
     image: {
       src: "/images/photos/rentflow.webp",
       alt: "A hand holding a tablet showing the FlowZa RentFlow application list — Approved and Under Review status pills beside three applicants — in a leasing office with a blurred Now Leasing sign behind",
@@ -269,7 +260,6 @@ export const PLATFORM_NAV_MAP: Record<PlatformSlug, PlatformNav> = {
     colorDeep: "#4338ca",
     icon: Gauge,
     appUrl: "https://pms.flowza.ai",
-    live: true,
     image: {
       src: "/images/photos/pms.webp",
       alt: "A laptop showing the FlowZa PMS Performance Calibration screen — a bell curve with individual ratings plotted, plus summary charts below — with a colleague visible in a meeting room behind",

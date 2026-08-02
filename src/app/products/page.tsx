@@ -83,7 +83,6 @@ export default function ProductsPage() {
                       <div className="min-w-0">
                         <h2 className="flex flex-wrap items-center gap-2.5 text-xl font-semibold text-ink">
                           {p.name}
-                          {p.live ? <Badge variant="live">Live</Badge> : null}
                         </h2>
                         <p className="mt-0.5 text-sm font-medium" style={{ color: p.colorDeep }}>
                           {p.tagline}

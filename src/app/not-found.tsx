@@ -1,26 +1,56 @@
 import Link from "next/link";
-import { ImageFrame } from "@/components/ui/image-frame";
+import type { Route } from "next";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/layout/container";
+
+/**
+ * 404. The generated placeholder illustration came off with the rest of them;
+ * a lost visitor is better served by routes than by a picture, so the page
+ * offers the four destinations that cover everything the site does.
+ */
+const DESTINATIONS: { href: Route; label: string; description: string }[] = [
+  { href: "/products", label: "Platforms", description: "All nine, and what each one runs" },
+  { href: "/pricing", label: "Pricing", description: "Plans and capacities per platform" },
+  { href: "/help", label: "Help Center", description: "Answers and direct lines to a human" },
+  { href: "/contact", label: "Contact", description: "WhatsApp, email or the form" },
+];
 
 export default function NotFound() {
   return (
-    <Container className="flex flex-col items-center gap-8 py-24 text-center">
-      <div className="w-full max-w-2xl">
-        <ImageFrame
-          image={{
-            src: "/images/pages/not-found.webp",
-            alt: "A grid of platform cards with one tile missing, a dashed outline and a magnifier where it should be.",
-          }}
-          ratio="16/10"
-          priority
-          sizes="(max-width: 768px) 92vw, 42rem"
-        />
-      </div>
-      <h1 className="fx-accent-gradient text-hero font-semibold">404</h1>
-      <p className="text-lede text-gray">
-        This page doesn&apos;t exist — it may have moved or never existed.
+    <Container className="flex flex-col items-center py-[clamp(4rem,10vw,8rem)] text-center">
+      <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-accent-deep">
+        Error 404
       </p>
-      <Link href="/" className="text-accent-deep underline underline-offset-4">
+      <h1 className="mt-4 text-hero font-semibold text-ink">Page not found</h1>
+      <p className="mt-5 max-w-md text-lede text-gray">
+        This page doesn&apos;t exist — it may have moved, or the link may be mistyped.
+      </p>
+
+      <ul className="mt-12 grid w-full max-w-3xl gap-4 sm:grid-cols-2">
+        {DESTINATIONS.map((item) => (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              className="group flex h-full items-center justify-between gap-4 rounded-card border border-line bg-surface px-6 py-5 text-left shadow-(--shadow-hairline) transition-all duration-500 ease-(--ease-1) hover:-translate-y-0.5 hover:border-accent hover:shadow-(--shadow-soft)"
+            >
+              <span>
+                <span className="block font-semibold text-ink">{item.label}</span>
+                <span className="mt-0.5 block text-sm text-gray">{item.description}</span>
+              </span>
+              <ArrowRight
+                className="size-4 shrink-0 text-accent-deep transition-transform duration-500 ease-(--ease-btn) group-hover:translate-x-1"
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <Link
+        href="/"
+        className="mt-10 text-sm font-semibold text-accent-deep underline underline-offset-4"
+      >
         Back to home
       </Link>
     </Container>

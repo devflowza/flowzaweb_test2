@@ -4,7 +4,6 @@ import type { Route } from "next";
 import { ArrowRight } from "lucide-react";
 import { PLATFORM_NAV_MAP } from "@/content/platforms-nav";
 import type { ProductPricing } from "@/content/pricing";
-import { Badge } from "@/components/ui/badge";
 import { Container, Section } from "@/components/layout/container";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Reveal } from "@/components/motion";
@@ -47,11 +46,6 @@ export function QuotePricingGrid({ products }: { products: ProductPricing[] }) {
                       >
                         <platform.icon className="size-5" strokeWidth={1.75} aria-hidden="true" />
                       </span>
-                      {platform.live ? (
-                        <Badge variant="live">Live</Badge>
-                      ) : (
-                        <Badge>Coming Soon</Badge>
-                      )}
                     </div>
                     <h3 className="mt-5 text-lg font-semibold text-ink">{platform.name}</h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-gray">
